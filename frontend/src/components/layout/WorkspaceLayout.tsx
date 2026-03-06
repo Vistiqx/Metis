@@ -22,18 +22,18 @@ export function WorkspaceLayout({
 }: WorkspaceLayoutProps) {
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
-      {/* Sidebar */}
+      {/* Sidebar - Fixed on mobile, static on desktop */}
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="flex flex-1 flex-col min-w-0">
+      <div className="flex flex-1 flex-col min-w-0 lg:ml-0">
         {/* Top Bar */}
         <TopBar />
 
-        {/* Workspace - pb-32 adds padding for dock bar at bottom */}
-        <div className="flex flex-1 overflow-hidden pb-32">
-          {/* Main Content */}
-          <main className="flex-1 overflow-auto p-6">
+        {/* Workspace */}
+        <div className="flex flex-1 overflow-hidden relative">
+          {/* Main Content - pb-24 for dock bar space */}
+          <main className="flex-1 overflow-auto p-4 lg:p-6 pb-24 lg:pb-24">
             {children}
           </main>
 
@@ -46,8 +46,14 @@ export function WorkspaceLayout({
         </div>
       </div>
 
-      {/* Dock */}
-      {showDock && <Dock context={dockContext} />}
+      {/* Dock - Fixed at bottom */}
+      {showDock && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 pointer-events-none">
+          <div className="pointer-events-auto">
+            <Dock context={dockContext} />
+          </div>
+        </div>
+      )}
     </div>
   )
 }

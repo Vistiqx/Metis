@@ -1,33 +1,100 @@
 version: '3.8'
 
+# Metis Platform - Complete Docker Compose Stack
+# Development and local deployment configuration
+
 services:
-  # PostgreSQL - Primary relational database
+  # ============================================
+  # Frontend
+  # ============================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: metis-frontend
+    ports:
+      - "5173:80"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000/api/v1
+      - VITE_WS_URL=ws://localhost:8000/ws
+    depends_on:
+      - api
+    networks:
+      - metis-network
+
+  # ============================================
+  # API Gateway / Backend
+  # ============================================
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: metis-api
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - DEBUG=false
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=metis
+      - POSTGRES_USER=metis
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-metis_password}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - NEO4J_HOST=neo4j
+      - NEO4J_PORT=7687
+      - OPENSEARCH_HOST=opensearch
+      - OPENSEARCH_PORT=9200
+      - S3_ENDPOINT=http://minio:9000
+      - S3_ACCESS_KEY=${S3_ACCESS_KEY:-minioadmin}
+      - S3_SECRET_KEY=${S3_SECRET_KEY:-minioadmin}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY:-change-me-in-production}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      opensearch:
+        condition: service_healthy
+    networks:
+      - metis-network
+
+  # ============================================
+  # PostgreSQL with PostGIS
+  # ============================================
   postgres:
     image: postgis/postgis:15-3.4
     container_name: metis-postgres
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-metis}
-      POSTGRES_USER: ${POSTGRES_USER:-metis}
+      POSTGRES_DB: metis
+      POSTGRES_USER: metis
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-metis_password}
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./data/migrations:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-metis} -d ${POSTGRES_DB:-metis}"]
+      test: ["CMD-SHELL", "pg_isready -U metis -d metis"]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
       - metis-network
 
-  # Redis - Cache and task queue
+  # ============================================
+  # Redis (Cache & Message Queue)
+  # ============================================
   redis:
     image: redis:7-alpine
     container_name: metis-redis
     ports:
-      - "${REDIS_PORT:-6379}:6379"
+      - "6379:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
@@ -39,17 +106,19 @@ services:
     networks:
       - metis-network
 
-  # Neo4j - Graph database
+  # ============================================
+  # Neo4j (Graph Database)
+  # ============================================
   neo4j:
     image: neo4j:5-community
     container_name: metis-neo4j
     environment:
-      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-neo4j_password}
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-neo4j_password}
       NEO4J_PLUGINS: '["apoc", "gds"]'
       NEO4J_dbms_security_procedures_unrestricted: "apoc.*,gds.*"
     ports:
-      - "${NEO4J_HTTP_PORT:-7474}:7474"
-      - "${NEO4J_BOLT_PORT:-7687}:7687"
+      - "7474:7474"
+      - "7687:7687"
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
@@ -61,7 +130,9 @@ services:
     networks:
       - metis-network
 
-  # OpenSearch - Full-text search
+  # ============================================
+  # OpenSearch (Search Engine)
+  # ============================================
   opensearch:
     image: opensearchproject/opensearch:2.11.0
     container_name: metis-opensearch
@@ -69,13 +140,13 @@ services:
       - discovery.type=single-node
       - plugins.security.disabled=true
       - bootstrap.memory_lock=true
-      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "OPENSEARCH_JAVA_OPTS=-Xms1g -Xmx1g"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
-      - "${OPENSEARCH_PORT:-9200}:9200"
+      - "9200:9200"
       - "9600:9600"
     volumes:
       - opensearch_data:/usr/share/opensearch/data
@@ -87,7 +158,9 @@ services:
     networks:
       - metis-network
 
-  # MinIO - Object storage for evidence
+  # ============================================
+  # MinIO (Object Storage)
+  # ============================================
   minio:
     image: minio/minio:latest
     container_name: metis-minio
@@ -108,20 +181,53 @@ services:
     networks:
       - metis-network
 
-  # Create MinIO bucket on startup
+  # MinIO bucket initialization
   minio-init:
     image: minio/mc:latest
     container_name: metis-minio-init
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     entrypoint: >
       /bin/sh -c "
       sleep 10;
       /usr/bin/mc config host add myminio http://minio:9000 ${S3_ACCESS_KEY:-minioadmin} ${S3_SECRET_KEY:-minioadmin};
-      /usr/bin/mc mb myminio/${S3_BUCKET_NAME:-metis-evidence} || true;
-      /usr/bin/mc policy set public myminio/${S3_BUCKET_NAME:-metis-evidence};
+      /usr/bin/mc mb myminio/metis-evidence || true;
+      /usr/bin/mc policy set public myminio/metis-evidence;
       exit 0;
       "
+    networks:
+      - metis-network
+
+  # ============================================
+  # Monitoring & Observability
+  # ============================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: metis-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    networks:
+      - metis-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: metis-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./infrastructure/monitoring/grafana:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
     networks:
       - metis-network
 
@@ -132,6 +238,8 @@ volumes:
   neo4j_logs:
   opensearch_data:
   minio_data:
+  prometheus_data:
+  grafana_data:
 
 networks:
   metis-network:

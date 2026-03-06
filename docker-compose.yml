@@ -124,7 +124,7 @@ services:
     container_name: metis-neo4j
     environment:
       NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-neo4j_password}
-      NEO4J_PLUGINS: '["apoc", "gds"]'
+      NEO4J_PLUGINS: '["apoc", "graph-data-science"]'
       NEO4J_dbms_security_procedures_unrestricted: "apoc.*,gds.*"
     ports:
       - "7475:7474"

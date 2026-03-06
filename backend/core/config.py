@@ -65,6 +65,11 @@ class Settings(BaseSettings):
     ENABLE_THREAT_MODELING: bool = True
     ENABLE_AUTOMATED_REPORTING: bool = False
     
+    # AI / LLM Providers
+    OPENAI_API_KEY: str = ""
+    ANTHROPIC_API_KEY: str = ""
+    COHERE_API_KEY: str = ""
+    
     # Logging
     LOG_LEVEL: str = "INFO"
     

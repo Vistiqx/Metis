@@ -4,7 +4,7 @@ Metis Platform - API Routes
 
 from fastapi import APIRouter
 
-from api.endpoints import analysis, auth, cases, events, health, sources
+from api.endpoints import analysis, auth, cases, events, health, sources, ai
 
 # Main API router
 api_router = APIRouter()
@@ -15,6 +15,7 @@ api_router.include_router(cases.router)
 api_router.include_router(events.router)
 api_router.include_router(sources.router)
 api_router.include_router(analysis.router)
+api_router.include_router(ai.router)
 api_router.include_router(health.router)
 
 

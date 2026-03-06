@@ -30,10 +30,10 @@ export function WorkspaceLayout({
         {/* Top Bar */}
         <TopBar />
 
-        {/* Workspace */}
-        <div className="flex flex-1 overflow-hidden">
-          {/* Main Content - pb-24 adds padding for dock bar */}
-          <main className="flex-1 overflow-auto p-6 pb-24">
+        {/* Workspace - pb-32 adds padding for dock bar at bottom */}
+        <div className="flex flex-1 overflow-hidden pb-32">
+          {/* Main Content */}
+          <main className="flex-1 overflow-auto p-6">
             {children}
           </main>
 

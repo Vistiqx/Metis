@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Alerts } from './pages/Alerts'
 import { Dashboard } from './pages/Dashboard'
+import { Docs } from './pages/Docs'
 import { Events } from './pages/Events'
 import { Evidence } from './pages/Evidence'
 import { Graph } from './pages/Graph'
@@ -36,7 +37,7 @@ function App() {
           <Route path="/sources" element={<Sources />} />
           <Route path="/operations" element={<Operations />} />
           <Route path="/narratives" element={<Narratives />} />
-          <Route path="/docs" element={<div className="p-8">Documentation Page - Coming Soon</div>} />
+          <Route path="/docs" element={<Docs />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>

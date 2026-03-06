@@ -52,24 +52,34 @@ export function Sidebar() {
       }`}
     >
       {/* Logo */}
-      <div className="flex h-16 items-center justify-between border-b px-4">
+      <div className={`flex h-16 items-center border-b px-4 ${collapsed ? 'justify-center' : 'justify-between'}`}>
         {!collapsed && (
           <div className="flex items-center gap-2">
             <Shield className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold">Metis</span>
           </div>
         )}
-        {collapsed && <Shield className="h-8 w-8 text-primary" />}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="rounded-lg p-1 hover:bg-accent"
-        >
-          {collapsed ? (
-            <ChevronRight className="h-5 w-5" />
-          ) : (
+        {collapsed && (
+          <div className="flex items-center justify-center">
+            <Shield className="h-8 w-8 text-primary" />
+          </div>
+        )}
+        {!collapsed && (
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="rounded-lg p-1 hover:bg-accent"
+          >
             <ChevronLeft className="h-5 w-5" />
-          )}
-        </button>
+          </button>
+        )}
+        {collapsed && (
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="absolute -right-3 top-20 rounded-full bg-card border p-1 shadow-md hover:bg-accent"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+        )}
       </div>
 
       {/* Main Navigation */}

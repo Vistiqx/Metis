@@ -1,5 +1,6 @@
 export { Alerts } from './Alerts'
 export { Dashboard } from './Dashboard'
+export { Docs } from './Docs'
 export { Events } from './Events'
 export { Evidence } from './Evidence'
 export { Graph } from './Graph'

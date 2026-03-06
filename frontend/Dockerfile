@@ -19,8 +19,8 @@ FROM nginx:alpine
 # Copy built assets
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy nginx config
-COPY infrastructure/docker/nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx config (from repository root during build context)
+COPY ./infrastructure/docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

@@ -4,15 +4,16 @@ Metis Platform - API Routes
 
 from fastapi import APIRouter
 
+from api.endpoints import auth, cases, events, health
+
 # Main API router
 api_router = APIRouter()
 
-# Placeholder for future route imports
-# from api.endpoints import cases, events, actors, evidence
-# api_router.include_router(cases.router, prefix="/cases", tags=["cases"])
-# api_router.include_router(events.router, prefix="/events", tags=["events"])
-# api_router.include_router(actors.router, prefix="/actors", tags=["actors"])
-# api_router.include_router(evidence.router, prefix="/evidence", tags=["evidence"])
+# Include endpoint routers
+api_router.include_router(auth.router)
+api_router.include_router(cases.router)
+api_router.include_router(events.router)
+api_router.include_router(health.router)
 
 
 @api_router.get("/status")

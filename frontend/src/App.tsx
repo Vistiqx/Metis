@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Dashboard } from './pages/Dashboard'
+import { Investigations } from './pages/Investigations'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,14 +16,20 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="min-h-screen bg-background">
-          <Routes>
-            <Route path="/" element={<div className="p-8 text-center">
-              <h1 className="text-4xl font-bold mb-4">Metis</h1>
-              <p className="text-muted-foreground">OSINT Intelligence Platform</p>
-            </div>} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/investigations" element={<Investigations />} />
+          <Route path="/events" element={<div className="p-8">Events Page</div>} />
+          <Route path="/graph" element={<div className="p-8">Graph Page</div>} />
+          <Route path="/evidence" element={<div className="p-8">Evidence Page</div>} />
+          <Route path="/watchlists" element={<div className="p-8">Watchlists Page</div>} />
+          <Route path="/alerts" element={<div className="p-8">Alerts Page</div>} />
+          <Route path="/sources" element={<div className="p-8">Sources Page</div>} />
+          <Route path="/operations" element={<div className="p-8">Operations Page</div>} />
+          <Route path="/narratives" element={<div className="p-8">Narratives Page</div>} />
+          <Route path="/docs" element={<div className="p-8">Documentation Page</div>} />
+          <Route path="/settings" element={<div className="p-8">Settings Page</div>} />
+        </Routes>
       </BrowserRouter>
     </QueryClientProvider>
   )

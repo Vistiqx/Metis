@@ -35,6 +35,7 @@ numpy==1.26.3
 httpx==0.26.0
 requests==2.31.0
 aiohttp==3.9.3
+feedparser==6.0.11
 
 # Utils
 python-dotenv==1.0.0

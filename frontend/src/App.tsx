@@ -1,9 +1,16 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Alerts } from './pages/Alerts'
 import { Dashboard } from './pages/Dashboard'
 import { Events } from './pages/Events'
+import { Evidence } from './pages/Evidence'
+import { Graph } from './pages/Graph'
 import { Investigations } from './pages/Investigations'
+import { Narratives } from './pages/Narratives'
+import { Operations } from './pages/Operations'
+import { Settings } from './pages/Settings'
 import { Sources } from './pages/Sources'
+import { Watchlists } from './pages/Watchlists'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,15 +29,15 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/investigations" element={<Investigations />} />
           <Route path="/events" element={<Events />} />
-          <Route path="/graph" element={<div className="p-8">Graph Page</div>} />
-          <Route path="/evidence" element={<div className="p-8">Evidence Page</div>} />
-          <Route path="/watchlists" element={<div className="p-8">Watchlists Page</div>} />
-          <Route path="/alerts" element={<div className="p-8">Alerts Page</div>} />
+          <Route path="/graph" element={<Graph />} />
+          <Route path="/evidence" element={<Evidence />} />
+          <Route path="/watchlists" element={<Watchlists />} />
+          <Route path="/alerts" element={<Alerts />} />
           <Route path="/sources" element={<Sources />} />
-          <Route path="/operations" element={<div className="p-8">Operations Page</div>} />
-          <Route path="/narratives" element={<div className="p-8">Narratives Page</div>} />
-          <Route path="/docs" element={<div className="p-8">Documentation Page</div>} />
-          <Route path="/settings" element={<div className="p-8">Settings Page</div>} />
+          <Route path="/operations" element={<Operations />} />
+          <Route path="/narratives" element={<Narratives />} />
+          <Route path="/docs" element={<div className="p-8">Documentation Page - Coming Soon</div>} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

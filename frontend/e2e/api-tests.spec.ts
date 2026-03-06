@@ -52,8 +52,8 @@ test.describe('Metis Platform - API End-to-End Tests', () => {
     // Try to access cases endpoint without auth
     const response = await request.get(`${apiBaseUrl}/api/v1/cases`);
     
-    // Should be protected (401) or return data (200)
-    expect([200, 401]).toContain(response.status());
+    // Should be protected (401/403) or return data (200)
+    expect([200, 401, 403]).toContain(response.status());
     
     if (response.status() === 200) {
       const body = await response.json();
@@ -64,7 +64,7 @@ test.describe('Metis Platform - API End-to-End Tests', () => {
   test('Events endpoint structure validation', async ({ request }) => {
     const response = await request.get(`${apiBaseUrl}/api/v1/events`);
     
-    expect([200, 401]).toContain(response.status());
+    expect([200, 401, 403]).toContain(response.status());
     
     if (response.status() === 200) {
       const body = await response.json();

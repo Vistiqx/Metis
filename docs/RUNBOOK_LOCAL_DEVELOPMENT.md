@@ -38,7 +38,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-Backend available at: http://localhost:8000
+Backend available at: http://localhost:8081
 
 ### 6. Start Frontend (new terminal)
 ```bash
@@ -47,13 +47,13 @@ npm install
 npm run dev
 ```
 
-Frontend available at: http://localhost:5173
+Frontend available at: http://localhost:3001
 
 ### 7. Verify
-- ✅ Frontend: http://localhost:5173
-- ✅ API: http://localhost:8000
-- ✅ API Docs: http://localhost:8000/docs
-- ✅ Health: http://localhost:8000/health
+- ✅ Frontend: http://localhost:3001
+- ✅ API: http://localhost:8081
+- ✅ API Docs: http://localhost:8081/docs
+- ✅ Health: http://localhost:8081/health
 
 ## Full Docker Stack (Alternative)
 
@@ -70,14 +70,14 @@ docker-compose logs -f frontend
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
-| Frontend | http://localhost:5173 | - |
-| API | http://localhost:8000 | - |
-| API Docs | http://localhost:8000/docs | - |
-| Grafana | http://localhost:3000 | admin/admin |
-| Neo4j Browser | http://localhost:7474 | neo4j/neo4j_password |
-| OpenSearch | http://localhost:9200 | - |
-| MinIO Console | http://localhost:9001 | minioadmin/minioadmin |
-| Prometheus | http://localhost:9090 | - |
+| Frontend | http://localhost:3001 | - |
+| API | http://localhost:8081 | - |
+| API Docs | http://localhost:8081/docs | - |
+| Grafana | http://localhost:3002 | admin/admin |
+| Neo4j Browser | http://localhost:7475 | neo4j/neo4j_password |
+| OpenSearch | http://localhost:9201 | - |
+| MinIO Console | http://localhost:9003 | minioadmin/minioadmin |
+| Prometheus | http://localhost:9091 | - |
 
 ## Development Commands
 
@@ -131,7 +131,7 @@ docker-compose exec neo4j cypher-shell -u neo4j -p neo4j_password
 docker-compose exec redis redis-cli
 
 # View OpenSearch indices
-curl http://localhost:9200/_cat/indices
+curl http://localhost:9201/_cat/indices
 ```
 
 ## Common Tasks
@@ -229,7 +229,7 @@ chmod +x tools/scripts/*.sh
 
 ### Register User
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/register \
+curl -X POST http://localhost:8081/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "analyst@metis.local",
@@ -241,14 +241,14 @@ curl -X POST http://localhost:8000/api/v1/auth/register \
 
 ### Login
 ```bash
-curl -X POST http://localhost:8000/api/v1/auth/login \
+curl -X POST http://localhost:8081/api/v1/auth/login \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "username=analyst&password=password123"
 ```
 
 ### Create Case
 ```bash
-curl -X POST http://localhost:8000/api/v1/cases \
+curl -X POST http://localhost:8081/api/v1/cases \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{
@@ -362,8 +362,8 @@ docker-compose up -d
 ## Getting Help
 
 1. Check logs: `docker-compose logs <service>`
-2. API docs: http://localhost:8000/docs
-3. Health check: http://localhost:8000/health
+2. API docs: http://localhost:8081/docs
+3. Health check: http://localhost:8081/health
 4. Review this document
 5. Check GitHub issues
 

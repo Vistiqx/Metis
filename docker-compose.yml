@@ -2,6 +2,16 @@ version: '3.8'
 
 # Metis Platform - Complete Docker Compose Stack
 # Development and local deployment configuration
+# Port Configuration (Updated to avoid conflicts):
+# - Frontend: 3001
+# - API: 8081
+# - PostgreSQL: 5433
+# - Redis: 6380
+# - Neo4j: 7475 (HTTP), 7688 (Bolt)
+# - OpenSearch: 9201
+# - MinIO: 9002 (API), 9003 (Console)
+# - Prometheus: 9091
+# - Grafana: 3002
 
 services:
   # ============================================
@@ -13,10 +23,10 @@ services:
       dockerfile: Dockerfile
     container_name: metis-frontend
     ports:
-      - "5173:80"
+      - "3001:80"
     environment:
-      - VITE_API_BASE_URL=http://localhost:8000/api/v1
-      - VITE_WS_URL=ws://localhost:8000/ws
+      - VITE_API_BASE_URL=http://localhost:8081/api/v1
+      - VITE_WS_URL=ws://localhost:8081/ws
     depends_on:
       - api
     networks:
@@ -31,7 +41,7 @@ services:
       dockerfile: Dockerfile
     container_name: metis-api
     ports:
-      - "8000:8000"
+      - "8081:8000"
     environment:
       - APP_ENV=production
       - DEBUG=false
@@ -75,7 +85,7 @@ services:
       POSTGRES_USER: metis
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-metis_password}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./data/migrations:/docker-entrypoint-initdb.d
@@ -94,7 +104,7 @@ services:
     image: redis:7-alpine
     container_name: metis-redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis_data:/data
     command: redis-server --appendonly yes
@@ -117,8 +127,8 @@ services:
       NEO4J_PLUGINS: '["apoc", "gds"]'
       NEO4J_dbms_security_procedures_unrestricted: "apoc.*,gds.*"
     ports:
-      - "7474:7474"
-      - "7687:7687"
+      - "7475:7474"
+      - "7688:7687"
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
@@ -146,8 +156,8 @@ services:
         soft: -1
         hard: -1
     ports:
-      - "9200:9200"
-      - "9600:9600"
+      - "9201:9200"
+      - "9601:9600"
     volumes:
       - opensearch_data:/usr/share/opensearch/data
     healthcheck:
@@ -169,8 +179,8 @@ services:
       MINIO_ROOT_USER: ${S3_ACCESS_KEY:-minioadmin}
       MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY:-minioadmin}
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "9002:9000"
+      - "9003:9001"
     volumes:
       - minio_data:/data
     healthcheck:
@@ -206,7 +216,7 @@ services:
     image: prom/prometheus:latest
     container_name: metis-prometheus
     ports:
-      - "9090:9090"
+      - "9091:9090"
     volumes:
       - ./infrastructure/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
@@ -220,7 +230,7 @@ services:
     image: grafana/grafana:latest
     container_name: metis-grafana
     ports:
-      - "3000:3000"
+      - "3002:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
     volumes:

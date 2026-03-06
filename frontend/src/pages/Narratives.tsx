@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 
 // Mock narratives data
 const mockNarratives = [

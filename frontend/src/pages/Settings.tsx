@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import { 
   Bell, 
-  Database, 
   Globe, 
   Lock, 
-  Mail, 
   Moon, 
   Palette, 
   Save, 

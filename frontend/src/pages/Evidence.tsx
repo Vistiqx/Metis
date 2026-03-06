@@ -8,7 +8,6 @@ import {
   Image as ImageIcon, 
   List, 
   MoreVertical, 
-  Plus, 
   Search, 
   Tag,
   Trash2,

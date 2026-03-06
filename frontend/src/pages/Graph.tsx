@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Download, Filter, Fullscreen, GitGraph, Network, Plus, RefreshCw, Search, Settings, ZoomIn, ZoomOut } from 'lucide-react'
+import { Download, Filter, Fullscreen, Network, Plus, RefreshCw, Search, Settings, ZoomIn, ZoomOut } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'

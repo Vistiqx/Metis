@@ -11,9 +11,7 @@ import {
   Plus, 
   Search, 
   Settings,
-  Trash2,
-  User,
-  Users
+  User
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'

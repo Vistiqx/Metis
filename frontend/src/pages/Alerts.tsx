@@ -8,9 +8,7 @@ import {
   Eye, 
   Filter, 
   Mail, 
-  MoreVertical, 
-  Trash2,
-  X
+  Trash2
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'

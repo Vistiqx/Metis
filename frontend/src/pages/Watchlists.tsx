@@ -5,7 +5,6 @@ import {
   Edit, 
   Eye, 
   Filter, 
-  MoreVertical, 
   Pause, 
   Play, 
   Plus, 

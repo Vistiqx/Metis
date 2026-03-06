@@ -5,7 +5,7 @@ import { TopBar } from './TopBar'
 
 interface WorkspaceLayoutProps {
   children: React.ReactNode
-  dockContext?: 'event' | 'graph' | 'evidence' | 'default'
+  dockContext?: 'watchlists' | 'alerts' | 'operations' | 'narratives' | 'settings' | 'graph' | 'evidence' | 'default' | 'event'
   rightPanelContent?: React.ReactNode
   rightPanelTitle?: string
   showRightPanel?: boolean

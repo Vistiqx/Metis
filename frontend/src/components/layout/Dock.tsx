@@ -20,7 +20,7 @@ interface DockItem {
 }
 
 interface DockProps {
-  context?: 'event' | 'graph' | 'evidence' | 'default'
+  context?: 'watchlists' | 'alerts' | 'operations' | 'narratives' | 'settings' | 'graph' | 'evidence' | 'default' | 'event'
   onItemClick?: (item: string) => void
 }
 

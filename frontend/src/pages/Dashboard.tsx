@@ -1,18 +1,13 @@
 import { 
   AlertTriangle, 
   BookOpen, 
-  Building2, 
   Eye, 
   FolderKanban, 
   GitGraph, 
-  Network, 
-  Shield,
-  TrendingUp,
-  Users
+  Network
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
 import { WorkspaceLayout } from '../components/layout'
-import { Button } from '../components/ui/Button'
 
 const stats = [
   { label: 'Active Cases', value: 12, icon: FolderKanban, trend: '+2 this week' },

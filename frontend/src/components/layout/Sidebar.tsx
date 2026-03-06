@@ -14,8 +14,7 @@ import {
   Network, 
   Newspaper, 
   Settings, 
-  Shield,
-  X
+  Shield
 } from 'lucide-react'
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'

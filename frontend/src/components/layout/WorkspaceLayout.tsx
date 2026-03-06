@@ -32,8 +32,8 @@ export function WorkspaceLayout({
 
         {/* Workspace */}
         <div className="flex flex-1 overflow-hidden">
-          {/* Main Content */}
-          <main className="flex-1 overflow-auto p-6">
+          {/* Main Content - pb-24 adds padding for dock bar */}
+          <main className="flex-1 overflow-auto p-6 pb-24">
             {children}
           </main>
 

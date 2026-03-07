@@ -1,0 +1,52 @@
+{
+  "page": "Operations",
+  "route": "/operations",
+  "generatedAt": "2026-03-06",
+  "dockContext": "operations",
+  "showRightPanel": true,
+  "totalElements": 28,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "New Task", "type": "button", "status": "ui-only" },
+      { "element": "Start", "type": "button", "status": "ui-only" },
+      { "element": "Complete", "type": "button", "status": "ui-only" },
+      { "element": "Pending", "type": "button", "status": "ui-only" },
+      { "element": "Filter", "type": "button", "status": "ui-only" },
+      { "element": "Assigned", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Export Button", "type": "button", "action": "export-tasks", "status": "ui-only" },
+    { "element": "New Task Button", "type": "button", "action": "create-task", "status": "ui-only" },
+    { "element": "Search Input", "type": "text-input", "action": "search-tasks", "status": "working" },
+    { "element": "All Tab", "type": "button", "action": "filter-all", "status": "working" },
+    { "element": "Pending Tab", "type": "button", "action": "filter-pending", "status": "working" },
+    { "element": "In Progress Tab", "type": "button", "action": "filter-in-progress", "status": "working" },
+    { "element": "Completed Tab", "type": "button", "action": "filter-completed", "status": "working" },
+    { "element": "Filter Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Task Card 1", "type": "card", "action": "view-task", "status": "working" },
+    { "element": "Task Card 2", "type": "card", "action": "view-task", "status": "working" },
+    { "element": "Task Card 3", "type": "card", "action": "view-task", "status": "working" },
+    { "element": "Task Card 4", "type": "card", "action": "view-task", "status": "working" },
+    { "element": "Task Card 5", "type": "card", "action": "view-task", "status": "working" },
+    { "element": "Play/Start Button", "type": "button", "action": "start-task", "status": "ui-only" },
+    { "element": "More Options", "type": "button", "action": "more-options", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Status tabs (All/Pending/In Progress/Completed) filter tasks correctly. Progress rings display task completion percentage."
+}

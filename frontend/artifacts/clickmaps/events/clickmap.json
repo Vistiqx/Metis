@@ -1,0 +1,52 @@
+{
+  "page": "Events",
+  "route": "/events",
+  "generatedAt": "2026-03-06",
+  "dockContext": "event",
+  "showRightPanel": true,
+  "totalElements": 30,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "Map Tool", "type": "button", "status": "ui-only" },
+      { "element": "Timeline Tool", "type": "button", "status": "ui-only" },
+      { "element": "Evidence Tool", "type": "button", "status": "ui-only" },
+      { "element": "Actors Tool", "type": "button", "status": "ui-only" },
+      { "element": "Narratives Tool", "type": "button", "status": "ui-only" },
+      { "element": "Related Tool", "type": "button", "status": "ui-only" },
+      { "element": "Graph Tool", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Events Tab", "type": "button", "action": "switch-tab", "status": "working" },
+    { "element": "Candidates Tab", "type": "button", "action": "switch-tab", "status": "working" },
+    { "element": "New Event Button", "type": "button", "action": "create-event", "status": "ui-only" },
+    { "element": "Search Input", "type": "text-input", "action": "filter-events", "status": "working" },
+    { "element": "Filter Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Event Card 1", "type": "card", "action": "select-event", "status": "working" },
+    { "element": "Event Card 2", "type": "card", "action": "select-event", "status": "working" },
+    { "element": "Event Card 3", "type": "card", "action": "select-event", "status": "working" },
+    { "element": "Candidate Card 1", "type": "card", "action": "select-candidate", "status": "working" },
+    { "element": "Candidate Card 2", "type": "card", "action": "select-candidate", "status": "working" },
+    { "element": "Candidate Card 3", "type": "card", "action": "select-candidate", "status": "working" },
+    { "element": "Promote Button", "type": "button", "action": "promote-candidate", "status": "ui-only" },
+    { "element": "Merge Button", "type": "button", "action": "merge-candidate", "status": "ui-only" },
+    { "element": "Dismiss Button", "type": "button", "action": "dismiss-candidate", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Events/Candidates tab switching works. Right panel shows event details when event selected."
+}

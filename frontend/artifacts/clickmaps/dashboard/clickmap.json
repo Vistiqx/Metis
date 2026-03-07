@@ -1,0 +1,46 @@
+{
+  "page": "Dashboard",
+  "route": "/",
+  "generatedAt": "2026-03-06",
+  "dockContext": "none",
+  "showRightPanel": false,
+  "totalElements": 22,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Mobile Menu Toggle", "type": "button", "selector": "button[class*='lg:hidden']", "action": "toggle-sidebar", "status": "working" },
+      { "element": "Logo/Shield", "type": "icon", "selector": "[class*='shield']", "action": "none", "status": "decorative" },
+      { "element": "Collapse Toggle", "type": "button", "selector": "button[title='Collapse sidebar']", "action": "collapse-sidebar", "status": "working" },
+      { "element": "Dashboard Nav", "type": "navlink", "selector": "a[href='/']", "action": "navigate", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "selector": "a[href='/investigations']", "action": "navigate", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "selector": "a[href='/events']", "action": "navigate", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "selector": "a[href='/graph']", "action": "navigate", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "selector": "a[href='/evidence']", "action": "navigate", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "selector": "a[href='/watchlists']", "action": "navigate", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "selector": "a[href='/alerts']", "action": "navigate", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "selector": "a[href='/sources']", "action": "navigate", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "selector": "a[href='/operations']", "action": "navigate", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "selector": "a[href='/narratives']", "action": "navigate", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "selector": "a[href='/docs']", "action": "navigate", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "selector": "a[href='/settings']", "action": "navigate", "target": "/settings", "status": "working" }
+    ],
+    "topbar": [
+      { "element": "Global Search Input", "type": "text-input", "selector": "input[type='text']", "action": "search", "placeholder": "Search cases, events, actors, evidence...", "status": "working" },
+      { "element": "Notifications Bell", "type": "button", "selector": "button[aria-label*='notification' i]", "action": "toggle-notifications", "status": "working" },
+      { "element": "User Avatar", "type": "button", "selector": "button[aria-label*='user' i]", "action": "open-user-menu", "status": "working" },
+      { "element": "Logout", "type": "button", "selector": "button[aria-label*='logout' i]", "action": "logout", "status": "working" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Active Cases Stat Card", "type": "card", "selector": "[class*='card']:has-text('Active Cases')", "action": "none", "status": "display" },
+    { "element": "Open Events Stat Card", "type": "card", "selector": "[class*='card']:has-text('Open Events')", "action": "none", "status": "display" },
+    { "element": "Alerts Stat Card", "type": "card", "selector": "[class*='card']:has-text('Alerts')", "action": "none", "status": "display" },
+    { "element": "Watchlists Stat Card", "type": "card", "selector": "[class*='card']:has-text('Watchlists')", "action": "none", "status": "display" },
+    { "element": "New Case Quick Action", "type": "link", "selector": "a[href='/investigations']", "action": "navigate", "target": "/investigations", "status": "working" },
+    { "element": "View Events Quick Action", "type": "link", "selector": "a[href='/events']", "action": "navigate", "target": "/events", "status": "working" },
+    { "element": "Graph Analysis Quick Action", "type": "link", "selector": "a[href='/graph']", "action": "navigate", "target": "/graph", "status": "working" },
+    { "element": "Browse Evidence Quick Action", "type": "link", "selector": "a[href='/evidence']", "action": "navigate", "target": "/evidence", "status": "working" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Dashboard has no dock bar (showDock=false). All quick actions navigate to valid routes."
+}

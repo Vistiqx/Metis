@@ -1,0 +1,49 @@
+{
+  "page": "Graph",
+  "route": "/graph",
+  "generatedAt": "2026-03-06",
+  "dockContext": "graph",
+  "showRightPanel": true,
+  "totalElements": 28,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "Add Node", "type": "button", "status": "ui-only" },
+      { "element": "Expand", "type": "button", "status": "ui-only" },
+      { "element": "Pivot", "type": "button", "status": "ui-only" },
+      { "element": "Cluster", "type": "button", "status": "ui-only" },
+      { "element": "Filter", "type": "button", "status": "ui-only" },
+      { "element": "Layout", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Export Button", "type": "button", "action": "export-graph", "status": "ui-only" },
+    { "element": "Add Node Button", "type": "button", "action": "add-node", "status": "ui-only" },
+    { "element": "Search Nodes Input", "type": "text-input", "action": "search-nodes", "status": "working" },
+    { "element": "Node Type Filter", "type": "select", "action": "filter-by-type", "status": "working" },
+    { "element": "Filters Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Zoom Out Button", "type": "button", "action": "zoom-out", "status": "working" },
+    { "element": "Zoom In Button", "type": "button", "action": "zoom-in", "status": "working" },
+    { "element": "Fullscreen Button", "type": "button", "action": "fullscreen", "status": "ui-only" },
+    { "element": "Refresh Button", "type": "button", "action": "refresh", "status": "ui-only" },
+    { "element": "Settings Button", "type": "button", "action": "open-settings", "status": "ui-only" },
+    { "element": "Graph Node 1-8", "type": "svg-circle", "action": "select-node", "status": "working" },
+    { "element": "View Details Button", "type": "button", "action": "view-details", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Zoom controls work. Node selection updates right panel. Node type filter works."
+}

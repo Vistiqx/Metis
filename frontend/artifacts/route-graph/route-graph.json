@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-03-06",
+  "graphType": "directed",
+  "totalNodes": 12,
+  "totalEdges": 28,
+  "nodes": [
+    { "id": "/", "type": "page", "label": "Dashboard", "category": "main" },
+    { "id": "/investigations", "type": "page", "label": "Investigations", "category": "main" },
+    { "id": "/events", "type": "page", "label": "Events", "category": "main" },
+    { "id": "/graph", "type": "page", "label": "Graph", "category": "main" },
+    { "id": "/evidence", "type": "page", "label": "Evidence", "category": "main" },
+    { "id": "/watchlists", "type": "page", "label": "Watchlists", "category": "main" },
+    { "id": "/alerts", "type": "page", "label": "Alerts", "category": "main" },
+    { "id": "/sources", "type": "page", "label": "Sources", "category": "main" },
+    { "id": "/operations", "type": "page", "label": "Operations", "category": "main" },
+    { "id": "/narratives", "type": "page", "label": "Narratives", "category": "main" },
+    { "id": "/docs", "type": "page", "label": "Docs", "category": "secondary" },
+    { "id": "/settings", "type": "page", "label": "Settings", "category": "secondary" }
+  ],
+  "edges": [
+    { "source": "/", "target": "/investigations", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/events", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/graph", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/evidence", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/watchlists", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/alerts", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/sources", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/operations", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/narratives", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/docs", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/", "target": "/settings", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/investigations", "target": "/", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/investigations", "target": "/events", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/investigations", "target": "/graph", "type": "nav", "sourceElement": "sidebar", "weight": 1, "status": "valid" },
+    { "source": "/events", "target": "/graph", "type": "dock", "sourceElement": "dock-graph", "weight": 1, "status": "valid" },
+    { "source": "/events", "target": "/evidence", "type": "dock", "sourceElement": "dock-evidence", "weight": 1, "status": "valid" },
+    { "source": "/dashboard", "target": "/investigations", "type": "quick-action", "sourceElement": "quick-action-new-case", "weight": 1, "status": "valid" },
+    { "source": "/dashboard", "target": "/events", "type": "quick-action", "sourceElement": "quick-action-view-events", "weight": 1, "status": "valid" },
+    { "source": "/dashboard", "target": "/graph", "type": "quick-action", "sourceElement": "quick-action-graph", "weight": 1, "status": "valid" },
+    { "source": "/dashboard", "target": "/evidence", "type": "quick-action", "sourceElement": "quick-action-evidence", "weight": 1, "status": "valid" }
+  ],
+  "brokenEdges": [],
+  "orphanNodes": [],
+  "unreachableNodes": [],
+  "connectivity": {
+    "stronglyConnected": true,
+    "weaklyConnected": true,
+    "diameter": 2,
+    "averagePathLength": 1.5
+  },
+  "statistics": {
+    "validRoutes": 12,
+    "brokenRoutes": 0,
+    "orphanRoutes": 0,
+    "unreachableRoutes": 0,
+    "sidebarNavigation": 13,
+    "dockInteractions": 9,
+    "quickActions": 4
+  }
+}

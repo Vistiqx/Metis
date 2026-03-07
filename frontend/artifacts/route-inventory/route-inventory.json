@@ -1,0 +1,181 @@
+{
+  "generatedAt": "2026-03-06",
+  "application": "Metis OSINT Platform",
+  "version": "0.1.0",
+  "totalRoutes": 12,
+  "routes": [
+    {
+      "path": "/",
+      "name": "Dashboard",
+      "component": "Dashboard.tsx",
+      "hasLayout": true,
+      "dockContext": "none",
+      "showRightPanel": false,
+      "navigationLocation": "sidebar",
+      "icon": "LayoutDashboard",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/investigations",
+      "name": "Investigations",
+      "component": "Investigations.tsx",
+      "hasLayout": true,
+      "dockContext": "default",
+      "showRightPanel": false,
+      "navigationLocation": "sidebar",
+      "icon": "FolderKanban",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/events",
+      "name": "Events",
+      "component": "Events.tsx",
+      "hasLayout": true,
+      "dockContext": "event",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "Network",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/graph",
+      "name": "Graph",
+      "component": "Graph.tsx",
+      "hasLayout": true,
+      "dockContext": "graph",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "GitGraph",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/evidence",
+      "name": "Evidence",
+      "component": "Evidence.tsx",
+      "hasLayout": true,
+      "dockContext": "evidence",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "FileText",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/watchlists",
+      "name": "Watchlists",
+      "component": "Watchlists.tsx",
+      "hasLayout": true,
+      "dockContext": "watchlists",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "Eye",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/alerts",
+      "name": "Alerts",
+      "component": "Alerts.tsx",
+      "hasLayout": true,
+      "dockContext": "alerts",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "AlertTriangle",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/sources",
+      "name": "Sources",
+      "component": "Sources.tsx",
+      "hasLayout": true,
+      "dockContext": "default",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "Database",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/operations",
+      "name": "Operations",
+      "component": "Operations.tsx",
+      "hasLayout": true,
+      "dockContext": "operations",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "Building2",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/narratives",
+      "name": "Narratives",
+      "component": "Narratives.tsx",
+      "hasLayout": true,
+      "dockContext": "narratives",
+      "showRightPanel": true,
+      "navigationLocation": "sidebar",
+      "icon": "BookOpen",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/docs",
+      "name": "Docs",
+      "component": "Docs.tsx",
+      "hasLayout": true,
+      "dockContext": "default",
+      "showRightPanel": false,
+      "navigationLocation": "sidebar-bottom",
+      "icon": "Newspaper",
+      "status": "implemented",
+      "mockData": true
+    },
+    {
+      "path": "/settings",
+      "name": "Settings",
+      "component": "Settings.tsx",
+      "hasLayout": true,
+      "dockContext": "settings",
+      "showRightPanel": false,
+      "navigationLocation": "sidebar-bottom",
+      "icon": "Settings",
+      "status": "implemented",
+      "mockData": false
+    }
+  ],
+  "navigationStructure": {
+    "sidebar": {
+      "mainItems": 11,
+      "bottomItems": 2,
+      "totalItems": 13
+    },
+    "dockContexts": [
+      "default",
+      "event",
+      "graph",
+      "evidence",
+      "watchlists",
+      "alerts",
+      "operations",
+      "narratives",
+      "settings"
+    ]
+  },
+  "missingRoutes": [],
+  "orphanRoutes": [],
+  "brokenRoutes": [],
+  "issues": [
+    {
+      "type": "data_source",
+      "description": "All pages use mock/hardcoded data instead of API integration",
+      "severity": "medium",
+      "affectedRoutes": "all"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "page": "Sources",
+  "route": "/sources",
+  "generatedAt": "2026-03-06",
+  "dockContext": "default",
+  "showRightPanel": true,
+  "totalElements": 24,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "Map Tool", "type": "button", "status": "ui-only" },
+      { "element": "Timeline Tool", "type": "button", "status": "ui-only" },
+      { "element": "Evidence Tool", "type": "button", "status": "ui-only" },
+      { "element": "Actors Tool", "type": "button", "status": "ui-only" },
+      { "element": "Graph Tool", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "New Source Button", "type": "button", "action": "add-source", "status": "ui-only" },
+    { "element": "Search Input", "type": "text-input", "action": "search-sources", "status": "working" },
+    { "element": "Filter Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Source Card 1", "type": "card", "action": "select-source", "status": "working" },
+    { "element": "Source Card 2", "type": "card", "action": "select-source", "status": "working" },
+    { "element": "Source Card 3", "type": "card", "action": "select-source", "status": "working" },
+    { "element": "Source Card 4", "type": "card", "action": "select-source", "status": "working" },
+    { "element": "Edit Configuration Button", "type": "button", "action": "edit-config", "status": "ui-only" },
+    { "element": "Run Ingestion Button", "type": "button", "action": "run-ingestion", "status": "ui-only" },
+    { "element": "Pause/Resume Button", "type": "button", "action": "toggle-source", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Source selection updates right panel with details and actions. All 4 sources display with correct status indicators."
+}

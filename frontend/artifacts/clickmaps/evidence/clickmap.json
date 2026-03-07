@@ -1,0 +1,48 @@
+{
+  "page": "Evidence",
+  "route": "/evidence",
+  "generatedAt": "2026-03-06",
+  "dockContext": "evidence",
+  "showRightPanel": true,
+  "totalElements": 32,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "Viewer", "type": "button", "status": "ui-only" },
+      { "element": "Location", "type": "button", "status": "ui-only" },
+      { "element": "Timeline", "type": "button", "status": "ui-only" },
+      { "element": "Related", "type": "button", "status": "ui-only" },
+      { "element": "Network", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Export Button", "type": "button", "action": "export-evidence", "status": "ui-only" },
+    { "element": "Upload Button", "type": "button", "action": "upload-evidence", "status": "ui-only" },
+    { "element": "Search Input", "type": "text-input", "action": "search-evidence", "status": "working" },
+    { "element": "Filter Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Tags Button", "type": "button", "action": "filter-tags", "status": "ui-only" },
+    { "element": "Grid View Toggle", "type": "button", "action": "grid-view", "status": "working" },
+    { "element": "List View Toggle", "type": "button", "action": "list-view", "status": "working" },
+    { "element": "Evidence Item Checkbox", "type": "checkbox", "action": "select-item", "status": "working" },
+    { "element": "View Eye Button", "type": "button", "action": "view-evidence", "status": "ui-only" },
+    { "element": "More Options Button", "type": "button", "action": "more-options", "status": "ui-only" },
+    { "element": "Download Button", "type": "button", "action": "download", "status": "ui-only" },
+    { "element": "Trash Button", "type": "button", "action": "delete", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Grid/List view toggle works. Evidence items are selectable via checkbox. Search filters items."
+}

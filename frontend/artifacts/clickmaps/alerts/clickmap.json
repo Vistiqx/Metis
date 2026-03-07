@@ -1,0 +1,47 @@
+{
+  "page": "Alerts",
+  "route": "/alerts",
+  "generatedAt": "2026-03-06",
+  "dockContext": "alerts",
+  "showRightPanel": true,
+  "totalElements": 26,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "Mark Read", "type": "button", "status": "ui-only" },
+      { "element": "All Alerts", "type": "button", "status": "ui-only" },
+      { "element": "Critical", "type": "button", "status": "ui-only" },
+      { "element": "Filter", "type": "button", "status": "ui-only" },
+      { "element": "Clear All", "type": "button", "status": "ui-only" },
+      { "element": "Settings", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Mark All Read Button", "type": "button", "action": "mark-all-read", "status": "ui-only" },
+    { "element": "Email Settings Button", "type": "button", "action": "email-settings", "status": "ui-only" },
+    { "element": "All Tab", "type": "button", "action": "filter-all", "status": "working" },
+    { "element": "Unread Tab", "type": "button", "action": "filter-unread", "status": "working" },
+    { "element": "Read Tab", "type": "button", "action": "filter-read", "status": "working" },
+    { "element": "Filter Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Alert Checkbox", "type": "checkbox", "action": "select-alert", "status": "working" },
+    { "element": "View Eye Button", "type": "button", "action": "view-alert", "status": "ui-only" },
+    { "element": "Mark Read Check", "type": "button", "action": "mark-read", "status": "ui-only" },
+    { "element": "Delete Button", "type": "button", "action": "delete-alert", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "All/Unread/Read tabs filter alerts correctly. Alert checkboxes allow multi-select."
+}

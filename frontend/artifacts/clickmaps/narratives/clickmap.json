@@ -1,0 +1,54 @@
+{
+  "page": "Narratives",
+  "route": "/narratives",
+  "generatedAt": "2026-03-06",
+  "dockContext": "narratives",
+  "showRightPanel": true,
+  "totalElements": 30,
+  "globalElements": {
+    "sidebar": [
+      { "element": "Dashboard Nav", "type": "navlink", "target": "/", "status": "working" },
+      { "element": "Investigations Nav", "type": "navlink", "target": "/investigations", "status": "working" },
+      { "element": "Events Nav", "type": "navlink", "target": "/events", "status": "working" },
+      { "element": "Graph Nav", "type": "navlink", "target": "/graph", "status": "working" },
+      { "element": "Evidence Nav", "type": "navlink", "target": "/evidence", "status": "working" },
+      { "element": "Watchlists Nav", "type": "navlink", "target": "/watchlists", "status": "working" },
+      { "element": "Alerts Nav", "type": "navlink", "target": "/alerts", "status": "working" },
+      { "element": "Sources Nav", "type": "navlink", "target": "/sources", "status": "working" },
+      { "element": "Operations Nav", "type": "navlink", "target": "/operations", "status": "working" },
+      { "element": "Narratives Nav", "type": "navlink", "target": "/narratives", "status": "working" },
+      { "element": "Docs Nav", "type": "navlink", "target": "/docs", "status": "working" },
+      { "element": "Settings Nav", "type": "navlink", "target": "/settings", "status": "working" }
+    ],
+    "dock": [
+      { "element": "New Report", "type": "button", "status": "ui-only" },
+      { "element": "Drafts", "type": "button", "status": "ui-only" },
+      { "element": "Published", "type": "button", "status": "ui-only" },
+      { "element": "Share", "type": "button", "status": "ui-only" },
+      { "element": "Export", "type": "button", "status": "ui-only" },
+      { "element": "Collaborators", "type": "button", "status": "ui-only" }
+    ]
+  },
+  "pageElements": [
+    { "element": "Export Button", "type": "button", "action": "export-reports", "status": "ui-only" },
+    { "element": "New Narrative Button", "type": "button", "action": "create-narrative", "status": "ui-only" },
+    { "element": "Search Input", "type": "text-input", "action": "search-narratives", "status": "working" },
+    { "element": "All Tab", "type": "button", "action": "filter-all", "status": "working" },
+    { "element": "Published Tab", "type": "button", "action": "filter-published", "status": "working" },
+    { "element": "Drafts Tab", "type": "button", "action": "filter-drafts", "status": "working" },
+    { "element": "Review Tab", "type": "button", "action": "filter-review", "status": "working" },
+    { "element": "Filter Button", "type": "button", "action": "open-filters", "status": "ui-only" },
+    { "element": "Narrative Card 1", "type": "card", "action": "view-narrative", "status": "working" },
+    { "element": "Narrative Card 2", "type": "card", "action": "view-narrative", "status": "working" },
+    { "element": "Narrative Card 3", "type": "card", "action": "view-narrative", "status": "working" },
+    { "element": "Narrative Card 4", "type": "card", "action": "view-narrative", "status": "working" },
+    { "element": "Narrative Card 5", "type": "card", "action": "view-narrative", "status": "working" },
+    { "element": "Share Button", "type": "button", "action": "share-narrative", "status": "ui-only" },
+    { "element": "More Options", "type": "button", "action": "more-options", "status": "ui-only" },
+    { "element": "Edit Button", "type": "button", "action": "edit-narrative", "status": "ui-only" },
+    { "element": "Delete Button", "type": "button", "action": "delete-narrative", "status": "ui-only" }
+  ],
+  "issues": [],
+  "validated": true,
+  "notes": "Status tabs (All/Published/Drafts/Review) filter narratives correctly. Cards display event count, actor count, and view count."
+}

@@ -24,7 +24,7 @@ const recentActivity = [
 ]
 
 const quickActions = [
-  { label: 'New Case', icon: FolderKanban, href: '/investigations/new' },
+  { label: 'New Case', icon: FolderKanban, href: '/investigations' },
   { label: 'View Events', icon: Network, href: '/events' },
   { label: 'Graph Analysis', icon: GitGraph, href: '/graph' },
   { label: 'Browse Evidence', icon: BookOpen, href: '/evidence' },

@@ -16,9 +16,23 @@ import {
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+import { CreateTaskDialog } from '../components/ui/Dialog'
 
-// Mock operations/tasks data
-const mockOperations = [
+interface Operation {
+  id: string
+  title: string
+  description: string
+  type: string
+  status: 'pending' | 'in-progress' | 'completed'
+  priority: 'low' | 'medium' | 'high'
+  assignee: string
+  caseId: string | null
+  dueDate: string
+  progress: number
+  createdAt: string
+}
+
+const initialOperations: Operation[] = [
   { 
     id: 'OP-001', 
     title: 'Analyze District 7 Protest Footage', 
@@ -108,10 +122,29 @@ const typeIcons: Record<string, React.ElementType> = {
 }
 
 export function Operations() {
+  const [operations, setOperations] = useState<Operation[]>(initialOperations)
   const [filter, setFilter] = useState<'all' | 'pending' | 'in-progress' | 'completed'>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
 
-  const filteredOperations = mockOperations.filter(op => {
+  const handleCreateTask = (taskData: { title: string; description: string; priority: string; type: string }) => {
+    const newTask: Operation = {
+      id: `OP-${String(operations.length + 1).padStart(3, '0')}`,
+      title: taskData.title,
+      description: taskData.description,
+      type: taskData.type,
+      status: 'pending',
+      priority: taskData.priority as 'low' | 'medium' | 'high',
+      assignee: 'Unassigned',
+      caseId: null,
+      dueDate: 'Not set',
+      progress: 0,
+      createdAt: 'Just now'
+    }
+    setOperations([newTask, ...operations])
+  }
+
+  const filteredOperations = operations.filter(op => {
     const matchesFilter = filter === 'all' || op.status === filter
     const matchesSearch = op.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          op.id.toLowerCase().includes(searchQuery.toLowerCase())
@@ -119,10 +152,10 @@ export function Operations() {
   })
 
   const stats = {
-    pending: mockOperations.filter(o => o.status === 'pending').length,
-    inProgress: mockOperations.filter(o => o.status === 'in-progress').length,
-    completed: mockOperations.filter(o => o.status === 'completed').length,
-    highPriority: mockOperations.filter(o => o.priority === 'high' && o.status !== 'completed').length,
+    pending: operations.filter(o => o.status === 'pending').length,
+    inProgress: operations.filter(o => o.status === 'in-progress').length,
+    completed: operations.filter(o => o.status === 'completed').length,
+    highPriority: operations.filter(o => o.priority === 'high' && o.status !== 'completed').length,
   }
 
   return (
@@ -141,7 +174,7 @@ export function Operations() {
               <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
-            <Button>
+            <Button onClick={() => setIsCreateDialogOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
               New Task
             </Button>
@@ -331,7 +364,21 @@ export function Operations() {
             )
           })}
         </div>
+
+        {/* Empty State */}
+        {filteredOperations.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No tasks found matching your search.</p>
+          </div>
+        )}
       </div>
+
+      {/* Create Task Dialog */}
+      <CreateTaskDialog
+        isOpen={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        onCreate={handleCreateTask}
+      />
     </WorkspaceLayout>
   )
 }

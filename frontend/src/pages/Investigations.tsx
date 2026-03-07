@@ -1,9 +1,21 @@
+import { useState } from 'react'
 import { Plus, Search, Filter } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+import { CreateCaseDialog } from '../components/ui/Dialog'
 
-const mockCases = [
+interface Case {
+  id: string
+  title: string
+  status: 'open' | 'closed'
+  priority: 'low' | 'medium' | 'high'
+  events: number
+  evidence: number
+  updated: string
+}
+
+const initialCases: Case[] = [
   { id: 'CASE-2024-001', title: 'District 7 Unrest Investigation', status: 'open', priority: 'high', events: 12, evidence: 45, updated: '2 hours ago' },
   { id: 'CASE-2024-002', title: 'Organizer Network Analysis', status: 'open', priority: 'medium', events: 8, evidence: 23, updated: '5 hours ago' },
   { id: 'CASE-2024-003', title: 'Social Media Campaign Tracking', status: 'closed', priority: 'low', events: 24, evidence: 67, updated: '2 days ago' },
@@ -11,6 +23,28 @@ const mockCases = [
 ]
 
 export function Investigations() {
+  const [cases, setCases] = useState<Case[]>(initialCases)
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleCreateCase = (caseData: { title: string; description: string; priority: string }) => {
+    const newCase: Case = {
+      id: `CASE-2024-${String(cases.length + 1).padStart(3, '0')}`,
+      title: caseData.title,
+      status: 'open',
+      priority: caseData.priority as 'low' | 'medium' | 'high',
+      events: 0,
+      evidence: 0,
+      updated: 'Just now'
+    }
+    setCases([newCase, ...cases])
+  }
+
+  const filteredCases = cases.filter(caseItem =>
+    caseItem.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    caseItem.id.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
   return (
     <WorkspaceLayout dockContext="default" showRightPanel={false}>
       <div className="space-y-6">
@@ -22,7 +56,7 @@ export function Investigations() {
               Manage cases and track investigation progress
             </p>
           </div>
-          <Button>
+          <Button onClick={() => setIsCreateDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
             New Case
           </Button>
@@ -35,6 +69,8 @@ export function Investigations() {
             <input
               type="text"
               placeholder="Search cases..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
@@ -46,7 +82,7 @@ export function Investigations() {
 
         {/* Cases Grid */}
         <div className="grid gap-4 md:grid-cols-2">
-          {mockCases.map((caseItem) => (
+          {filteredCases.map((caseItem) => (
             <Card key={caseItem.id} className="hover:border-primary/50 transition-colors cursor-pointer">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
@@ -90,7 +126,21 @@ export function Investigations() {
             </Card>
           ))}
         </div>
+
+        {/* Empty State */}
+        {filteredCases.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No cases found matching your search.</p>
+          </div>
+        )}
       </div>
+
+      {/* Create Case Dialog */}
+      <CreateCaseDialog
+        isOpen={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        onCreate={handleCreateCase}
+      />
     </WorkspaceLayout>
   )
 }

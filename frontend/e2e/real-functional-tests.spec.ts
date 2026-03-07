@@ -8,14 +8,18 @@ import { test, expect } from '@playwright/test';
 test.describe('REAL UI Testing - Finding Actual Bugs', () => {
   
   test('Dashboard - Quick action buttons should navigate', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForLoadState('networkidle');
+    await page.goto('/', { waitUntil: 'networkidle' });
     
     // Test "New Case" quick action
     const newCaseBtn = page.locator('a:has-text("New Case")');
     await expect(newCaseBtn).toBeVisible();
+    
+    // Check the href attribute
+    const href = await newCaseBtn.getAttribute('href');
+    expect(href).toBe('/investigations');
+    
     await newCaseBtn.click();
-    await page.waitForURL('**/investigations');
+    await page.waitForURL('**/investigations', { timeout: 10000 });
     expect(page.url()).toContain('/investigations');
     
     // Go back and test another
@@ -228,9 +232,6 @@ test.describe('REAL UI Testing - Finding Actual Bugs', () => {
   test('Narratives - Filter by status works', async ({ page }) => {
     await page.goto('/narratives');
     await page.waitForLoadState('networkidle');
-    
-    // Get initial count
-    const initialCards = await page.locator('[class*="card"]').count();
     
     // Click Published tab
     const publishedTab = page.locator('button:has-text("Published")').first();

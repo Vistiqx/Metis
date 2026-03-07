@@ -13,8 +13,22 @@ import {
 import { WorkspaceLayout, MetadataItem, MetadataSection } from '../components/layout'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+import { CreateEventDialog } from '../components/ui/Dialog'
 
-const mockEvents = [
+interface Event {
+  id: string
+  title: string
+  type: string
+  status: 'confirmed' | 'monitoring'
+  severity: 'high' | 'medium' | 'low'
+  location: string
+  occurredAt: string
+  confidence: number
+  evidence: number
+  caseId: string
+}
+
+const initialEvents: Event[] = [
   { 
     id: 'EVT-001', 
     title: 'Protest at City Hall', 
@@ -84,8 +98,32 @@ const mockCandidates = [
 ]
 
 export function Events() {
-  const [selectedEvent, setSelectedEvent] = useState<typeof mockEvents[0] | null>(null)
+  const [events, setEvents] = useState<Event[]>(initialEvents)
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [activeTab, setActiveTab] = useState<'events' | 'candidates'>('events')
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const handleCreateEvent = (eventData: { title: string; type: string; location: string; description: string }) => {
+    const newEvent: Event = {
+      id: `EVT-${String(events.length + 1).padStart(3, '0')}`,
+      title: eventData.title,
+      type: eventData.type,
+      status: 'confirmed',
+      severity: 'medium',
+      location: eventData.location || 'Unknown',
+      occurredAt: new Date().toISOString().slice(0, 16).replace('T', ' '),
+      confidence: 0.85,
+      evidence: 0,
+      caseId: 'Unassigned'
+    }
+    setEvents([newEvent, ...events])
+  }
+
+  const filteredEvents = events.filter(event =>
+    event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.id.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   const rightPanelContent = selectedEvent ? (
     <>
@@ -141,7 +179,7 @@ export function Events() {
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                Events ({mockEvents.length})
+                Events ({events.length})
               </button>
               <button
                 onClick={() => setActiveTab('candidates')}
@@ -154,7 +192,7 @@ export function Events() {
                 Candidates ({mockCandidates.length})
               </button>
             </div>
-            <Button>
+            <Button onClick={() => setIsCreateDialogOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
               New Event
             </Button>
@@ -168,6 +206,8 @@ export function Events() {
             <input
               type="text"
               placeholder={`Search ${activeTab}...`}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
@@ -180,7 +220,7 @@ export function Events() {
         {/* Content */}
         {activeTab === 'events' ? (
           <div className="grid gap-4">
-            {mockEvents.map((event) => (
+            {filteredEvents.map((event) => (
               <Card 
                 key={event.id} 
                 className={`cursor-pointer transition-all hover:border-primary/50 ${
@@ -232,6 +272,11 @@ export function Events() {
                 </CardContent>
               </Card>
             ))}
+            {filteredEvents.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No events found matching your search.</p>
+              </div>
+            )}
           </div>
         ) : (
           <div className="grid gap-4">
@@ -298,6 +343,13 @@ export function Events() {
           </div>
         )}
       </div>
+
+      {/* Create Event Dialog */}
+      <CreateEventDialog
+        isOpen={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        onCreate={handleCreateEvent}
+      />
     </WorkspaceLayout>
   )
 }

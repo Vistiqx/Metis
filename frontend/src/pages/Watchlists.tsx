@@ -15,9 +15,21 @@ import {
 import { WorkspaceLayout } from '../components/layout'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+import { CreateWatchlistDialog } from '../components/ui/Dialog'
 
-// Mock watchlists data
-const mockWatchlists = [
+interface Watchlist {
+  id: string
+  name: string
+  type: string
+  status: 'active' | 'paused'
+  matches: number
+  entities: number
+  lastMatch: string
+  severity: 'high' | 'medium' | 'low'
+  criteria: string[]
+}
+
+const initialWatchlists: Watchlist[] = [
   { 
     id: 'WL-001', 
     name: 'Protest Organizers', 
@@ -90,16 +102,33 @@ const severityColors: Record<string, string> = {
 }
 
 export function Watchlists() {
+  const [watchlists, setWatchlists] = useState<Watchlist[]>(initialWatchlists)
   const [searchQuery, setSearchQuery] = useState('')
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
 
-  const filteredWatchlists = mockWatchlists.filter(item =>
+  const handleCreateWatchlist = (watchlistData: { name: string; type: string; description: string }) => {
+    const newWatchlist: Watchlist = {
+      id: `WL-${String(watchlists.length + 1).padStart(3, '0')}`,
+      name: watchlistData.name,
+      type: watchlistData.type,
+      status: 'active',
+      matches: 0,
+      entities: 0,
+      lastMatch: 'Never',
+      severity: 'medium',
+      criteria: [watchlistData.description || 'No criteria defined']
+    }
+    setWatchlists([newWatchlist, ...watchlists])
+  }
+
+  const filteredWatchlists = watchlists.filter(item =>
     item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const activeWatchlists = mockWatchlists.filter(w => w.status === 'active').length
-  const totalMatches = mockWatchlists.reduce((acc, w) => acc + w.matches, 0)
-  const highSeverity = mockWatchlists.filter(w => w.severity === 'high' && w.status === 'active').length
+  const activeWatchlists = watchlists.filter(w => w.status === 'active').length
+  const totalMatches = watchlists.reduce((acc, w) => acc + w.matches, 0)
+  const highSeverity = watchlists.filter(w => w.severity === 'high' && w.status === 'active').length
 
   return (
     <WorkspaceLayout dockContext="watchlists" showRightPanel={true}>
@@ -112,7 +141,7 @@ export function Watchlists() {
               Monitor entities and track triggered matches
             </p>
           </div>
-          <Button>
+          <Button onClick={() => setIsCreateDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
             New Watchlist
           </Button>
@@ -128,7 +157,7 @@ export function Watchlists() {
             <CardContent>
               <div className="text-2xl font-bold">{activeWatchlists}</div>
               <p className="text-xs text-muted-foreground">
-                {mockWatchlists.length - activeWatchlists} paused
+                {watchlists.length - activeWatchlists} paused
               </p>
             </CardContent>
           </Card>
@@ -280,7 +309,21 @@ export function Watchlists() {
             )
           })}
         </div>
+
+        {/* Empty State */}
+        {filteredWatchlists.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No watchlists found matching your search.</p>
+          </div>
+        )}
       </div>
+
+      {/* Create Watchlist Dialog */}
+      <CreateWatchlistDialog
+        isOpen={isCreateDialogOpen}
+        onClose={() => setIsCreateDialogOpen(false)}
+        onCreate={handleCreateWatchlist}
+      />
     </WorkspaceLayout>
   )
 }

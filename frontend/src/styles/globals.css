@@ -4,48 +4,34 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 222 52% 6%;
+    --foreground: 42 30% 92%;
+    --card: 224 36% 12%;
+    --card-foreground: 42 30% 94%;
+    --popover: 223 39% 10%;
+    --popover-foreground: 42 30% 94%;
+    --primary: 40 65% 54%;
+    --primary-foreground: 222 50% 8%;
+    --secondary: 223 28% 18%;
+    --secondary-foreground: 42 22% 88%;
+    --muted: 223 24% 15%;
+    --muted-foreground: 217 15% 66%;
+    --accent: 224 28% 18%;
+    --accent-foreground: 42 30% 94%;
+    --destructive: 340 78% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 21% 24%;
+    --input: 222 23% 16%;
+    --ring: 43 74% 62%;
+    --radius: 0.875rem;
+    --metis-midnight: 222 78% 5%;
+    --metis-ink: 224 41% 9%;
+    --metis-gold: 41 64% 53%;
+    --metis-gold-soft: 41 43% 23%;
+    --metis-cyan: 178 62% 51%;
+    --metis-orange: 27 100% 55%;
+    --metis-lime: 81 100% 50%;
+    --metis-rose: 330 100% 59%;
   }
 }
 
@@ -53,7 +39,159 @@
   * {
     @apply border-border;
   }
+
+  html {
+    color-scheme: dark;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: "Charter", "Cambria", Georgia, serif;
+    background-image:
+      radial-gradient(circle at top left, rgba(212, 167, 58, 0.12), transparent 28%),
+      radial-gradient(circle at top right, rgba(50, 209, 204, 0.07), transparent 22%),
+      linear-gradient(180deg, rgba(11, 15, 26, 0.96), rgba(2, 8, 23, 1));
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight text-foreground;
+    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  }
+
+  p,
+  label,
+  input,
+  select,
+  textarea,
+  button,
+  td,
+  th {
+    font-family: "Charter", "Cambria", Georgia, serif;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply border border-border bg-input text-sm text-foreground shadow-sm transition-colors outline-none;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    @apply text-muted-foreground;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply ring-2 ring-ring ring-offset-0 border-primary;
+  }
+
+  ::selection {
+    background: rgba(242, 193, 78, 0.28);
+    color: #f8f4ea;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.24);
+    border-radius: 999px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.18);
+  }
+}
+
+@layer components {
+  .metis-page {
+    @apply space-y-6;
+  }
+
+  .metis-page-header {
+    @apply flex flex-col gap-4 border-b border-border/70 pb-5 lg:flex-row lg:items-end lg:justify-between;
+  }
+
+  .metis-kicker {
+    @apply text-[0.68rem] uppercase tracking-[0.24em] text-primary/80;
+  }
+
+  .metis-title {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  .metis-subtitle {
+    @apply max-w-3xl text-sm leading-6 text-muted-foreground sm:text-[0.95rem];
+  }
+
+  .metis-panel {
+    @apply rounded-2xl border border-border/80 bg-card/90 shadow-panel shadow-black/25 backdrop-blur;
+  }
+
+  .metis-panel-muted {
+    @apply rounded-2xl border border-border/70 bg-secondary/70 shadow-sm;
+  }
+
+  .metis-toolbar {
+    @apply flex flex-col gap-3 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-panel shadow-black/25 backdrop-blur lg:flex-row lg:items-center lg:justify-between;
+  }
+
+  .metis-input {
+    @apply h-11 rounded-xl border border-border/80 bg-input/90 px-3.5 text-sm text-foreground placeholder:text-muted-foreground;
+  }
+
+  .metis-textarea {
+    @apply rounded-xl border border-border/80 bg-input/90 px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground;
+  }
+
+  .metis-tablist {
+    @apply inline-flex rounded-xl border border-border/80 bg-secondary/70 p-1;
+  }
+
+  .metis-stat-grid {
+    @apply grid gap-4 md:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .metis-empty {
+    @apply flex min-h-[220px] flex-col items-center justify-center rounded-2xl border border-border/80 bg-card/90 px-6 text-center shadow-panel shadow-black/25 backdrop-blur;
+  }
+
+  .metis-badge {
+    @apply inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em];
+  }
+
+  .metis-dot {
+    @apply h-2 w-2 rounded-full;
+  }
+
+  .metis-table {
+    @apply w-full border-separate border-spacing-0 overflow-hidden;
+  }
+
+  .metis-table thead th {
+    @apply border-b border-border/80 bg-secondary/70 px-4 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  .metis-table tbody td {
+    @apply border-b border-border/70 px-4 py-3 align-top text-sm;
+  }
+
+  .metis-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .metis-table tbody tr:hover {
+    background: rgba(30, 41, 59, 0.42);
   }
 }

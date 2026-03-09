@@ -15,30 +15,37 @@ export function Dialog({ isOpen, onClose, title, children, footer }: DialogProps
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        role="button"
+        tabIndex={0}
+        aria-label="Close dialog overlay"
+        className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
         onClick={onClose}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            onClose()
+          }
+        }}
       />
-      
-      {/* Dialog */}
-      <div className="relative z-10 w-full max-w-lg rounded-lg border bg-card p-6 shadow-lg">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">{title}</h2>
-          <Button variant="ghost" size="icon" onClick={onClose}>
+
+      <div className="relative z-10 w-full max-w-lg rounded-2xl border border-border/80 bg-card p-6 shadow-panel shadow-black/35">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <div className="metis-kicker">Create</div>
+            <h2 className="text-lg font-semibold">{title}</h2>
+          </div>
+          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close dialog">
             <X className="h-4 w-4" />
           </Button>
         </div>
-        
-        {/* Content */}
+
         <div className="space-y-4">
           {children}
         </div>
-        
-        {/* Footer */}
+
         {footer && (
-          <div className="flex justify-end gap-2 mt-6 pt-4 border-t">
+          <div className="mt-6 flex justify-end gap-2 border-t border-border/70 pt-4">
             {footer}
           </div>
         )}
@@ -85,20 +92,21 @@ export function CreateCaseDialog({ isOpen, onClose, onCreate }: CreateCaseDialog
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Case Title *</label>
+          <label htmlFor="create-case-title" className="text-sm font-medium">Case Title *</label>
           <input
+            id="create-case-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter case title..."
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            autoFocus
           />
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Description</label>
+          <label htmlFor="create-case-description" className="text-sm font-medium">Description</label>
           <textarea
+            id="create-case-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter case description..."
@@ -108,8 +116,9 @@ export function CreateCaseDialog({ isOpen, onClose, onCreate }: CreateCaseDialog
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Priority</label>
+          <label htmlFor="create-case-priority" className="text-sm font-medium">Priority</label>
           <select
+            id="create-case-priority"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -164,20 +173,21 @@ export function CreateEventDialog({ isOpen, onClose, onCreate }: CreateEventDial
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Event Title *</label>
+          <label htmlFor="create-event-title" className="text-sm font-medium">Event Title *</label>
           <input
+            id="create-event-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter event title..."
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            autoFocus
           />
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Event Type</label>
+          <label htmlFor="create-event-type" className="text-sm font-medium">Event Type</label>
           <select
+            id="create-event-type"
             value={type}
             onChange={(e) => setType(e.target.value)}
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -191,8 +201,9 @@ export function CreateEventDialog({ isOpen, onClose, onCreate }: CreateEventDial
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Location</label>
+          <label htmlFor="create-event-location" className="text-sm font-medium">Location</label>
           <input
+            id="create-event-location"
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
@@ -202,8 +213,9 @@ export function CreateEventDialog({ isOpen, onClose, onCreate }: CreateEventDial
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Description</label>
+          <label htmlFor="create-event-description" className="text-sm font-medium">Description</label>
           <textarea
+            id="create-event-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter event description..."
@@ -254,20 +266,21 @@ export function CreateWatchlistDialog({ isOpen, onClose, onCreate }: CreateWatch
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Watchlist Name *</label>
+          <label htmlFor="create-watchlist-name" className="text-sm font-medium">Watchlist Name *</label>
           <input
+            id="create-watchlist-name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter watchlist name..."
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            autoFocus
           />
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Watchlist Type</label>
+          <label htmlFor="create-watchlist-type" className="text-sm font-medium">Watchlist Type</label>
           <select
+            id="create-watchlist-type"
             value={type}
             onChange={(e) => setType(e.target.value)}
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -281,8 +294,9 @@ export function CreateWatchlistDialog({ isOpen, onClose, onCreate }: CreateWatch
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Description</label>
+          <label htmlFor="create-watchlist-description" className="text-sm font-medium">Description</label>
           <textarea
+            id="create-watchlist-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter watchlist description..."
@@ -335,20 +349,21 @@ export function CreateTaskDialog({ isOpen, onClose, onCreate }: CreateTaskDialog
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Task Title *</label>
+          <label htmlFor="create-task-title" className="text-sm font-medium">Task Title *</label>
           <input
+            id="create-task-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter task title..."
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            autoFocus
           />
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Task Type</label>
+          <label htmlFor="create-task-type" className="text-sm font-medium">Task Type</label>
           <select
+            id="create-task-type"
             value={type}
             onChange={(e) => setType(e.target.value)}
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -362,8 +377,9 @@ export function CreateTaskDialog({ isOpen, onClose, onCreate }: CreateTaskDialog
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Priority</label>
+          <label htmlFor="create-task-priority" className="text-sm font-medium">Priority</label>
           <select
+            id="create-task-priority"
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -375,8 +391,9 @@ export function CreateTaskDialog({ isOpen, onClose, onCreate }: CreateTaskDialog
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Description</label>
+          <label htmlFor="create-task-description" className="text-sm font-medium">Description</label>
           <textarea
+            id="create-task-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter task description..."
@@ -425,20 +442,21 @@ export function CreateNarrativeDialog({ isOpen, onClose, onCreate }: CreateNarra
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Narrative Title *</label>
+          <label htmlFor="create-narrative-title" className="text-sm font-medium">Narrative Title *</label>
           <input
+            id="create-narrative-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter narrative title..."
             className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            autoFocus
           />
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Description</label>
+          <label htmlFor="create-narrative-description" className="text-sm font-medium">Description</label>
           <textarea
+            id="create-narrative-description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter narrative description..."

@@ -1,5 +1,6 @@
 import { X, ChevronRight, ChevronLeft } from 'lucide-react'
 import { useState } from 'react'
+import { Badge } from '../ui/Badge'
 
 interface RightPanelProps {
   children?: React.ReactNode
@@ -14,7 +15,9 @@ export function RightPanel({ children, title = 'Details', onClose }: RightPanelP
     return (
       <button
         onClick={() => setCollapsed(false)}
-        className="flex h-full w-8 items-center justify-center border-l bg-card hover:bg-accent"
+        aria-label="Expand inspector"
+        title="Expand inspector"
+        className="hidden h-full w-10 items-center justify-center border-l border-border/70 bg-card/80 text-muted-foreground transition hover:bg-secondary/70 hover:text-foreground xl:flex"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -22,29 +25,35 @@ export function RightPanel({ children, title = 'Details', onClose }: RightPanelP
   }
 
   return (
-    <aside className="flex h-full w-80 flex-col border-l bg-card">
-      {/* Header */}
-      <div className="flex h-14 items-center justify-between border-b px-4">
-        <h2 className="font-semibold">{title}</h2>
+    <aside className="hidden h-full w-[320px] flex-col border-l border-border/70 bg-card/80 backdrop-blur xl:flex">
+      <div className="border-b border-border/70 px-5 py-4">
+        <div className="mb-2 flex items-center justify-between">
+          <div>
+            <div className="metis-kicker">Inspector</div>
+            <h2 className="text-xl">{title}</h2>
+          </div>
+          <Badge variant="neutral">Live context</Badge>
+        </div>
         <div className="flex items-center gap-1">
           <button
             onClick={() => setCollapsed(true)}
-            className="rounded p-1 hover:bg-accent"
+            aria-label="Collapse inspector"
+            title="Collapse inspector"
+            className="rounded-xl border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
           {onClose && (
-            <button onClick={onClose} className="rounded p-1 hover:bg-accent">
+            <button aria-label="Close inspector" title="Close inspector" onClick={onClose} className="rounded-xl border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground">
               <X className="h-5 w-5" />
             </button>
           )}
         </div>
       </div>
 
-      {/* Content */}
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-5">
         {children || (
-          <div className="text-center text-muted-foreground">
+          <div className="metis-empty min-h-[260px] border-dashed bg-transparent">
             <p className="text-sm">Select an item to view details</p>
           </div>
         )}
@@ -56,8 +65,8 @@ export function RightPanel({ children, title = 'Details', onClose }: RightPanelP
 // Pre-built sections for the right panel
 export function MetadataSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mb-6">
-      <h3 className="mb-3 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+    <div className="mb-6 rounded-2xl border border-border/70 bg-secondary/45 p-4">
+      <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
         {title}
       </h3>
       <div className="space-y-2">{children}</div>
@@ -67,9 +76,9 @@ export function MetadataSection({ title, children }: { title: string; children: 
 
 export function MetadataItem({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div className="flex justify-between py-1">
+    <div className="flex items-start justify-between gap-3 py-1.5">
       <span className="text-sm text-muted-foreground">{label}</span>
-      <span className="text-sm font-medium">{value}</span>
+      <span className="text-right text-sm font-semibold text-foreground">{value}</span>
     </div>
   )
 }
@@ -78,12 +87,7 @@ export function TagList({ tags }: { tags: string[] }) {
   return (
     <div className="flex flex-wrap gap-1">
       {tags.map((tag) => (
-        <span
-          key={tag}
-          className="inline-flex items-center rounded-full bg-secondary px-2 py-0.5 text-xs font-medium text-secondary-foreground"
-        >
-          {tag}
-        </span>
+        <Badge key={tag} variant="neutral">{tag}</Badge>
       ))}
     </div>
   )

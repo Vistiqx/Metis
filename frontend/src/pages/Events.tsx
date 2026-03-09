@@ -11,6 +11,7 @@ import {
   XCircle 
 } from 'lucide-react'
 import { WorkspaceLayout, MetadataItem, MetadataSection } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { CreateEventDialog } from '../components/ui/Dialog'
@@ -160,20 +161,18 @@ export function Events() {
       rightPanelContent={rightPanelContent}
       rightPanelTitle={selectedEvent ? 'Event Details' : 'Details'}
     >
-      <div className="space-y-6">
-        {/* Header with Tabs */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Events</h1>
-            <p className="text-muted-foreground">
-              Manage confirmed events and review candidates
-            </p>
+            <div className="metis-kicker">Event Intake</div>
+            <h1 className="metis-title">Events</h1>
+            <p className="metis-subtitle">Review confirmed events, inspect candidate signals, and promote evidence-backed findings.</p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex rounded-lg border bg-card p-1">
+            <div className="metis-tablist">
               <button
                 onClick={() => setActiveTab('events')}
-                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
                   activeTab === 'events'
                     ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground'
@@ -183,7 +182,7 @@ export function Events() {
               </button>
               <button
                 onClick={() => setActiveTab('candidates')}
-                className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
                   activeTab === 'candidates'
                     ? 'bg-primary text-primary-foreground'
                     : 'text-muted-foreground hover:text-foreground'
@@ -199,8 +198,7 @@ export function Events() {
           </div>
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-4">
+        <div className="metis-toolbar">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -208,22 +206,24 @@ export function Events() {
               placeholder={`Search ${activeTab}...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="metis-input w-full pl-10"
             />
           </div>
-          <Button variant="outline">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
+          <div className="flex items-center gap-3">
+            <Badge variant={activeTab === 'events' ? 'gold' : 'warning'}>{activeTab}</Badge>
+            <Button variant="outline">
+              <Filter className="mr-2 h-4 w-4" />
+              Filter
+            </Button>
+          </div>
         </div>
 
-        {/* Content */}
         {activeTab === 'events' ? (
           <div className="grid gap-4">
             {filteredEvents.map((event) => (
               <Card 
                 key={event.id} 
-                className={`cursor-pointer transition-all hover:border-primary/50 ${
+                className={`cursor-pointer transition-all hover:border-primary/40 hover:bg-secondary/40 ${
                   selectedEvent?.id === event.id ? 'border-primary ring-1 ring-primary' : ''
                 }`}
                 onClick={() => setSelectedEvent(event)}
@@ -231,23 +231,20 @@ export function Events() {
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
-                      <div className={`mt-1 h-2 w-2 rounded-full ${
-                        event.severity === 'high' ? 'bg-red-500' :
-                        event.severity === 'medium' ? 'bg-yellow-500' : 'bg-blue-500'
-                      }`} />
+                      <Badge
+                        variant={event.severity === 'high' ? 'danger' : event.severity === 'medium' ? 'warning' : 'info'}
+                        dot
+                        className="mt-0.5"
+                      >
+                        {event.severity}
+                      </Badge>
                       <div>
                         <p className="text-xs font-mono text-muted-foreground">{event.id}</p>
                         <CardTitle className="text-lg mt-1">{event.title}</CardTitle>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                        event.status === 'confirmed' 
-                          ? 'bg-green-100 text-green-700' 
-                          : 'bg-yellow-100 text-yellow-700'
-                      }`}>
-                        {event.status}
-                      </span>
+                      <Badge variant={event.status === 'confirmed' ? 'success' : 'warning'}>{event.status}</Badge>
                     </div>
                   </div>
                 </CardHeader>
@@ -265,7 +262,7 @@ export function Events() {
                       <Shield className="h-4 w-4" />
                       {Math.round(event.confidence * 100)}% confidence
                     </div>
-                    <div className="ml-auto font-medium">
+                    <div className="ml-auto font-semibold text-foreground">
                       {event.evidence} evidence items
                     </div>
                   </div>
@@ -273,7 +270,7 @@ export function Events() {
               </Card>
             ))}
             {filteredEvents.length === 0 && (
-              <div className="text-center py-12">
+              <div className="metis-empty border-dashed bg-transparent py-12">
                 <p className="text-muted-foreground">No events found matching your search.</p>
               </div>
             )}
@@ -281,7 +278,7 @@ export function Events() {
         ) : (
           <div className="grid gap-4">
             {mockCandidates.map((candidate) => (
-              <Card key={candidate.id} className="border-l-4 border-l-yellow-500">
+              <Card key={candidate.id} className="border-l-4 border-l-amber-400/80">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div>
@@ -289,7 +286,7 @@ export function Events() {
                       <CardTitle className="text-lg mt-1">{candidate.title}</CardTitle>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium">
+                      <span className="text-sm font-semibold text-foreground">
                         {Math.round(candidate.confidence * 100)}% confidence
                       </span>
                     </div>
@@ -315,7 +312,7 @@ export function Events() {
                       {candidate.signals.map((signal) => (
                         <span
                           key={signal}
-                          className="inline-flex items-center rounded-full bg-secondary px-2 py-0.5 text-xs font-medium capitalize"
+                          className="metis-badge border-border/80 bg-secondary/60 capitalize text-secondary-foreground"
                         >
                           {signal.replace('_', ' ')}
                         </span>

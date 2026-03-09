@@ -15,6 +15,7 @@ import {
   Users
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 
@@ -93,9 +94,9 @@ const mockNarratives = [
 ]
 
 const statusColors: Record<string, string> = {
-  published: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  draft: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400',
-  review: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+  published: 'success',
+  draft: 'neutral',
+  review: 'warning',
 }
 
 export function Narratives() {
@@ -118,14 +119,12 @@ export function Narratives() {
 
   return (
     <WorkspaceLayout dockContext="narratives" showRightPanel={true}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Narratives</h1>
-            <p className="text-muted-foreground">
-              Document and share investigation findings and analysis
-            </p>
+            <div className="metis-kicker">Reporting</div>
+            <h1 className="metis-title">Narratives</h1>
+            <p className="metis-subtitle">Draft, review, and publish report-ready analytical narratives grounded in live case data.</p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline">
@@ -193,9 +192,9 @@ export function Narratives() {
                 placeholder="Search narratives..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              />
-            </div>
+                 className="metis-input w-full pl-10"
+               />
+             </div>
             <div className="flex gap-1 rounded-lg border bg-card p-1">
               <Button
                 variant={filter === 'all' ? 'secondary' : 'ghost'}
@@ -242,17 +241,15 @@ export function Narratives() {
                   <div>
                     <div className="flex items-center gap-2">
                       <p className="text-xs font-mono text-muted-foreground">{narrative.id}</p>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[narrative.status]}`}>
-                        {narrative.status}
-                      </span>
+                       <Badge variant={statusColors[narrative.status] as 'success' | 'neutral' | 'warning'}>{narrative.status}</Badge>
                     </div>
                     <CardTitle className="text-lg mt-1">{narrative.title}</CardTitle>
                   </div>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Share narrative">
                       <Share2 className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More narrative actions">
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </div>
@@ -285,8 +282,8 @@ export function Narratives() {
                     {narrative.tags.map(tag => (
                       <span 
                         key={tag}
-                        className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs"
-                      >
+                         className="inline-flex items-center rounded-full border border-border/80 bg-secondary/60 px-2 py-1 text-xs"
+                       >
                         <Tag className="mr-1 h-3 w-3" />
                         {tag}
                       </span>
@@ -306,7 +303,7 @@ export function Narratives() {
                         <Edit className="mr-1 h-4 w-4" />
                         Edit
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Delete narrative">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>

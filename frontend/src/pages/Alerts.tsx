@@ -11,6 +11,7 @@ import {
   Trash2
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 
@@ -85,9 +86,9 @@ const severityIcons: Record<string, React.ElementType> = {
 }
 
 const severityColors: Record<string, string> = {
-  high: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-  medium: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  low: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  high: 'danger',
+  medium: 'warning',
+  low: 'info',
 }
 
 const typeLabels: Record<string, string> = {
@@ -126,20 +127,16 @@ export function Alerts() {
 
   return (
     <WorkspaceLayout dockContext="alerts" showRightPanel={true}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">Alerts</h1>
-              <p className="text-muted-foreground">
-                Manage notifications and system alerts
-              </p>
+              <div className="metis-kicker">Alerts Queue</div>
+              <h1 className="metis-title">Alerts</h1>
+              <p className="metis-subtitle">Triage system findings with explicit state labels, case context, and analyst actions.</p>
             </div>
             {unreadCount > 0 && (
-              <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700 dark:bg-red-900/30 dark:text-red-400">
-                {unreadCount} unread
-              </span>
+              <Badge variant="danger">{unreadCount} unread</Badge>
             )}
           </div>
           <div className="flex items-center gap-2">
@@ -198,9 +195,8 @@ export function Alerts() {
           </Card>
         </div>
 
-        {/* Filter Tabs */}
         <div className="flex items-center justify-between">
-          <div className="flex gap-1 rounded-lg border bg-card p-1">
+          <div className="metis-tablist">
             <Button
               variant={filter === 'all' ? 'secondary' : 'ghost'}
               size="sm"
@@ -232,7 +228,6 @@ export function Alerts() {
           </Button>
         </div>
 
-        {/* Alerts List */}
         <div className="space-y-3">
           {filteredAlerts.map((alert) => {
             const SeverityIcon = severityIcons[alert.severity]
@@ -254,9 +249,9 @@ export function Alerts() {
                     />
 
                     {/* Severity Icon */}
-                    <div className={`flex h-10 w-10 items-center justify-center rounded-full ${severityColors[alert.severity]}`}>
-                      <SeverityIcon className="h-5 w-5" />
-                    </div>
+                     <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border/80 bg-secondary/70">
+                       <SeverityIcon className="h-5 w-5" />
+                     </div>
 
                     {/* Content */}
                     <div className="flex-1 min-w-0">
@@ -267,7 +262,7 @@ export function Alerts() {
                               {alert.title}
                             </p>
                             {alert.status === 'unread' && (
-                              <span className="h-2 w-2 rounded-full bg-primary" />
+                              <Badge variant={severityColors[alert.severity] as 'danger' | 'warning' | 'info'} dot>{alert.severity}</Badge>
                             )}
                           </div>
                           <p className="mt-1 text-sm text-muted-foreground">
@@ -293,15 +288,15 @@ export function Alerts() {
 
                         {/* Actions */}
                         <div className="flex items-center gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Check className="h-4 w-4" />
-                          </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                           <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="View alert details">
+                             <Eye className="h-4 w-4" />
+                           </Button>
+                           <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Mark alert read">
+                             <Check className="h-4 w-4" />
+                           </Button>
+                           <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Delete alert">
+                             <Trash2 className="h-4 w-4" />
+                           </Button>
                         </div>
                       </div>
                     </div>

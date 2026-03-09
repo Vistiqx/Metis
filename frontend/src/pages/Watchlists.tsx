@@ -13,6 +13,7 @@ import {
   Users
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { CreateWatchlistDialog } from '../components/ui/Dialog'
@@ -96,9 +97,9 @@ const typeIcons: Record<string, React.ElementType> = {
 }
 
 const severityColors: Record<string, string> = {
-  high: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-  medium: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  low: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  high: 'danger',
+  medium: 'warning',
+  low: 'info',
 }
 
 export function Watchlists() {
@@ -132,14 +133,12 @@ export function Watchlists() {
 
   return (
     <WorkspaceLayout dockContext="watchlists" showRightPanel={true}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Watchlists</h1>
-            <p className="text-muted-foreground">
-              Monitor entities and track triggered matches
-            </p>
+            <div className="metis-kicker">Continuous Monitoring</div>
+            <h1 className="metis-title">Watchlists</h1>
+            <p className="metis-subtitle">Track monitored entities, trigger criteria, and priority signals without losing operational context.</p>
           </div>
           <Button onClick={() => setIsCreateDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -193,8 +192,7 @@ export function Watchlists() {
           </Card>
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-4">
+        <div className="metis-toolbar">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -202,7 +200,7 @@ export function Watchlists() {
               placeholder="Search watchlists..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="metis-input w-full pl-10"
             />
           </div>
           <Button variant="outline">
@@ -211,7 +209,6 @@ export function Watchlists() {
           </Button>
         </div>
 
-        {/* Watchlists Grid */}
         <div className="grid gap-4 md:grid-cols-2">
           {filteredWatchlists.map((watchlist) => {
             const TypeIcon = typeIcons[watchlist.type] || Eye
@@ -231,16 +228,8 @@ export function Watchlists() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                        watchlist.status === 'active' 
-                          ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
-                          : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
-                      }`}>
-                        {watchlist.status}
-                      </span>
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${severityColors[watchlist.severity]}`}>
-                        {watchlist.severity}
-                      </span>
+                      <Badge variant={watchlist.status === 'active' ? 'success' : 'neutral'}>{watchlist.status}</Badge>
+                      <Badge variant={severityColors[watchlist.severity] as 'danger' | 'warning' | 'info'}>{watchlist.severity}</Badge>
                     </div>
                   </div>
                 </CardHeader>
@@ -266,8 +255,8 @@ export function Watchlists() {
                     <div>
                       <p className="text-xs font-medium text-muted-foreground mb-2">Criteria</p>
                       <div className="space-y-1">
-                        {watchlist.criteria.map((criterion, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-sm">
+                        {watchlist.criteria.map((criterion) => (
+                          <div key={`${watchlist.id}-${criterion}`} className="flex items-center gap-2 text-sm">
                             <span className="h-1.5 w-1.5 rounded-full bg-primary" />
                             {criterion}
                           </div>
@@ -295,10 +284,10 @@ export function Watchlists() {
                         </Button>
                       </div>
                       <div className="flex gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Open watchlist">
                           <Eye className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Delete watchlist">
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -310,9 +299,8 @@ export function Watchlists() {
           })}
         </div>
 
-        {/* Empty State */}
         {filteredWatchlists.length === 0 && (
-          <div className="text-center py-12">
+          <div className="metis-empty border-dashed bg-transparent py-12">
             <p className="text-muted-foreground">No watchlists found matching your search.</p>
           </div>
         )}

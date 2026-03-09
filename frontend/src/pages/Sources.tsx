@@ -13,6 +13,7 @@ import {
   Settings
 } from 'lucide-react'
 import { WorkspaceLayout, MetadataItem, MetadataSection } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent } from '../components/ui/Card'
 
@@ -139,14 +140,12 @@ export function Sources() {
       rightPanelContent={rightPanelContent}
       rightPanelTitle={selectedSource ? 'Source Details' : 'Details'}
     >
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Sources</h1>
-            <p className="text-muted-foreground">
-              Monitor and manage ingestion sources
-            </p>
+            <div className="metis-kicker">Source Directory</div>
+            <h1 className="metis-title">Sources</h1>
+            <p className="metis-subtitle">Assess provenance, reliability, freshness, and ingestion state at a glance.</p>
           </div>
           <Button>
             <Plus className="mr-2 h-4 w-4" />
@@ -202,20 +201,22 @@ export function Sources() {
           </Card>
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-4">
+        <div className="metis-toolbar">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search sources..."
-              className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="metis-input w-full pl-10"
             />
           </div>
-          <Button variant="outline">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
+          <div className="flex items-center gap-3">
+            <Badge variant="gold">Trust and provenance</Badge>
+            <Button variant="outline">
+              <Filter className="mr-2 h-4 w-4" />
+              Filter
+            </Button>
+          </div>
         </div>
 
         {/* Sources List */}
@@ -239,16 +240,8 @@ export function Sources() {
                       <div>
                         <div className="flex items-center gap-2">
                           <h3 className="font-semibold">{source.name}</h3>
-                          <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                            source.status === 'active'
-                              ? 'bg-green-100 text-green-700'
-                              : source.status === 'paused'
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-red-100 text-red-700'
-                          }`}>
-                            {source.status}
-                          </span>
-                        </div>
+                           <Badge variant={source.status === 'active' ? 'success' : source.status === 'paused' ? 'warning' : 'danger'}>{source.status}</Badge>
+                         </div>
                         <p className="text-sm text-muted-foreground">{source.url}</p>
                       </div>
                     </div>

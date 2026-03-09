@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { LazyMotion, domAnimation, m } from 'framer-motion'
 import { 
   Map, 
   Clock, 
@@ -118,45 +118,47 @@ export function Dock({ context = 'default', onItemClick }: DockProps) {
 
   return (
     <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2">
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="flex items-end gap-2 rounded-2xl bg-background/80 p-3 backdrop-blur-xl border shadow-2xl"
-      >
-        {items.map((item, index) => {
-          const isHovered = hoveredIndex === index
-          const isNeighbor = hoveredIndex !== null && Math.abs(hoveredIndex - index) === 1
+      <LazyMotion features={domAnimation}>
+        <m.div
+          initial={{ y: 24, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="flex max-w-[calc(100vw-2rem)] items-center gap-2 overflow-x-auto rounded-2xl border border-border/80 bg-metis-ink/88 p-2.5 shadow-panel shadow-black/35 backdrop-blur-xl"
+        >
+          {items.map((item, index) => {
+            const isHovered = hoveredIndex === index
 
-          return (
-            <motion.button
-              key={item.label}
-              onClick={() => onItemClick?.(item.label)}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className="group relative flex flex-col items-center"
-              animate={{
-                scale: isHovered ? 1.3 : isNeighbor ? 1.15 : 1,
-                y: isHovered ? -10 : 0,
-              }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-            >
-              {/* Tooltip */}
-              <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? -35 : -20 }}
-                className="absolute whitespace-nowrap rounded-md bg-popover px-2 py-1 text-xs font-medium text-popover-foreground shadow-md"
+            return (
+              <m.button
+                key={item.label}
+                onClick={() => onItemClick?.(item.label)}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                aria-label={item.label}
+                title={item.label}
+                className="group relative flex flex-col items-center"
+                animate={{
+                  scale: isHovered ? 1.04 : 1,
+                  y: isHovered ? -4 : 0,
+                }}
+                transition={{ type: 'spring', stiffness: 320, damping: 24 }}
               >
-                {item.label}
-              </motion.span>
+                <m.span
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? -28 : -18 }}
+                  className="pointer-events-none absolute whitespace-nowrap rounded-lg border border-border/80 bg-popover px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-popover-foreground shadow-md"
+                >
+                  {item.label}
+                </m.span>
 
-              {/* Icon Container */}
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/50 transition-colors group-hover:bg-accent">
-                <item.icon className="h-6 w-6 text-foreground" />
-              </div>
-            </motion.button>
-          )
-        })}
-      </motion.div>
+                <div className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-colors ${isHovered ? 'border-primary/35 bg-primary/12 text-primary' : 'border-border/70 bg-secondary/65 text-muted-foreground group-hover:border-border group-hover:text-foreground'}`}>
+                  <item.icon className="h-5 w-5" />
+                  <span className="sr-only">{item.label}</span>
+                </div>
+              </m.button>
+            )
+          })}
+        </m.div>
+      </LazyMotion>
     </div>
   )
 }

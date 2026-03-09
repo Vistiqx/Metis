@@ -1,4 +1,4 @@
-import { 
+import {
   AlertTriangle, 
   BookOpen, 
   Eye, 
@@ -7,6 +7,7 @@ import {
   Network
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
+import { Badge } from '../components/ui/Badge'
 import { WorkspaceLayout } from '../components/layout'
 
 const stats = [
@@ -33,71 +34,62 @@ const quickActions = [
 export function Dashboard() {
   return (
     <WorkspaceLayout showDock={false} showRightPanel={false}>
-      <div className="space-y-8">
-        {/* Welcome Section */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-            <p className="text-muted-foreground">
-              Welcome back to Metis OSINT Platform
-            </p>
+            <div className="metis-kicker">Executive Overview</div>
+            <h1 className="metis-title">Dashboard</h1>
+            <p className="metis-subtitle">Fast analyst orientation across active investigations, alert load, and system readiness.</p>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="text-right">
-              <p className="text-sm font-medium">System Status</p>
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-green-500" />
-                <span className="text-xs text-muted-foreground">All systems operational</span>
-              </div>
-            </div>
+          <div className="flex items-center gap-3">
+            <Badge variant="gold">Authority layer active</Badge>
+            <Badge variant="success" dot>All systems operational</Badge>
           </div>
         </div>
 
-        {/* Stats Grid */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="metis-stat-grid">
           {stats.map((stat) => (
-            <Card key={stat.label}>
+            <Card key={stat.label} className="overflow-hidden">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  {stat.label}
-                </CardTitle>
-                <stat.icon className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">{stat.label}</CardTitle>
+                <stat.icon className="h-4 w-4 text-primary" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-muted-foreground">
-                  {stat.trend}
-                </p>
+                <div className="mb-3 text-3xl font-semibold text-foreground">{stat.value}</div>
+                <Badge variant="neutral">{stat.trend}</Badge>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Quick Actions */}
         <div>
-          <h2 className="mb-4 text-lg font-semibold">Quick Actions</h2>
+          <div className="mb-4 flex items-end justify-between gap-3">
+            <div>
+              <div className="metis-kicker">Navigation</div>
+              <h2 className="text-2xl">Quick Actions</h2>
+            </div>
+            <p className="hidden text-sm text-muted-foreground lg:block">Go directly into the primary analysis surfaces.</p>
+          </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {quickActions.map((action) => (
               <a
                 key={action.label}
                 href={action.href}
-                className="flex items-center gap-4 rounded-lg border bg-card p-4 transition-colors hover:bg-accent"
+                className="metis-panel group flex items-center gap-4 p-4 transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-secondary/60"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary transition group-hover:bg-primary/16">
                   <action.icon className="h-6 w-6" />
                 </div>
                 <div>
-                  <p className="font-medium">{action.label}</p>
-                  <p className="text-sm text-muted-foreground">Go to workspace</p>
+                  <p className="font-semibold">{action.label}</p>
+                  <p className="text-sm text-muted-foreground">Open operational workspace</p>
                 </div>
               </a>
             ))}
           </div>
         </div>
 
-        {/* Two Column Layout */}
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Recent Activity */}
           <Card>
             <CardHeader>
               <CardTitle>Recent Activity</CardTitle>
@@ -105,31 +97,42 @@ export function Dashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentActivity.map((activity, index) => (
+                {recentActivity.map((activity) => (
                   <div
-                    key={index}
-                    className="flex items-start gap-4 rounded-lg border p-3"
+                    key={activity.title}
+                    className="rounded-2xl border border-border/70 bg-secondary/40 p-4"
                   >
+                    <div className="mb-3 flex items-center justify-between gap-3">
+                      <Badge
+                        variant={
+                          activity.severity === 'high'
+                            ? 'danger'
+                            : activity.severity === 'medium'
+                              ? 'warning'
+                              : 'success'
+                        }
+                        dot
+                      >
+                        {activity.type}
+                      </Badge>
+                      <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{activity.time}</span>
+                    </div>
+                    <p className="text-sm font-semibold text-foreground">{activity.title}</p>
                     <div
-                      className={`h-2 w-2 rounded-full mt-2 ${
+                      className={`mt-3 h-1.5 rounded-full ${
                         activity.severity === 'high'
                           ? 'bg-destructive'
                           : activity.severity === 'medium'
-                          ? 'bg-yellow-500'
-                          : 'bg-green-500'
+                            ? 'bg-amber-400'
+                            : 'bg-emerald-400'
                       }`}
                     />
-                    <div className="flex-1">
-                      <p className="text-sm font-medium">{activity.title}</p>
-                      <p className="text-xs text-muted-foreground">{activity.time}</p>
-                    </div>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
 
-          {/* System Status */}
           <Card>
             <CardHeader>
               <CardTitle>System Health</CardTitle>
@@ -146,21 +149,15 @@ export function Dashboard() {
                 ].map((service) => (
                   <div
                     key={service.name}
-                    className="flex items-center justify-between rounded-lg border p-3"
+                    className="flex items-center justify-between rounded-2xl border border-border/70 bg-secondary/40 p-4"
                   >
                     <div className="flex items-center gap-3">
-                      <span
-                        className={`h-2 w-2 rounded-full ${
-                          service.status === 'operational'
-                            ? 'bg-green-500'
-                            : 'bg-yellow-500'
-                        }`}
-                      />
-                      <span className="text-sm font-medium">{service.name}</span>
+                      <Badge variant={service.status === 'operational' ? 'success' : 'warning'} dot>
+                        {service.status}
+                      </Badge>
+                      <span className="text-sm font-semibold">{service.name}</span>
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      {service.latency}
-                    </span>
+                    <span className="text-sm text-muted-foreground">{service.latency}</span>
                   </div>
                 ))}
               </div>

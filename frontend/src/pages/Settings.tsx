@@ -12,6 +12,7 @@ import {
   Users
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
 
@@ -19,19 +20,38 @@ export function Settings() {
   const [activeTab, setActiveTab] = useState<'general' | 'notifications' | 'security' | 'appearance'>('general')
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
 
+  const generalIds = {
+    displayName: 'settings-display-name',
+    email: 'settings-email',
+    role: 'settings-role',
+    timezone: 'settings-timezone',
+    organization: 'settings-organization',
+    department: 'settings-department',
+  }
+
+  const notificationsIds = {
+    digestFrequency: 'settings-digest-frequency',
+  }
+
+  const securityIds = {
+    currentPassword: 'settings-current-password',
+    newPassword: 'settings-new-password',
+    confirmPassword: 'settings-confirm-password',
+  }
+
   return (
     <WorkspaceLayout dockContext="settings" showRightPanel={false}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-          <p className="text-muted-foreground">
-            Manage your account and application preferences
-          </p>
+      <div className="metis-page">
+        <div className="metis-page-header">
+          <div>
+            <div className="metis-kicker">Administration</div>
+            <h1 className="metis-title">Settings</h1>
+            <p className="metis-subtitle">Govern workspace configuration, notification posture, and security controls with minimal visual noise.</p>
+          </div>
+          <Badge variant="neutral">Administrative surface</Badge>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-4">
-          {/* Sidebar */}
           <Card className="lg:col-span-1 h-fit">
             <CardContent className="p-4">
               <nav className="space-y-1">
@@ -71,7 +91,6 @@ export function Settings() {
             </CardContent>
           </Card>
 
-          {/* Content */}
           <div className="lg:col-span-3 space-y-6">
             {activeTab === 'general' && (
               <>
@@ -85,16 +104,18 @@ export function Settings() {
                   <CardContent className="space-y-4">
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">Display Name</label>
+                        <label htmlFor={generalIds.displayName} className="text-sm font-medium">Display Name</label>
                         <input
+                          id={generalIds.displayName}
                           type="text"
                           defaultValue="Analyst A"
                           className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium">Email</label>
+                        <label htmlFor={generalIds.email} className="text-sm font-medium">Email</label>
                         <input
+                          id={generalIds.email}
                           type="email"
                           defaultValue="analyst@metis.local"
                           className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -102,8 +123,8 @@ export function Settings() {
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Role</label>
-                      <select className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                      <label htmlFor={generalIds.role} className="text-sm font-medium">Role</label>
+                      <select id={generalIds.role} className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
                         <option>Senior Analyst</option>
                         <option>Analyst</option>
                         <option>Reviewer</option>
@@ -111,8 +132,8 @@ export function Settings() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Timezone</label>
-                      <select className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                      <label htmlFor={generalIds.timezone} className="text-sm font-medium">Timezone</label>
+                      <select id={generalIds.timezone} className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
                         <option>UTC-05:00 Eastern Time</option>
                         <option>UTC-08:00 Pacific Time</option>
                         <option>UTC+00:00 UTC</option>
@@ -131,8 +152,9 @@ export function Settings() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Organization</label>
+                      <label htmlFor={generalIds.organization} className="text-sm font-medium">Organization</label>
                       <input
+                        id={generalIds.organization}
                         type="text"
                         defaultValue="Metis Intelligence Unit"
                         disabled
@@ -140,8 +162,9 @@ export function Settings() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Department</label>
+                      <label htmlFor={generalIds.department} className="text-sm font-medium">Department</label>
                       <input
+                        id={generalIds.department}
                         type="text"
                         defaultValue="OSINT Analysis"
                         className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
@@ -211,8 +234,8 @@ export function Settings() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Digest Frequency</label>
-                    <select className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                    <label htmlFor={notificationsIds.digestFrequency} className="text-sm font-medium">Digest Frequency</label>
+                    <select id={notificationsIds.digestFrequency} className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
                       <option>Real-time</option>
                       <option>Hourly digest</option>
                       <option>Daily digest</option>
@@ -234,22 +257,25 @@ export function Settings() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Current Password</label>
+                      <label htmlFor={securityIds.currentPassword} className="text-sm font-medium">Current Password</label>
                       <input
+                        id={securityIds.currentPassword}
                         type="password"
                         className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">New Password</label>
+                      <label htmlFor={securityIds.newPassword} className="text-sm font-medium">New Password</label>
                       <input
+                        id={securityIds.newPassword}
                         type="password"
                         className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Confirm New Password</label>
+                      <label htmlFor={securityIds.confirmPassword} className="text-sm font-medium">Confirm New Password</label>
                       <input
+                        id={securityIds.confirmPassword}
                         type="password"
                         className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                       />

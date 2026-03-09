@@ -1,4 +1,4 @@
-import { 
+import {
   AlertTriangle, 
   BookOpen, 
   Building2, 
@@ -16,7 +16,7 @@ import {
   Settings, 
   Shield
 } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 interface NavItem {
@@ -44,94 +44,120 @@ const bottomItems: NavItem[] = [
 ]
 
 export function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(() => window.innerWidth < 1024)
   const location = useLocation()
+  const isMobile = window.innerWidth < 1024
+  const workspaceLabel = useMemo(() => {
+    const active = [...navItems, ...bottomItems].find((item) => {
+      if (item.path === '/') return location.pathname === '/'
+      return location.pathname.startsWith(item.path)
+    })
 
-  // Debug: Log current path
-  console.log('Current path:', location.pathname)
+    return active?.label ?? 'Workspace'
+  }, [location.pathname])
 
   return (
     <>
-      {/* Mobile Toggle Button - Visible on small screens */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="fixed top-4 left-4 z-50 lg:hidden flex h-10 w-10 items-center justify-center rounded-lg bg-card border shadow-md hover:bg-accent"
+        className="fixed left-4 top-4 z-[60] flex h-11 w-11 items-center justify-center rounded-xl border border-border/80 bg-card/95 text-foreground shadow-panel shadow-black/30 backdrop-blur transition hover:border-primary/40 hover:text-primary lg:hidden"
+        aria-label="Toggle navigation"
       >
         <Menu className="h-5 w-5" />
+        <span className="sr-only">Toggle navigation</span>
       </button>
 
-      {/* Overlay for mobile */}
-      {!collapsed && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+      {!collapsed && isMobile && (
+        <div
+          role="button"
+          tabIndex={0}
+          aria-label="Close navigation overlay"
+          className="fixed inset-0 z-30 bg-slate-950/70 backdrop-blur-sm lg:hidden"
           onClick={() => setCollapsed(true)}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault()
+              setCollapsed(true)
+            }
+          }}
         />
       )}
 
-      {/* Sidebar */}
-      <aside 
-        className={`fixed lg:static inset-y-0 left-0 z-40 flex flex-col border-r bg-card transition-all duration-300 ease-in-out ${
-          collapsed ? 'w-16 -translate-x-full lg:translate-x-0' : 'w-64 translate-x-0'
+      <aside
+        className={`fixed inset-y-0 left-0 z-40 flex h-screen flex-col border-r border-border/70 bg-metis-ink/95 backdrop-blur-xl transition-all duration-300 ease-out lg:static ${
+          collapsed ? 'w-[92px] -translate-x-full lg:translate-x-0' : 'w-[280px] translate-x-0'
         }`}
-      >        {/* Logo Section */}
-        <div className="flex h-16 items-center border-b px-3">
-          {/* Logo / Shield */}
-          <div className={`flex items-center ${collapsed ? 'justify-center w-full' : 'gap-2 flex-1'}`}>
-            <Shield className="h-8 w-8 text-primary flex-shrink-0" />
+      >
+        <div className="border-b border-border/70 px-4 py-4">
+          <div className={`flex items-center ${collapsed ? 'justify-center' : 'justify-between gap-3'}`}>
+            <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-3'}`}>
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary shadow-sm shadow-primary/10">
+                <Shield className="h-5 w-5 flex-shrink-0" />
+              </div>
+              {!collapsed && (
+                <div className="min-w-0">
+                  <div className="metis-kicker">Metis</div>
+                  <span className="block truncate font-authority text-xl text-foreground">{workspaceLabel}</span>
+                </div>
+              )}
+            </div>
             {!collapsed && (
-              <span className="text-xl font-bold whitespace-nowrap overflow-hidden">Metis</span>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setCollapsed(!collapsed)
+                }}
+                className="hidden h-9 w-9 items-center justify-center rounded-xl border border-transparent text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground lg:flex"
+                title="Collapse navigation"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
             )}
           </div>
-          
-          {/* Collapse Toggle Button - Desktop only */}
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              console.log('Toggle clicked, current state:', collapsed)
-              setCollapsed(!collapsed)
-            }}
-            className="hidden lg:flex h-8 w-8 items-center justify-center rounded-lg hover:bg-accent transition-colors flex-shrink-0 ml-2"
-            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-          >
-            {collapsed ? (
-              <ChevronRight className="h-5 w-5" />
-            ) : (
-              <ChevronLeft className="h-5 w-5" />
-            )}
-          </button>
+          {collapsed && (
+            <button
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                setCollapsed(false)
+              }}
+              className="mt-3 hidden w-full items-center justify-center rounded-xl border border-border/70 bg-secondary/70 py-2 text-muted-foreground transition hover:border-primary/40 hover:text-primary lg:flex"
+              title="Expand navigation"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          )}
         </div>
 
-        {/* Main Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4">
-          <ul className="space-y-1 px-2">
+        <nav className="flex-1 overflow-y-auto px-3 py-5">
+          {!collapsed && <div className="mb-3 px-3 text-[0.68rem] uppercase tracking-[0.22em] text-muted-foreground">Operations</div>}
+          <ul className="space-y-1.5">
             {navItems.map((item) => {
-              const isActive = location.pathname === item.path || 
+              const isActive = location.pathname === item.path ||
                 (item.path !== '/' && location.pathname.startsWith(item.path))
-              
+
               return (
                 <li key={item.path}>
                   <NavLink
                     to={item.path}
                     onClick={() => {
-                      console.log('Navigating to:', item.path)
-                      // On mobile, close sidebar after navigation
-                      if (window.innerWidth < 1024) {
+                      if (isMobile) {
                         setCollapsed(true)
                       }
                     }}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200 ${
+                    className={`group flex items-center gap-3 rounded-xl border px-3 py-3 transition-all duration-200 ${
                       isActive
-                        ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'hover:bg-accent text-foreground'
-                    } ${collapsed ? 'justify-center' : ''}`}
+                        ? 'border-primary/30 bg-primary/12 text-primary shadow-sm shadow-primary/10'
+                        : 'border-transparent text-slate-200 hover:border-border/80 hover:bg-secondary/60 hover:text-foreground'
+                    } ${collapsed ? 'justify-center px-0' : ''}`}
                     title={collapsed ? item.label : undefined}
                   >
-                    <item.icon className="h-5 w-5 flex-shrink-0" />
+                    <item.icon className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`} />
                     {!collapsed && (
-                      <span className="text-sm font-medium whitespace-nowrap overflow-hidden">
-                        {item.label}
-                      </span>
+                      <div className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-semibold">{item.label}</span>
+                      </div>
                     )}
                   </NavLink>
                 </li>
@@ -140,34 +166,31 @@ export function Sidebar() {
           </ul>
         </nav>
 
-        {/* Bottom Navigation */}
-        <div className="border-t py-4">
-          <ul className="space-y-1 px-2">
+        <div className="border-t border-border/70 px-3 py-4">
+          {!collapsed && <div className="mb-3 px-3 text-[0.68rem] uppercase tracking-[0.22em] text-muted-foreground">Reference</div>}
+          <ul className="space-y-1.5">
             {bottomItems.map((item) => {
               const isActive = location.pathname === item.path
-              
+
               return (
                 <li key={item.path}>
                   <NavLink
                     to={item.path}
                     onClick={() => {
-                      console.log('Navigating to:', item.path)
-                      if (window.innerWidth < 1024) {
+                      if (isMobile) {
                         setCollapsed(true)
                       }
                     }}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200 ${
+                    className={`group flex items-center gap-3 rounded-xl border px-3 py-3 transition-all duration-200 ${
                       isActive
-                        ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'hover:bg-accent text-foreground'
-                    } ${collapsed ? 'justify-center' : ''}`}
+                        ? 'border-primary/30 bg-primary/12 text-primary shadow-sm shadow-primary/10'
+                        : 'border-transparent text-slate-200 hover:border-border/80 hover:bg-secondary/60 hover:text-foreground'
+                    } ${collapsed ? 'justify-center px-0' : ''}`}
                     title={collapsed ? item.label : undefined}
                   >
-                    <item.icon className="h-5 w-5 flex-shrink-0" />
+                    <item.icon className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'}`} />
                     {!collapsed && (
-                      <span className="text-sm font-medium whitespace-nowrap overflow-hidden">
-                        {item.label}
-                      </span>
+                      <span className="truncate text-sm font-semibold">{item.label}</span>
                     )}
                   </NavLink>
                 </li>
@@ -176,22 +199,6 @@ export function Sidebar() {
           </ul>
         </div>
 
-        {/* Expand hint when collapsed */}
-        {collapsed && (
-          <div className="border-t py-2 px-1">
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                setCollapsed(false)
-              }}
-              className="w-full flex items-center justify-center py-2 rounded-lg hover:bg-accent transition-colors"
-              title="Click to expand"
-            >
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            </button>
-          </div>
-        )}
       </aside>
     </>
   )

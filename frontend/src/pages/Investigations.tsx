@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Plus, Search, Filter } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { CreateCaseDialog } from '../components/ui/Dialog'
@@ -45,16 +46,25 @@ export function Investigations() {
     caseItem.id.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
+  const statusVariant = {
+    open: 'success',
+    closed: 'neutral',
+  } as const
+
+  const priorityVariant = {
+    high: 'danger',
+    medium: 'warning',
+    low: 'info',
+  } as const
+
   return (
     <WorkspaceLayout dockContext="default" showRightPanel={false}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Investigations</h1>
-            <p className="text-muted-foreground">
-              Manage cases and track investigation progress
-            </p>
+            <div className="metis-kicker">Case Command</div>
+            <h1 className="metis-title">Investigations</h1>
+            <p className="metis-subtitle">Structured case inventory with owner context, evidence volume, and operational priority.</p>
           </div>
           <Button onClick={() => setIsCreateDialogOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -62,8 +72,7 @@ export function Investigations() {
           </Button>
         </div>
 
-        {/* Filters */}
-        <div className="flex gap-4">
+        <div className="metis-toolbar">
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -71,65 +80,63 @@ export function Investigations() {
               placeholder="Search cases..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              className="metis-input w-full pl-10"
             />
           </div>
-          <Button variant="outline">
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
+          <div className="flex items-center gap-3">
+            <Badge variant="gold">{filteredCases.length} active rows</Badge>
+            <Button variant="outline">
+              <Filter className="mr-2 h-4 w-4" />
+              Filter
+            </Button>
+          </div>
         </div>
 
-        {/* Cases Grid */}
-        <div className="grid gap-4 md:grid-cols-2">
-          {filteredCases.map((caseItem) => (
-            <Card key={caseItem.id} className="hover:border-primary/50 transition-colors cursor-pointer">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-xs font-mono text-muted-foreground">{caseItem.id}</p>
-                    <CardTitle className="text-lg mt-1">{caseItem.title}</CardTitle>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                      caseItem.status === 'open' 
-                        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
-                        : 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400'
-                    }`}>
-                      {caseItem.status}
-                    </span>
-                    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
-                      caseItem.priority === 'high'
-                        ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
-                        : caseItem.priority === 'medium'
-                        ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                        : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
-                    }`}>
-                      {caseItem.priority}
-                    </span>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <div>
-                    <span className="font-medium text-foreground">{caseItem.events}</span> events
-                  </div>
-                  <div>
-                    <span className="font-medium text-foreground">{caseItem.evidence}</span> evidence
-                  </div>
-                  <div className="ml-auto">
-                    Updated {caseItem.updated}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        <Card>
+          <CardHeader className="flex-row items-center justify-between">
+            <div>
+              <CardTitle>Investigation Queue</CardTitle>
+              <p className="text-sm text-muted-foreground">Dense but readable operational list aligned to case triage.</p>
+            </div>
+            <Badge variant="neutral">Owner metadata pending</Badge>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="overflow-x-auto">
+              <table className="metis-table">
+                <thead>
+                  <tr>
+                    <th>Investigation</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Events</th>
+                    <th>Evidence</th>
+                    <th>Last updated</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredCases.map((caseItem) => (
+                    <tr key={caseItem.id} className="cursor-pointer">
+                      <td>
+                        <div>
+                          <div className="mb-1 font-mono text-xs text-muted-foreground">{caseItem.id}</div>
+                          <div className="font-semibold text-foreground">{caseItem.title}</div>
+                        </div>
+                      </td>
+                      <td><Badge variant={statusVariant[caseItem.status]}>{caseItem.status}</Badge></td>
+                      <td><Badge variant={priorityVariant[caseItem.priority]}>{caseItem.priority}</Badge></td>
+                      <td className="font-semibold text-foreground">{caseItem.events}</td>
+                      <td className="font-semibold text-foreground">{caseItem.evidence}</td>
+                      <td className="text-muted-foreground">{caseItem.updated}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Empty State */}
         {filteredCases.length === 0 && (
-          <div className="text-center py-12">
+          <div className="metis-empty border-dashed bg-transparent py-12">
             <p className="text-muted-foreground">No cases found matching your search.</p>
           </div>
         )}

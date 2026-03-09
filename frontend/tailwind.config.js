@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        authority: ['"Iowan Old Style"', '"Palatino Linotype"', '"Book Antiqua"', 'Georgia', 'serif'],
+        interface: ['"Charter"', '"Cambria"', 'Georgia', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -40,11 +44,28 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        metis: {
+          midnight: 'hsl(var(--metis-midnight))',
+          ink: 'hsl(var(--metis-ink))',
+          gold: 'hsl(var(--metis-gold))',
+          goldSoft: 'hsl(var(--metis-gold-soft))',
+          cyan: 'hsl(var(--metis-cyan))',
+          orange: 'hsl(var(--metis-orange))',
+          lime: 'hsl(var(--metis-lime))',
+          rose: 'hsl(var(--metis-rose))',
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        panel: '0 22px 60px rgba(2, 6, 23, 0.45)',
+        inset: 'inset 0 1px 0 rgba(255,255,255,0.04)',
+      },
+      backgroundImage: {
+        'metis-grid': 'linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px)',
       },
     },
   },

@@ -14,6 +14,7 @@ import {
   User
 } from 'lucide-react'
 import { WorkspaceLayout } from '../components/layout'
+import { Badge } from '../components/ui/Badge'
 import { Button } from '../components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
 import { CreateTaskDialog } from '../components/ui/Dialog'
@@ -101,16 +102,16 @@ const initialOperations: Operation[] = [
 ]
 
 const statusColors: Record<string, string> = {
-  'pending': 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400',
-  'in-progress': 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-  'completed': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  'blocked': 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+  'pending': 'neutral',
+  'in-progress': 'info',
+  'completed': 'success',
+  'blocked': 'danger',
 }
 
 const priorityColors: Record<string, string> = {
-  high: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-  medium: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  low: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  high: 'danger',
+  medium: 'warning',
+  low: 'info',
 }
 
 const typeIcons: Record<string, React.ElementType> = {
@@ -160,14 +161,12 @@ export function Operations() {
 
   return (
     <WorkspaceLayout dockContext="operations" showRightPanel={true}>
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+      <div className="metis-page">
+        <div className="metis-page-header">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Operations</h1>
-            <p className="text-muted-foreground">
-              Manage tasks and track operational progress
-            </p>
+            <div className="metis-kicker">Task Orchestration</div>
+            <h1 className="metis-title">Operations</h1>
+            <p className="metis-subtitle">Track analytical tasks, assignees, due dates, and workflow completion with administrative clarity.</p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline">
@@ -235,8 +234,8 @@ export function Operations() {
                 placeholder="Search tasks..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-10 w-full rounded-lg border bg-background pl-10 pr-4 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              />
+                 className="metis-input w-full pl-10"
+               />
             </div>
             <div className="flex gap-1 rounded-lg border bg-card p-1">
               <Button
@@ -317,12 +316,8 @@ export function Operations() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="font-medium">{operation.title}</p>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${statusColors[operation.status]}`}>
-                              {operation.status}
-                            </span>
-                            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${priorityColors[operation.priority]}`}>
-                              {operation.priority}
-                            </span>
+                             <Badge variant={statusColors[operation.status] as 'neutral' | 'info' | 'success' | 'danger'}>{operation.status}</Badge>
+                             <Badge variant={priorityColors[operation.priority] as 'danger' | 'warning' | 'info'}>{operation.priority}</Badge>
                           </div>
                           <p className="mt-1 text-sm text-muted-foreground">
                             {operation.description}
@@ -349,10 +344,10 @@ export function Operations() {
 
                         {/* Actions */}
                         <div className="flex items-center gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Start operation">
                             <Play className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                          <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More operation actions">
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </div>
@@ -365,9 +360,8 @@ export function Operations() {
           })}
         </div>
 
-        {/* Empty State */}
         {filteredOperations.length === 0 && (
-          <div className="text-center py-12">
+          <div className="metis-empty border-dashed bg-transparent py-12">
             <p className="text-muted-foreground">No tasks found matching your search.</p>
           </div>
         )}

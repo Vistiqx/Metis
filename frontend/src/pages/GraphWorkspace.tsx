@@ -118,7 +118,7 @@ export function GraphInspectorPanel({
             return (
               <div
                 key={`${edge.from}-${edge.to}-${edge.label}`}
-                className="rounded-lg border border-[rgba(110,138,189,0.18)] bg-[rgba(11,17,28,0.9)] px-3 py-2"
+                className="rounded-lg border border-[rgba(156,120,70,0.18)] bg-[rgba(25,17,19,0.9)] px-3 py-2"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-semibold text-foreground">
@@ -286,10 +286,10 @@ export function GraphCanvas({
   return (
     <Panel className="overflow-hidden p-0">
       <div
-        className="relative h-[680px] overflow-hidden bg-[radial-gradient(circle_at_50%_38%,rgba(212,175,55,0.09),transparent_18%),linear-gradient(180deg,rgba(15,23,42,0.76),rgba(8,13,23,0.98))]"
+        className="relative h-[680px] overflow-hidden bg-[radial-gradient(circle_at_50%_38%,rgba(240,207,112,0.12),transparent_18%),radial-gradient(circle_at_20%_18%,rgba(156,52,20,0.1),transparent_22%),linear-gradient(180deg,rgba(34,18,18,0.82),rgba(18,12,16,0.98))]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 50% 38%, rgba(212,175,55,0.08), transparent 18%), radial-gradient(circle at 1px 1px, rgba(148,163,184,0.12) 1px, transparent 0)",
+            "radial-gradient(circle at 50% 38%, rgba(240,207,112,0.12), transparent 18%), radial-gradient(circle at 20% 18%, rgba(156,52,20,0.1), transparent 22%), radial-gradient(circle at 1px 1px, rgba(212,175,55,0.14) 1px, transparent 0)",
           backgroundSize: "28px 28px",
         }}
       >
@@ -326,7 +326,7 @@ export function GraphCanvas({
                     stroke={
                       edge.from === selectedNodeId || edge.to === selectedNodeId
                         ? "rgba(240, 207, 112, 0.68)"
-                        : "rgba(148, 163, 184, 0.38)"
+                        : "rgba(156, 120, 70, 0.32)"
                     }
                     strokeWidth="1.6"
                     strokeDasharray={
@@ -343,7 +343,7 @@ export function GraphCanvas({
                     height="20"
                     rx="10"
                     fill="rgba(8, 13, 23, 0.92)"
-                    stroke="rgba(110, 138, 189, 0.36)"
+                    stroke="rgba(156, 120, 70, 0.3)"
                   />
                   <text
                     x={midX}
@@ -357,7 +357,7 @@ export function GraphCanvas({
                   <text
                     x={midX}
                     y={midY + 5}
-                    fill="rgba(163, 181, 213, 0.84)"
+                    fill="rgba(224, 196, 154, 0.82)"
                     fontSize="8"
                     textAnchor="middle"
                   >

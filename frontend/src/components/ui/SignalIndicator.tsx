@@ -16,7 +16,7 @@ export function SignalIndicator({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-md border border-[rgba(110,138,189,0.16)] bg-[rgba(11,17,28,0.52)] px-2 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-foreground",
+        "inline-flex items-center gap-2 rounded-md border border-[rgba(156,120,70,0.16)] bg-[rgba(25,17,19,0.56)] px-2 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-foreground",
         className,
       )}
       {...props}

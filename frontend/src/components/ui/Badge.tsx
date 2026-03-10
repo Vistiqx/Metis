@@ -6,7 +6,7 @@ const badgeVariants = cva("metis-badge", {
   variants: {
     variant: {
       neutral:
-        "border-[rgba(110,138,189,0.28)] bg-[rgba(17,24,39,0.82)] text-[#d7dfed] shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]",
+        "border-[rgba(156,120,70,0.24)] bg-[rgba(31,21,21,0.82)] text-[#eadfca] shadow-[inset_0_1px_0_rgba(255,240,177,0.02)]",
       gold:
         "border-[rgba(212,175,55,0.34)] bg-[linear-gradient(180deg,rgba(82,58,14,0.9),rgba(42,31,11,0.95))] text-[#f2d883] shadow-[inset_0_1px_0_rgba(255,240,177,0.18),0_0_0_1px_rgba(130,95,20,0.22)]",
     },
@@ -22,7 +22,7 @@ export interface BadgeProps
 }
 
 const dotClasses = {
-  neutral: "bg-[#8da2c6]",
+  neutral: "bg-[#c39a5a]",
   gold: "bg-[#f0cf70]",
 } as const;
 

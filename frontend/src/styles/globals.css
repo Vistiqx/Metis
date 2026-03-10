@@ -4,28 +4,28 @@
 
 @layer base {
   :root {
-    --background: 224 58% 4%;
+    --background: 12 32% 5%;
     --foreground: 42 60% 92%;
-    --card: 223 49% 9%;
+    --card: 16 28% 9%;
     --card-foreground: 42 52% 91%;
-    --popover: 223 49% 9%;
+    --popover: 16 28% 9%;
     --popover-foreground: 42 52% 91%;
     --primary: 45 64% 52%;
-    --primary-foreground: 224 58% 4%;
-    --secondary: 221 38% 15%;
+    --primary-foreground: 12 32% 5%;
+    --secondary: 18 22% 14%;
     --secondary-foreground: 42 50% 90%;
-    --muted: 221 30% 19%;
-    --muted-foreground: 219 28% 70%;
-    --accent: 217 28% 18%;
+    --muted: 18 18% 18%;
+    --muted-foreground: 30 22% 74%;
+    --accent: 18 22% 14%;
     --accent-foreground: 42 52% 91%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 30% 46%;
-    --input: 221 31% 18%;
+    --border: 24 20% 42%;
+    --input: 18 22% 16%;
     --ring: 45 64% 52%;
     --radius: 10px;
-    --metis-midnight: 224 58% 4%;
-    --metis-ink: 223 49% 9%;
+    --metis-midnight: 12 32% 5%;
+    --metis-ink: 16 28% 9%;
     --metis-gold: 45 64% 52%;
     --metis-gold-soft: 42 64% 38%;
     --metis-gold-radiant: 44 79% 69%;
@@ -51,8 +51,11 @@
     @apply bg-background text-foreground antialiased;
     font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", sans-serif;
     background-image:
-      radial-gradient(circle at 50% 14%, rgba(212, 175, 55, 0.08), transparent 24%),
-      linear-gradient(180deg, rgba(2, 6, 12, 1) 0%, rgba(4, 9, 17, 1) 42%, rgba(7, 11, 19, 1) 100%);
+      radial-gradient(circle at 50% 12%, rgba(240, 207, 112, 0.12), transparent 20%),
+      radial-gradient(circle at 15% 28%, rgba(156, 68, 22, 0.12), transparent 26%),
+      radial-gradient(circle at 82% 20%, rgba(133, 34, 18, 0.1), transparent 24%),
+      radial-gradient(circle at 50% 120%, rgba(212, 175, 55, 0.06), transparent 30%),
+      linear-gradient(180deg, rgba(12, 6, 9, 1) 0%, rgba(18, 10, 12, 1) 30%, rgba(14, 10, 14, 1) 62%, rgba(8, 7, 11, 1) 100%);
     min-height: 100vh;
   }
 
@@ -108,12 +111,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.24);
+    background: rgba(156, 120, 70, 0.28);
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(15, 23, 42, 0.18);
+    background: rgba(24, 16, 18, 0.22);
   }
 }
 
@@ -148,7 +151,7 @@
   }
 
   .metis-panel {
-    @apply rounded-lg border border-[rgba(110,138,189,0.24)] bg-[rgba(8,13,23,0.96)] p-4 shadow-panel;
+    @apply rounded-lg border border-[rgba(166,132,72,0.26)] bg-[linear-gradient(180deg,rgba(27,18,18,0.94),rgba(16,13,18,0.97))] p-4 shadow-panel;
     box-shadow:
       inset 0 1px 0 rgba(255, 240, 177, 0.04),
       0 0 0 1px rgba(212, 175, 55, 0.04),
@@ -156,15 +159,15 @@
   }
 
   .metis-panel-muted {
-    @apply rounded-lg border border-[rgba(110,138,189,0.2)] bg-[rgba(14,21,33,0.92)] p-4;
+    @apply rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.84)] p-4;
   }
 
   .metis-toolbar {
-    @apply flex min-h-12 flex-col gap-3 rounded-lg border border-[rgba(110,138,189,0.22)] bg-[rgba(9,14,24,0.96)] px-3 py-2 shadow-panel lg:flex-row lg:items-center lg:justify-between;
+    @apply flex min-h-12 flex-col gap-3 rounded-lg border border-[rgba(166,132,72,0.24)] bg-[rgba(22,16,18,0.94)] px-3 py-2 shadow-panel lg:flex-row lg:items-center lg:justify-between;
   }
 
   .metis-command-strip {
-    @apply flex min-h-12 flex-wrap items-center gap-3 rounded-lg border border-[rgba(212,175,55,0.24)] bg-[rgba(12,18,29,0.96)] px-3 py-2 shadow-panel;
+    @apply flex min-h-12 flex-wrap items-center gap-3 rounded-lg border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(28,18,18,0.96),rgba(18,14,18,0.98))] px-3 py-2 shadow-panel;
     box-shadow:
       inset 0 1px 0 rgba(255, 240, 177, 0.08),
       0 6px 20px rgba(0, 0, 0, 0.35);
@@ -195,23 +198,23 @@
   }
 
   .metis-pane {
-    @apply rounded-lg border border-[rgba(110,138,189,0.24)] bg-[rgba(8,13,23,0.96)] p-4 shadow-panel;
+    @apply rounded-lg border border-[rgba(166,132,72,0.24)] bg-[linear-gradient(180deg,rgba(27,18,18,0.94),rgba(16,13,18,0.97))] p-4 shadow-panel;
   }
 
   .metis-pane-muted {
-    @apply rounded-lg border border-[rgba(110,138,189,0.2)] bg-[rgba(14,21,33,0.92)] p-3;
+    @apply rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.84)] p-3;
   }
 
   .metis-list-row {
-    @apply flex items-start justify-between gap-3 rounded-lg border border-[rgba(110,138,189,0.22)] bg-[rgba(12,18,29,0.88)] px-3 py-3 transition-colors hover:border-[rgba(212,175,55,0.24)] hover:bg-[rgba(18,25,38,0.94)];
+    @apply flex items-start justify-between gap-3 rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.88)] px-3 py-3 transition-colors hover:border-[rgba(212,175,55,0.26)] hover:bg-[rgba(36,22,22,0.94)];
   }
 
   .metis-keyline {
-    @apply h-px w-full bg-[linear-gradient(90deg,rgba(212,175,55,0.45),rgba(110,138,189,0.18),transparent)];
+    @apply h-px w-full bg-[linear-gradient(90deg,rgba(212,175,55,0.45),rgba(144,84,48,0.18),transparent)];
   }
 
   .metis-shell-grid {
-    @apply grid min-h-screen bg-[linear-gradient(180deg,rgba(2,6,12,0.99),rgba(4,9,17,1))] xl:grid-cols-[240px_minmax(0,1fr)];
+    @apply grid min-h-screen bg-[radial-gradient(circle_at_16%_18%,rgba(156,52,20,0.16),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(212,175,55,0.1),transparent_18%),radial-gradient(circle_at_50%_52%,rgba(122,34,18,0.08),transparent_32%),linear-gradient(180deg,rgba(12,6,9,0.99),rgba(18,10,12,1)_32%,rgba(14,10,14,1)_68%,rgba(8,7,11,1))] xl:grid-cols-[240px_minmax(0,1fr)];
   }
 
   .metis-shell-grid[data-has-inspector="true"] {
@@ -219,14 +222,14 @@
   }
 
   .metis-workspace {
-    @apply min-w-0 border-l border-r border-[rgba(110,138,189,0.18)] bg-[rgba(4,10,19,0.94)];
+    @apply min-w-0 border-l border-r border-[rgba(166,132,72,0.16)] bg-[rgba(11,9,14,0.9)];
     box-shadow:
       inset 1px 0 0 rgba(212, 175, 55, 0.03),
       inset -1px 0 0 rgba(212, 175, 55, 0.03);
   }
 
   .metis-shell-region {
-    @apply relative bg-[rgba(4,10,19,0.72)];
+    @apply relative bg-[rgba(10,8,13,0.72)];
   }
 
   .metis-shell-region::before {
@@ -236,7 +239,27 @@
     pointer-events: none;
     background-image:
       linear-gradient(180deg, rgba(255, 240, 177, 0.03), transparent 18%),
-      linear-gradient(90deg, rgba(212, 175, 55, 0.03), transparent 18%);
+      linear-gradient(90deg, rgba(212, 175, 55, 0.035), transparent 18%),
+      radial-gradient(circle at 50% 0, rgba(137, 44, 18, 0.045), transparent 22%);
+  }
+
+  .metis-shell-region::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.22;
+    background-image:
+      radial-gradient(circle at 8% 12%, rgba(255, 240, 177, 0.9) 0 0.6px, transparent 0.9px),
+      radial-gradient(circle at 22% 34%, rgba(212, 175, 55, 0.7) 0 0.7px, transparent 1px),
+      radial-gradient(circle at 38% 18%, rgba(255, 240, 177, 0.78) 0 0.5px, transparent 0.9px),
+      radial-gradient(circle at 56% 28%, rgba(212, 175, 55, 0.62) 0 0.6px, transparent 1px),
+      radial-gradient(circle at 72% 12%, rgba(255, 240, 177, 0.82) 0 0.6px, transparent 0.9px),
+      radial-gradient(circle at 84% 24%, rgba(212, 175, 55, 0.65) 0 0.7px, transparent 1px),
+      radial-gradient(circle at 14% 62%, rgba(255, 240, 177, 0.72) 0 0.5px, transparent 0.9px),
+      radial-gradient(circle at 30% 74%, rgba(212, 175, 55, 0.68) 0 0.6px, transparent 1px),
+      radial-gradient(circle at 52% 66%, rgba(255, 240, 177, 0.76) 0 0.5px, transparent 0.9px),
+      radial-gradient(circle at 78% 72%, rgba(212, 175, 55, 0.62) 0 0.7px, transparent 1px);
   }
 
   .metis-page-body {
@@ -248,7 +271,7 @@
   }
 
   .metis-metric-cell {
-    @apply min-w-[140px] rounded-lg border border-[rgba(110,138,189,0.22)] bg-[rgba(12,18,29,0.92)] px-3 py-2;
+    @apply min-w-[140px] rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.9)] px-3 py-2;
   }
 
   .metis-micro-label {
@@ -256,15 +279,15 @@
   }
 
   .metis-input {
-    @apply h-10 rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(20,28,42,0.92)] px-3 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply h-10 rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(33,23,24,0.9)] px-3 text-sm text-foreground placeholder:text-muted-foreground;
   }
 
   .metis-textarea {
-    @apply rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(20,28,42,0.92)] px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(33,23,24,0.9)] px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground;
   }
 
   .metis-tablist {
-    @apply inline-flex rounded-md border border-border/80 bg-secondary/70 p-1;
+    @apply inline-flex rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(31,21,21,0.82)] p-1;
   }
 
   .metis-stat-grid {
@@ -272,7 +295,7 @@
   }
 
   .metis-empty {
-    @apply flex min-h-[220px] flex-col items-center justify-center rounded-lg border border-dashed border-[rgba(110,138,189,0.24)] bg-[rgba(8,13,23,0.78)] px-6 text-center shadow-panel;
+    @apply flex min-h-[220px] flex-col items-center justify-center rounded-lg border border-dashed border-[rgba(156,120,70,0.24)] bg-[rgba(21,16,18,0.78)] px-6 text-center shadow-panel;
   }
 
   .metis-badge {
@@ -292,7 +315,7 @@
   }
 
   .metis-choice-card {
-    @apply rounded-lg border border-[rgba(110,138,189,0.22)] bg-[rgba(12,18,29,0.9)] p-4 transition-colors;
+    @apply rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.9)] p-4 transition-colors;
   }
 
   .metis-table {
@@ -300,11 +323,11 @@
   }
 
   .metis-table thead th {
-    @apply border-b border-[rgba(110,138,189,0.24)] bg-[rgba(12,18,29,0.96)] px-[10px] py-2 text-left text-[11px] font-semibold uppercase tracking-[0.16em] text-[#d4af37];
+    @apply border-b border-[rgba(156,120,70,0.24)] bg-[rgba(24,17,19,0.96)] px-[10px] py-2 text-left text-[11px] font-semibold uppercase tracking-[0.16em] text-[#d4af37];
   }
 
   .metis-table tbody td {
-    @apply border-b border-[rgba(110,138,189,0.16)] px-[10px] py-[9px] align-top text-sm;
+    @apply border-b border-[rgba(156,120,70,0.14)] px-[10px] py-[9px] align-top text-sm;
   }
 
   .metis-table tbody tr:last-child td {
@@ -312,11 +335,11 @@
   }
 
   .metis-table tbody tr:hover {
-    background: rgba(18, 25, 38, 0.74);
+    background: rgba(38, 22, 22, 0.72);
   }
 
   .metis-shell-sidebar {
-    @apply border-r border-[rgba(212,175,55,0.16)] bg-[linear-gradient(180deg,rgba(5,9,16,0.98),rgba(7,11,19,0.99))];
+    @apply border-r border-[rgba(212,175,55,0.16)] bg-[linear-gradient(180deg,rgba(16,11,13,0.98),rgba(11,8,12,0.99))];
     box-shadow: inset -1px 0 0 rgba(212, 175, 55, 0.08);
   }
 
@@ -335,7 +358,7 @@
   }
 
   .metis-operations-rail-link {
-    @apply relative flex items-center gap-3 rounded-md border border-transparent px-2.5 py-2 text-sm text-[#d9e3f4] transition-colors;
+    @apply relative flex items-center gap-3 rounded-md border border-transparent px-2.5 py-2 text-sm text-[#eadfca] transition-colors;
   }
 
   .metis-operations-rail-link::before {
@@ -351,11 +374,11 @@
   }
 
   .metis-operations-rail-link:hover {
-    @apply border-[rgba(212,175,55,0.14)] bg-[rgba(17,24,39,0.7)] text-[#fff3cf];
+    @apply border-[rgba(212,175,55,0.14)] bg-[rgba(36,23,22,0.7)] text-[#fff3cf];
   }
 
   .metis-operations-rail-link[data-active="true"] {
-    @apply border-[rgba(212,175,55,0.24)] bg-[linear-gradient(180deg,rgba(38,28,10,0.46),rgba(16,24,39,0.9))] text-[#fff1bf];
+    @apply border-[rgba(212,175,55,0.24)] bg-[linear-gradient(180deg,rgba(56,37,12,0.46),rgba(25,17,18,0.9))] text-[#fff1bf];
     box-shadow: inset 0 1px 0 rgba(255, 240, 177, 0.08);
   }
 
@@ -364,12 +387,12 @@
   }
 
   .metis-context-bar {
-    @apply sticky top-0 z-20 flex h-14 items-center border-b border-[rgba(212,175,55,0.16)] bg-[rgba(5,10,18,0.95)] px-4 py-2 backdrop-blur xl:px-5;
+    @apply sticky top-0 z-20 flex h-14 items-center border-b border-[rgba(212,175,55,0.16)] bg-[rgba(16,10,13,0.94)] px-4 py-2 backdrop-blur xl:px-5;
     box-shadow: inset 0 1px 0 rgba(255, 240, 177, 0.05);
   }
 
   .metis-context-bar-search {
-    @apply flex h-9 items-center gap-2 rounded-md border border-[rgba(212,175,55,0.18)] bg-[rgba(16,24,39,0.82)] px-3 text-sm text-muted-foreground;
+    @apply flex h-9 items-center gap-2 rounded-md border border-[rgba(212,175,55,0.18)] bg-[rgba(31,21,21,0.84)] px-3 text-sm text-muted-foreground;
   }
 
   .metis-logo-lockup {

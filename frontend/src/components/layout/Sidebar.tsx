@@ -159,7 +159,7 @@ export function Sidebar() {
             </div>
             <button
               onClick={() => setMobileOpen(false)}
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground xl:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-[rgba(156,120,70,0.24)] hover:bg-[rgba(31,21,21,0.8)] hover:text-foreground xl:hidden"
               title="Close navigation"
             >
               <X className="h-4 w-4" />
@@ -170,10 +170,10 @@ export function Sidebar() {
         <div className="relative z-[1] border-b border-border/70 px-4 py-3">
           <div className="metis-operations-rail-label">Navigation Posture</div>
           <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-            <div className="rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] px-2 py-2 text-[#dce6f6]">
+            <div className="rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] px-2 py-2 text-[#eadfca]">
               Analyst mode
             </div>
-            <div className="rounded-md border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(48,36,12,0.42),rgba(11,17,28,0.88))] px-2 py-2 text-[#f0cf70]">
+            <div className="rounded-md border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(48,36,12,0.42),rgba(22,15,16,0.9))] px-2 py-2 text-[#f0cf70]">
               Secure session
             </div>
           </div>
@@ -198,7 +198,7 @@ export function Sidebar() {
 
         <div className="relative z-[1] border-t border-border/70 px-4 py-3">
           <div className="metis-operations-rail-label">Rail Status</div>
-          <div className="mt-2 rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] px-3 py-3 text-sm text-muted-foreground">
+          <div className="mt-2 rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] px-3 py-3 text-sm text-muted-foreground">
             <div className="flex items-center justify-between gap-3">
               <span>Context lane</span>
               <span className="text-foreground">{workspaceLabel}</span>

@@ -123,7 +123,7 @@ export function TopBar() {
             </div>
             <div className="mt-1 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
               <span className="metis-logo-lockup shrink-0">
-                <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-[rgba(212,175,55,0.22)] bg-[linear-gradient(180deg,rgba(46,34,11,0.48),rgba(11,17,28,0.88))]">
+                <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-[rgba(212,175,55,0.22)] bg-[linear-gradient(180deg,rgba(46,34,11,0.48),rgba(21,14,16,0.9))]">
                   <MetisLogoMark className="h-3.5 w-3.5" />
                 </span>
                 <span className="metis-logo-wordmark text-[0.82rem]">METIS</span>
@@ -161,14 +161,14 @@ export function TopBar() {
             </div>
           </div>
 
-          <div className="hidden rounded-md border border-border/70 bg-[rgba(17,24,39,0.76)] px-2.5 py-1.5 text-[11px] uppercase tracking-[0.16em] text-muted-foreground lg:block">
+          <div className="hidden rounded-md border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.8)] px-2.5 py-1.5 text-[11px] uppercase tracking-[0.16em] text-muted-foreground lg:block">
             {currentRoute.label}
           </div>
 
           <button
             aria-label="Open notifications"
             title="Open notifications"
-            className="relative flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70]"
+            className="relative flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70]"
           >
             <Bell className="h-[18px] w-[18px]" />
             <span className="sr-only">Open notifications</span>
@@ -176,7 +176,7 @@ export function TopBar() {
           </button>
 
           <div className="flex items-center gap-2 border-l border-border/70 pl-2">
-            <div className="hidden items-center gap-2 rounded-md border border-[rgba(212,175,55,0.24)] bg-[linear-gradient(180deg,rgba(48,36,12,0.34),rgba(11,17,28,0.88))] px-2.5 py-1.5 md:flex">
+            <div className="hidden items-center gap-2 rounded-md border border-[rgba(212,175,55,0.24)] bg-[linear-gradient(180deg,rgba(48,36,12,0.34),rgba(22,15,16,0.9))] px-2.5 py-1.5 md:flex">
               <Shield className="h-4 w-4 text-[#f0cf70]" />
               <div className="leading-none">
                 <p className="text-[11px] uppercase tracking-[0.16em] text-[#d4af37]">
@@ -189,7 +189,7 @@ export function TopBar() {
             <button
               aria-label="Open user session"
               title="Open user session"
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70]"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70]"
             >
               <UserCircle2 className="h-[18px] w-[18px]" />
               <span className="sr-only">Open user session</span>
@@ -197,7 +197,7 @@ export function TopBar() {
             <button
               aria-label="Log out"
               title="Log out"
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-[rgba(110,138,189,0.24)] hover:bg-[rgba(11,17,28,0.84)] hover:text-[#f0cf70]"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-[rgba(156,120,70,0.24)] hover:bg-[rgba(25,17,19,0.84)] hover:text-[#f0cf70]"
             >
               <LogOut className="h-[18px] w-[18px]" />
               <span className="sr-only">Log out</span>

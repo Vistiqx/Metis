@@ -10,7 +10,7 @@ export function SignalSeverityBar({ tone, className }: SignalSeverityBarProps) {
   return (
     <div
       className={cn(
-        "mt-3 h-2 rounded-full border border-[rgba(110,138,189,0.18)] bg-[rgba(17,24,39,0.92)] p-[2px]",
+        "mt-3 h-2 rounded-full border border-[rgba(156,120,70,0.18)] bg-[rgba(31,21,21,0.9)] p-[2px]",
         className,
       )}
       aria-hidden="true"

@@ -135,7 +135,7 @@ export function Dashboard() {
             {activityFeed.map((item) => (
               <div
                 key={`${item.time}-${item.text}`}
-                className="rounded-lg border border-[rgba(110,138,189,0.18)] bg-[rgba(11,17,28,0.88)] px-3 py-2.5"
+                className="rounded-lg border border-[rgba(156,120,70,0.18)] bg-[rgba(25,17,19,0.88)] px-3 py-2.5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-mono text-xs text-muted-foreground">
@@ -241,7 +241,7 @@ export function Dashboard() {
               </div>
               <div className="space-y-2.5">
                 {watchRows.map((row) => (
-                    <div key={row.subject} className="metis-pane-muted border-[rgba(110,138,189,0.18)] bg-[rgba(10,16,27,0.92)]">
+                    <div key={row.subject} className="metis-pane-muted border-[rgba(156,120,70,0.18)] bg-[rgba(24,17,19,0.9)]">
                     <p className="text-sm font-semibold text-foreground">
                       {row.subject}
                     </p>
@@ -276,7 +276,7 @@ export function Dashboard() {
               {commandRows.map((row) => (
                 <div
                   key={row.id}
-                  className="metis-list-row flex-col border-[rgba(110,138,189,0.18)] bg-[linear-gradient(180deg,rgba(14,20,31,0.94),rgba(11,17,28,0.96))]"
+                  className="metis-list-row flex-col border-[rgba(156,120,70,0.18)] bg-[linear-gradient(180deg,rgba(28,18,18,0.94),rgba(18,14,18,0.96))]"
                 >
                   <div className="flex w-full items-start justify-between gap-3">
                     <div>

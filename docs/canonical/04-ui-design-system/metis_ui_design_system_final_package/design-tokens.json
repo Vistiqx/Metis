@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "name": "M\u00e9tis UI Design System",
+    "version": "1.0",
+    "theme": "Precision Intelligence Instrument",
+    "description": "Dark-environment intelligence interface with Wisdom Gold authority accents and signal-layer analytical classification."
+  },
+  "colors": {
+    "environment": {
+      "obsidian": "#121212",
+      "midnight": "#020817",
+      "charcoal_900": "#0B0F1A",
+      "charcoal_800": "#12192A",
+      "charcoal_700": "#1A2235",
+      "paper_000": "#FFFFFF",
+      "paper_050": "#F7F5EF",
+      "ink_900": "#111111",
+      "ink_700": "#2A3142"
+    },
+    "wisdom_gold": {
+      "deep_gold": "#7A5A12",
+      "antique_gold": "#A87C1F",
+      "wisdom_gold": "#D4A73A",
+      "radiant_gold": "#F2C14E",
+      "luminous_core": "#FFD977"
+    },
+    "signal": {
+      "magenta_pulse": "#FF2D8F",
+      "solar_orange": "#FF7A18",
+      "signal_yellow": "#FFD400",
+      "cyber_teal": "#32D1CC",
+      "neon_lime": "#A6FF00"
+    }
+  },
+  "typography": {
+    "authority_serif": {
+      "family": "Authority Serif",
+      "fallback": "Georgia, serif",
+      "use": [
+        "wordmark",
+        "hero_titles",
+        "report_titles",
+        "H1"
+      ]
+    },
+    "modern_serif": {
+      "family": "Modern Serif",
+      "fallback": "Times New Roman, serif",
+      "use": [
+        "body_text",
+        "UI_labels",
+        "H2",
+        "H3",
+        "tables",
+        "reports"
+      ]
+    }
+  }
+}

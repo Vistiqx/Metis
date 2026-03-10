@@ -15,6 +15,22 @@ Metis combines:
 - Visual intelligence
 - Threat and conflict modeling
 
+## Platform Specification
+
+The authoritative product specification is located at:
+
+docs/canonical/
+
+These documents define:
+
+- UI system
+- data model
+- graph visualization
+- investigation lifecycle
+- report rendering
+
+Implementation must follow the canonical specification.
+
 ## Architecture
 
 ### Core Modules

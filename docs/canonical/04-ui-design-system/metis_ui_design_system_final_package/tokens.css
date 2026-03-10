@@ -1,0 +1,26 @@
+:root {
+  --obsidian: #121212;
+  --midnight: #020817;
+  --charcoal-900: #0B0F1A;
+  --charcoal-800: #12192A;
+  --charcoal-700: #1A2235;
+  --paper-000: #FFFFFF;
+  --paper-050: #F7F5EF;
+  --ink-900: #111111;
+  --ink-700: #2A3142;
+
+  --deep-gold: #7A5A12;
+  --antique-gold: #A87C1F;
+  --wisdom-gold: #D4A73A;
+  --radiant-gold: #F2C14E;
+  --luminous-core: #FFD977;
+
+  --magenta-pulse: #FF2D8F;
+  --solar-orange: #FF7A18;
+  --signal-yellow: #FFD400;
+  --cyber-teal: #32D1CC;
+  --neon-lime: #A6FF00;
+
+  --font-authority-serif: "Authority Serif", Georgia, serif;
+  --font-modern-serif: "Modern Serif", "Times New Roman", serif;
+}

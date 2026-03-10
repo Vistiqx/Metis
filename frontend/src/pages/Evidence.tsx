@@ -1,487 +1,272 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { Download, Eye, Filter, Search, Upload } from "lucide-react";
 import {
-  Download,
-  Eye,
-  FileText,
-  Filter,
-  Grid3X3,
-  Image as ImageIcon,
-  List,
-  MoreVertical,
-  Search,
-  Tag,
-  Trash2,
-  Upload,
-  Video,
-} from "lucide-react";
-import { WorkspaceLayout } from "../components/layout";
+  MetadataItem,
+  MetadataSection,
+  WorkspaceLayout,
+} from "../components/layout";
+import { EvidenceReviewArchetype } from "../components/archetypes";
 import { Badge } from "../components/ui/Badge";
 import { Button } from "../components/ui/Button";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../components/ui/Card";
+  DataTable,
+  DataTableCell,
+  DataTableHeadCell,
+  DataTableTable,
+} from "../components/ui/DataTable";
+import { Panel } from "../components/ui/Panel";
+import { SectionHeader } from "../components/ui/SectionHeader";
 import { SignalBadge } from "../components/ui/SignalBadge";
-import { SignalTag } from "../components/ui/SignalTag";
 
-// Mock evidence data
-const mockEvidence = [
+const evidenceRows = [
   {
     id: "EV-001",
-    title: "Protest Photo Set A",
-    type: "image",
-    format: "JPG",
-    size: "12.4 MB",
+    title: "Protest photo set A",
+    type: "Image",
     caseId: "CASE-2024-001",
-    tags: ["protest", "district-7", "photo"],
-    uploaded: "2 hours ago",
-    thumbnail: "📷",
+    state: "VERIFIED",
+    confidence: "82%",
+    signal: "financial" as const,
+    source: "Field collection",
+    note: "Contains repeated subject and badge identifiers near the transit yard.",
   },
   {
     id: "EV-002",
-    title: "Social Media Video",
-    type: "video",
-    format: "MP4",
-    size: "45.2 MB",
+    title: "Social media video",
+    type: "Video",
     caseId: "CASE-2024-001",
-    tags: ["video", "twitter", "viral"],
-    uploaded: "5 hours ago",
-    thumbnail: "🎥",
+    state: "EXTRACTED",
+    confidence: "75%",
+    signal: "emerging" as const,
+    source: "Open source ingest",
+    note: "Entity extraction produced three candidate matches with route overlap.",
   },
   {
     id: "EV-003",
-    title: "Network Communication Log",
-    type: "document",
-    format: "PDF",
-    size: "2.1 MB",
+    title: "Network communication log",
+    type: "Document",
     caseId: "CASE-2024-002",
-    tags: ["document", "communication", "log"],
-    uploaded: "1 day ago",
-    thumbnail: "📄",
-  },
-  {
-    id: "EV-004",
-    title: "Aerial Surveillance",
-    type: "image",
-    format: "PNG",
-    size: "8.7 MB",
-    caseId: "CASE-2024-004",
-    tags: ["drone", "aerial", "surveillance"],
-    uploaded: "2 days ago",
-    thumbnail: "📷",
-  },
-  {
-    id: "EV-005",
-    title: "Interview Recording",
-    type: "video",
-    format: "MOV",
-    size: "156.3 MB",
-    caseId: "CASE-2024-002",
-    tags: ["interview", "audio", "witness"],
-    uploaded: "3 days ago",
-    thumbnail: "🎥",
-  },
-  {
-    id: "EV-006",
-    title: "Financial Records",
-    type: "document",
-    format: "XLSX",
-    size: "1.2 MB",
-    caseId: "CASE-2024-003",
-    tags: ["financial", "spreadsheet", "records"],
-    uploaded: "4 days ago",
-    thumbnail: "📊",
+    state: "CORRELATED",
+    confidence: "88%",
+    signal: "anomaly" as const,
+    source: "Intercept archive",
+    note: "References schedule variance and late-stage rerouting instructions.",
   },
 ];
 
-const typeIcons: Record<string, React.ElementType> = {
-  image: ImageIcon,
-  video: Video,
-  document: FileText,
-};
-
-const typeColors: Record<string, string> = {
-  image: "emerging",
-  video: "anomaly",
-  document: "financial",
-};
-
 export function Evidence() {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [selectedEvidence, setSelectedEvidence] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedId, setSelectedId] = useState(evidenceRows[0]?.id ?? "");
 
-  const filteredEvidence = mockEvidence.filter(
-    (item) =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery.toLowerCase()),
+  const filteredEvidence = useMemo(
+    () =>
+      evidenceRows.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.caseId.toLowerCase().includes(searchQuery.toLowerCase()),
       ),
+    [searchQuery],
   );
 
-  const toggleSelection = (id: string) => {
-    setSelectedEvidence((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
-    );
-  };
+  const selectedEvidence =
+    filteredEvidence.find((item) => item.id === selectedId) ??
+    filteredEvidence[0] ??
+    null;
 
   return (
-    <WorkspaceLayout dockContext="evidence" showRightPanel={true}>
-      <div className="metis-page">
-        <div className="metis-page-header">
-          <div>
-            <div className="metis-kicker">Evidence Registry</div>
-            <h1 className="metis-title">Evidence</h1>
-            <p className="metis-subtitle">
-              Browse evidence by media type, chain context, and tagged
-              analytical relevance.
-            </p>
+    <WorkspaceLayout
+      dockContext="evidence"
+      rightPanelTitle="Evidence Metadata"
+      rightPanelContent={
+        selectedEvidence ? (
+          <>
+            <MetadataSection title="Evidence Metadata">
+              <MetadataItem label="Evidence ID" value={selectedEvidence.id} />
+              <MetadataItem label="Type" value={selectedEvidence.type} />
+              <MetadataItem label="Case" value={selectedEvidence.caseId} />
+              <MetadataItem label="Workflow" value={selectedEvidence.state} />
+              <MetadataItem label="Source" value={selectedEvidence.source} />
+            </MetadataSection>
+            <MetadataSection title="Classification">
+              <SignalBadge tone={selectedEvidence.signal}>
+                {selectedEvidence.confidence}
+              </SignalBadge>
+            </MetadataSection>
+            <MetadataSection title="Analyst Annotation">
+              <p className="text-sm text-muted-foreground">
+                {selectedEvidence.note}
+              </p>
+            </MetadataSection>
+          </>
+        ) : undefined
+      }
+    >
+      <EvidenceReviewArchetype
+        header={
+          <SectionHeader
+            kicker="Evidence Review"
+            title="Evidence"
+            subtitle="Evidence review workspace with compact filters, a dominant document review surface, and a persistent metadata and classification inspector."
+            meta={
+              <div className="flex items-center gap-2">
+                <Button variant="outline">
+                  <Download className="mr-2 h-4 w-4" /> Export
+                </Button>
+                <Button>
+                  <Upload className="mr-2 h-4 w-4" /> Upload
+                </Button>
+              </div>
+            }
+          />
+        }
+        commandStrip={
+          <div className="metis-command-strip">
+            <div className="metis-metric-cell flex-1">
+              <div className="metis-micro-label">Artifacts</div>
+              <div className="mt-1 text-2xl font-semibold text-foreground">
+                {evidenceRows.length}
+              </div>
+            </div>
+            <div className="metis-metric-cell flex-1">
+              <div className="metis-micro-label">Ready for review</div>
+              <div className="mt-1 text-2xl font-semibold text-foreground">
+                2
+              </div>
+            </div>
+            <div className="metis-metric-cell flex-[1.3]">
+              <div className="metis-micro-label">Surface note</div>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Evidence confidence stays inside signal components while viewer
+                and metadata surfaces remain neutral.
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline">
-              <Download className="mr-2 h-4 w-4" />
-              Export
-            </Button>
-            <Button>
-              <Upload className="mr-2 h-4 w-4" />
-              Upload
-            </Button>
-          </div>
-        </div>
-
-        <div className="metis-toolbar">
-          <div className="flex items-center gap-4">
+        }
+        leftRail={
+          <Panel>
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div>
+                <div className="metis-kicker">Evidence Filters</div>
+                <h2 className="text-[20px] font-semibold">Intake Scope</h2>
+              </div>
+              <Button variant="outline" size="sm">
+                <Filter className="mr-2 h-4 w-4" /> Filters
+              </Button>
+            </div>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="Search evidence..."
+                placeholder="Search evidence"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="metis-input w-80 pl-10"
+                onChange={(event) => setSearchQuery(event.target.value)}
+                className="metis-input w-full pl-10"
               />
             </div>
-            <Button variant="outline">
-              <Filter className="mr-2 h-4 w-4" />
-              Filters
-            </Button>
-            <Button variant="outline">
-              <Tag className="mr-2 h-4 w-4" />
-              Tags
-            </Button>
-            {selectedEvidence.length > 0 && (
-              <Badge variant="gold">{selectedEvidence.length} selected</Badge>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant={viewMode === "grid" ? "secondary" : "ghost"}
-              size="icon"
-              aria-label="Grid view"
-              onClick={() => setViewMode("grid")}
-            >
-              <Grid3X3 className="h-4 w-4" />
-            </Button>
-            <Button
-              variant={viewMode === "list" ? "secondary" : "ghost"}
-              size="icon"
-              aria-label="List view"
-              onClick={() => setViewMode("list")}
-            >
-              <List className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="metis-stat-grid">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Total Evidence
-              </CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{mockEvidence.length}</div>
-              <p className="text-xs text-muted-foreground">Across all cases</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Images</CardTitle>
-              <ImageIcon className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {mockEvidence.filter((e) => e.type === "image").length}
+          </Panel>
+        }
+        centerPrimary={
+          <Panel>
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <div>
+                <div className="metis-kicker">Document Viewer</div>
+                <h2 className="text-[20px] font-semibold">Review Queue</h2>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Photos & screenshots
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Videos</CardTitle>
-              <Video className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {mockEvidence.filter((e) => e.type === "video").length}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Recordings & clips
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Storage Used
-              </CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">226.9 MB</div>
-              <p className="text-xs text-muted-foreground">Of 10 GB limit</p>
-            </CardContent>
-          </Card>
-        </div>
+              <Badge variant="gold">
+                {filteredEvidence.length} packets visible
+              </Badge>
+            </div>
 
-        {viewMode === "grid" ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredEvidence.map((item) => {
-              const TypeIcon = typeIcons[item.type];
-              return (
-                <Card
-                  key={item.id}
-                  className={`cursor-pointer transition-all hover:shadow-md ${
-                    selectedEvidence.includes(item.id)
-                      ? "ring-2 ring-primary"
-                      : ""
-                  }`}
-                  onClick={() => toggleSelection(item.id)}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-muted text-2xl">
-                          {item.thumbnail}
-                        </div>
-                        <div>
-                          <p className="text-xs font-mono text-muted-foreground">
-                            {item.id}
-                          </p>
-                          <CardTitle className="text-base">
-                            {item.title}
-                          </CardTitle>
-                        </div>
-                      </div>
-                      <input
-                        type="checkbox"
-                        checked={selectedEvidence.includes(item.id)}
-                        onChange={() => {}}
-                        className="metis-check"
-                      />
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2">
-                        <SignalBadge
-                          tone={
-                            typeColors[item.type] as
-                              | "emerging"
-                              | "anomaly"
-                              | "financial"
-                          }
-                        >
-                          <TypeIcon className="h-3 w-3" />
-                          {item.format}
-                        </SignalBadge>
-                        <span className="text-xs text-muted-foreground">
-                          {item.size}
-                        </span>
-                      </div>
-                      <p className="text-xs text-muted-foreground">
-                        Case: {item.caseId}
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {item.tags.map((tag) => (
-                          <SignalTag
-                            key={tag}
-                            tone="communications"
-                            className="normal-case tracking-normal text-xs"
-                          >
-                            {tag}
-                          </SignalTag>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between pt-2">
-                        <span className="text-xs text-muted-foreground">
-                          {item.uploaded}
-                        </span>
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            aria-label="Preview evidence"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            aria-label="More evidence actions"
-                          >
-                            <MoreVertical className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        ) : (
-          <Card>
-            <CardContent className="p-0">
-              <table className="metis-table">
+            <DataTable className="mb-4">
+              <DataTableTable>
                 <thead>
                   <tr>
-                    <th className="w-12 px-4 py-3"></th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Evidence
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Type
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Case
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Size
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Tags
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">
-                      Uploaded
-                    </th>
-                    <th className="px-4 py-3 text-right text-sm font-medium">
-                      Actions
-                    </th>
+                    <DataTableHeadCell>Evidence</DataTableHeadCell>
+                    <DataTableHeadCell>Workflow</DataTableHeadCell>
+                    <DataTableHeadCell>Case</DataTableHeadCell>
+                    <DataTableHeadCell>Confidence</DataTableHeadCell>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredEvidence.map((item) => {
-                    const TypeIcon = typeIcons[item.type];
-                    return (
-                      <tr
-                        key={item.id}
-                        className={`${
-                          selectedEvidence.includes(item.id)
-                            ? "bg-primary/5"
-                            : ""
-                        }`}
-                      >
-                        <td className="px-4 py-3">
-                          <input
-                            type="checkbox"
-                            checked={selectedEvidence.includes(item.id)}
-                            onChange={() => toggleSelection(item.id)}
-                            className="metis-check"
-                          />
-                        </td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-3">
-                            <div className="text-2xl">{item.thumbnail}</div>
-                            <div>
-                              <p className="font-medium">{item.title}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {item.id}
-                              </p>
-                            </div>
+                  {filteredEvidence.map((item) => (
+                    <tr
+                      key={item.id}
+                      className={`cursor-pointer ${selectedEvidence?.id === item.id ? "bg-primary/5" : ""}`}
+                      onClick={() => setSelectedId(item.id)}
+                    >
+                      <DataTableCell>
+                        <div>
+                          <div className="mb-1 flex items-center gap-2">
+                            <span className="font-mono text-xs text-muted-foreground">
+                              {item.id}
+                            </span>
+                            <Badge variant="neutral">{item.type}</Badge>
                           </div>
-                        </td>
-                        <td className="px-4 py-3">
-                          <SignalBadge
-                            tone={
-                              typeColors[item.type] as
-                                | "emerging"
-                                | "anomaly"
-                                | "financial"
-                            }
-                          >
-                            <TypeIcon className="h-3 w-3" />
-                            {item.format}
-                          </SignalBadge>
-                        </td>
-                        <td className="px-4 py-3 text-sm">{item.caseId}</td>
-                        <td className="px-4 py-3 text-sm">{item.size}</td>
-                        <td className="px-4 py-3">
-                          <div className="flex flex-wrap gap-1">
-                            {item.tags.slice(0, 2).map((tag) => (
-                              <SignalTag
-                                key={tag}
-                                tone="communications"
-                                className="normal-case tracking-normal text-xs"
-                              >
-                                {tag}
-                              </SignalTag>
-                            ))}
-                            {item.tags.length > 2 && (
-                              <span className="text-xs text-muted-foreground">
-                                +{item.tags.length - 2}
-                              </span>
-                            )}
+                          <div className="font-semibold text-foreground">
+                            {item.title}
                           </div>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-muted-foreground">
-                          {item.uploaded}
-                        </td>
-                        <td className="px-4 py-3 text-right">
-                          <div className="flex justify-end gap-1">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                              aria-label="Preview evidence"
-                            >
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                              aria-label="Download evidence"
-                            >
-                              <Download className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8"
-                              aria-label="Delete evidence"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                        </div>
+                      </DataTableCell>
+                      <DataTableCell>
+                        <Badge variant="neutral">{item.state}</Badge>
+                      </DataTableCell>
+                      <DataTableCell>{item.caseId}</DataTableCell>
+                      <DataTableCell>
+                        <SignalBadge tone={item.signal}>
+                          {item.confidence}
+                        </SignalBadge>
+                      </DataTableCell>
+                    </tr>
+                  ))}
                 </tbody>
-              </table>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+              </DataTableTable>
+            </DataTable>
+
+            {selectedEvidence ? (
+              <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+                <div className="metis-pane-muted min-h-[320px]">
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <div>
+                      <div className="metis-kicker">Preview</div>
+                      <h3 className="text-[16px] font-semibold">
+                        {selectedEvidence.title}
+                      </h3>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      aria-label="Preview evidence"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <div className="flex h-[240px] items-center justify-center rounded-lg border border-border/70 bg-background/40 text-sm text-muted-foreground">
+                    Canonical review surface placeholder
+                  </div>
+                </div>
+                <div className="metis-pane-muted">
+                  <div className="metis-kicker">Extracted Entities</div>
+                  <div className="mt-3 space-y-2 text-sm text-muted-foreground">
+                    <div className="metis-list-row">
+                      <span>Samir Haddad</span>
+                      <Badge variant="neutral">person</Badge>
+                    </div>
+                    <div className="metis-list-row">
+                      <span>North Transit Yard</span>
+                      <Badge variant="neutral">location</Badge>
+                    </div>
+                    <div className="metis-list-row">
+                      <span>Badge 14-C</span>
+                      <Badge variant="gold">asset</Badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : null}
+          </Panel>
+        }
+      />
     </WorkspaceLayout>
   );
 }

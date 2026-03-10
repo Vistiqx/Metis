@@ -1,0 +1,26 @@
+{
+  "graph": {
+    "canvas_background": "#020817",
+    "authority_layer": {
+      "primary_node": "#D4A73A",
+      "core_highlight": "#FFD977",
+      "secondary_gold": "#A87C1F"
+    },
+    "signal_layer": {
+      "anomaly": "#FF2D8F",
+      "financial": "#FF7A18",
+      "relationship": "#FFD400",
+      "communications": "#32D1CC",
+      "emerging": "#A6FF00"
+    },
+    "node_shapes": {
+      "person": "circle",
+      "organization": "hexagon",
+      "location": "diamond",
+      "event": "triangle",
+      "digital_asset": "square",
+      "document": "rounded_rect",
+      "unknown": "outlined_circle"
+    }
+  }
+}

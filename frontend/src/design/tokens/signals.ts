@@ -1,8 +1,8 @@
 export type SignalTone =
   | "anomaly"
   | "financial"
-  | "relationship"
-  | "communications"
+  | "core"
+  | "confirmed"
   | "emerging";
 
 export const signalTokens: Record<
@@ -32,7 +32,7 @@ export const signalTokens: Record<
     nodeFill: "#FF7A18",
     nodeStroke: "#FFB16D",
   },
-  relationship: {
+  core: {
     badge: "border-[#ffd400]/35 bg-[#ffd400]/10 text-[#ffe37a]",
     tag: "border-[#ffd400]/30 bg-[#ffd400]/10 text-[#ffe37a]",
     dot: "bg-[#ffd400]",
@@ -40,7 +40,7 @@ export const signalTokens: Record<
     nodeFill: "#FFD400",
     nodeStroke: "#FFE37A",
   },
-  communications: {
+  confirmed: {
     badge: "border-[#32d1cc]/35 bg-[#32d1cc]/10 text-[#89e7e3]",
     tag: "border-[#32d1cc]/30 bg-[#32d1cc]/10 text-[#89e7e3]",
     dot: "bg-[#32d1cc]",

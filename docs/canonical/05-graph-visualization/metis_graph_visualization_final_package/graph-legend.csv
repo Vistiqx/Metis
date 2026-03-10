@@ -1,0 +1,12 @@
+Type,Visual,Meaning
+Person,Circle,Human entity
+Organization,Hexagon,"Company, group, institution"
+Location,Diamond,Geographic place
+Event,Triangle,Occurrence in time
+Digital Asset,Square,"Domain, IP, account, handle"
+Document,Rounded Rectangle,"Report, article, file"
+Unknown,Outlined Circle,Unclassified entity
+Confirmed Edge,Solid,Validated relationship
+Suspected Edge,Dashed,Possible relationship
+Inferred Edge,Dotted,Derived relationship
+Temporal Edge,Thin Pulse,Time-linked relationship

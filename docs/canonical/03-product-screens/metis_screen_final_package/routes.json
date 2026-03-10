@@ -1,0 +1,20 @@
+{
+  "/login": "Login / Access Gate",
+  "/dashboard": "Dashboard",
+  "/investigations-list": "Investigations List",
+  "/investigation-detail": "Investigation Detail",
+  "/graph-explorer": "Graph Explorer",
+  "/entity-profile": "Entity Profile",
+  "/source-directory": "Source Directory",
+  "/source-detail": "Source Detail",
+  "/timeline-view": "Timeline View",
+  "/reports-list": "Reports List",
+  "/report-builder": "Report Builder",
+  "/alerts-queue": "Alerts Queue",
+  "/analytics": "Analytics",
+  "/settings": "Settings / Administration",
+  "/investigations/:id": "Investigation Detail",
+  "/entities/:id": "Entity Profile",
+  "/sources/:id": "Source Detail",
+  "/reports/:id": "Report Builder"
+}

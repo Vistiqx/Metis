@@ -4,34 +4,34 @@
 
 @layer base {
   :root {
-    --background: 222 52% 6%;
-    --foreground: 42 30% 92%;
-    --card: 224 36% 12%;
-    --card-foreground: 42 30% 94%;
-    --popover: 223 39% 10%;
-    --popover-foreground: 42 30% 94%;
-    --primary: 40 65% 54%;
-    --primary-foreground: 222 50% 8%;
-    --secondary: 223 28% 18%;
-    --secondary-foreground: 42 22% 88%;
-    --muted: 223 24% 15%;
-    --muted-foreground: 217 15% 66%;
-    --accent: 224 28% 18%;
-    --accent-foreground: 42 30% 94%;
-    --destructive: 340 78% 58%;
+    --background: 222 36% 7%;
+    --foreground: 210 20% 92%;
+    --card: 222 31% 12%;
+    --card-foreground: 210 20% 92%;
+    --popover: 222 31% 12%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 45 64% 52%;
+    --primary-foreground: 222 52% 6%;
+    --secondary: 217 28% 18%;
+    --secondary-foreground: 210 20% 90%;
+    --muted: 216 28% 23%;
+    --muted-foreground: 215 15% 67%;
+    --accent: 217 28% 18%;
+    --accent-foreground: 210 20% 92%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 222 21% 24%;
-    --input: 222 23% 16%;
-    --ring: 43 74% 62%;
-    --radius: 0.875rem;
-    --metis-midnight: 222 78% 5%;
-    --metis-ink: 224 41% 9%;
-    --metis-gold: 41 64% 53%;
-    --metis-gold-soft: 41 43% 23%;
-    --metis-cyan: 178 62% 51%;
-    --metis-orange: 27 100% 55%;
-    --metis-lime: 81 100% 50%;
-    --metis-rose: 330 100% 59%;
+    --border: 217 25% 58%;
+    --input: 216 28% 23%;
+    --ring: 45 64% 52%;
+    --radius: 10px;
+    --metis-midnight: 222 36% 7%;
+    --metis-ink: 222 31% 12%;
+    --metis-gold: 45 64% 52%;
+    --metis-gold-soft: 45 60% 40%;
+    --metis-cyan: 188 93% 40%;
+    --metis-orange: 38 92% 50%;
+    --metis-lime: 160 84% 36%;
+    --metis-rose: 0 84% 60%;
   }
 }
 
@@ -46,19 +46,15 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: "Charter", "Cambria", Georgia, serif;
+    font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", sans-serif;
     background-image:
       radial-gradient(
         circle at top left,
-        rgba(212, 167, 58, 0.12),
-        transparent 28%
+        rgba(212, 175, 55, 0.12),
+        transparent 24%
       ),
-      radial-gradient(
-        circle at top right,
-        rgba(212, 167, 58, 0.05),
-        transparent 20%
-      ),
-      linear-gradient(180deg, rgba(11, 15, 26, 0.96), rgba(2, 8, 23, 1));
+      radial-gradient(circle at 82% 0, rgba(58, 74, 99, 0.42), transparent 24%),
+      linear-gradient(180deg, #070b12 0%, #0d1420 48%, #111827 100%);
     min-height: 100vh;
   }
 
@@ -71,8 +67,8 @@
   h3,
   h4 {
     @apply tracking-tight text-foreground;
-    font-family:
-      "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-family: "IBM Plex Serif", "Palatino Linotype", Georgia, serif;
+    font-weight: 600;
   }
 
   p,
@@ -83,7 +79,7 @@
   button,
   td,
   th {
-    font-family: "Charter", "Cambria", Georgia, serif;
+    font-family: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", sans-serif;
   }
 
   input,
@@ -104,8 +100,8 @@
   }
 
   ::selection {
-    background: rgba(242, 193, 78, 0.28);
-    color: #f8f4ea;
+    background: rgba(212, 175, 55, 0.28);
+    color: #e5e7eb;
   }
 
   ::-webkit-scrollbar {
@@ -125,7 +121,15 @@
 
 @layer components {
   .metis-page {
-    @apply space-y-5;
+    @apply space-y-4;
+  }
+
+  .metis-archetype {
+    @apply space-y-4;
+  }
+
+  .metis-archetype-command {
+    @apply block;
   }
 
   .metis-page-header {
@@ -133,39 +137,111 @@
   }
 
   .metis-kicker {
-    @apply text-[0.68rem] uppercase tracking-[0.24em] text-primary/80;
+    @apply text-[11px] uppercase tracking-[0.22em] text-primary/85;
   }
 
   .metis-title {
-    @apply text-[2.1rem] sm:text-[2.55rem];
+    @apply font-authority text-[25px] leading-tight text-foreground;
   }
 
   .metis-subtitle {
-    @apply max-w-3xl text-sm leading-6 text-muted-foreground;
+    @apply max-w-3xl text-sm leading-5 text-muted-foreground;
   }
 
   .metis-panel {
-    @apply rounded-xl border border-border/80 bg-card/90 shadow-panel shadow-black/25 backdrop-blur;
+    @apply rounded-lg border border-border/80 bg-[linear-gradient(180deg,rgba(24,33,48,0.94),rgba(17,24,39,0.96))] p-4 shadow-panel;
   }
 
   .metis-panel-muted {
-    @apply rounded-xl border border-border/70 bg-secondary/56 shadow-sm;
+    @apply rounded-lg border border-border/70 bg-secondary/50 p-4;
   }
 
   .metis-toolbar {
-    @apply flex flex-col gap-3 rounded-xl border border-border/80 bg-card/90 p-3.5 shadow-panel shadow-black/25 backdrop-blur lg:flex-row lg:items-center lg:justify-between;
+    @apply flex min-h-12 flex-col gap-3 rounded-lg border border-border/80 bg-[linear-gradient(180deg,rgba(23,31,46,0.96),rgba(17,24,39,0.98))] px-3 py-2 shadow-panel lg:flex-row lg:items-center lg:justify-between;
+  }
+
+  .metis-command-strip {
+    @apply flex min-h-12 flex-wrap items-center gap-3 rounded-lg border border-primary/15 bg-[linear-gradient(180deg,rgba(31,41,55,0.88),rgba(21,29,42,0.94))] px-3 py-2 shadow-panel;
+  }
+
+  .metis-analysis-grid {
+    @apply grid gap-4 xl:grid-cols-[240px_minmax(0,1.6fr)];
+  }
+
+  .metis-archetype-grid {
+    @apply items-start;
+  }
+
+  .metis-archetype-rail {
+    @apply min-w-0;
+  }
+
+  .metis-archetype-main {
+    @apply min-w-0;
+  }
+
+  .metis-archetype-secondary {
+    @apply min-w-0;
+  }
+
+  .metis-analysis-stack {
+    @apply space-y-4;
+  }
+
+  .metis-pane {
+    @apply rounded-lg border border-border/80 bg-[linear-gradient(180deg,rgba(24,33,48,0.94),rgba(17,24,39,0.96))] p-4 shadow-panel;
+  }
+
+  .metis-pane-muted {
+    @apply rounded-lg border border-border/70 bg-[linear-gradient(180deg,rgba(33,43,61,0.72),rgba(30,41,59,0.5))] p-3;
+  }
+
+  .metis-list-row {
+    @apply flex items-start justify-between gap-3 rounded-lg border border-border/70 bg-[linear-gradient(180deg,rgba(27,36,51,0.7),rgba(22,31,45,0.76))] px-3 py-3 transition-colors hover:border-primary/25 hover:bg-[linear-gradient(180deg,rgba(35,46,64,0.82),rgba(27,38,56,0.9))];
+  }
+
+  .metis-keyline {
+    @apply h-px w-full bg-gradient-to-r from-primary/25 via-border/80 to-transparent;
+  }
+
+  .metis-shell-grid {
+    @apply grid min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(212,175,55,0.14),transparent_18%),radial-gradient(circle_at_100%_0,rgba(56,189,248,0.08),transparent_20%),linear-gradient(180deg,rgba(10,14,22,0.98),rgba(8,12,19,1))] xl:grid-cols-[240px_minmax(0,1.6fr)_300px];
+  }
+
+  .metis-workspace {
+    @apply min-w-0 border-l border-r border-border/70 bg-[linear-gradient(180deg,rgba(15,23,42,0.82),rgba(10,15,24,0.96))];
+  }
+
+  .metis-shell-region {
+    @apply bg-[linear-gradient(180deg,rgba(18,25,38,0.24),rgba(10,15,24,0.52))];
+  }
+
+  .metis-page-body {
+    @apply px-5 py-4;
+  }
+
+  .metis-metric-row {
+    @apply grid gap-2 sm:grid-cols-2 xl:grid-cols-4;
+  }
+
+  .metis-metric-cell {
+    @apply min-w-[140px] rounded-lg border border-border/70 bg-secondary/30 px-3 py-2;
+  }
+
+  .metis-micro-label {
+    @apply text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
   }
 
   .metis-input {
-    @apply h-10 rounded-xl border border-border/80 bg-input/90 px-3 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply h-10 rounded-md border border-border/80 bg-input/90 px-3 text-sm text-foreground placeholder:text-muted-foreground;
   }
 
   .metis-textarea {
-    @apply rounded-xl border border-border/80 bg-input/90 px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply rounded-md border border-border/80 bg-input/90 px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground;
   }
 
   .metis-tablist {
-    @apply inline-flex rounded-xl border border-border/80 bg-secondary/70 p-1;
+    @apply inline-flex rounded-md border border-border/80 bg-secondary/70 p-1;
   }
 
   .metis-stat-grid {
@@ -173,11 +249,11 @@
   }
 
   .metis-empty {
-    @apply flex min-h-[220px] flex-col items-center justify-center rounded-xl border border-border/80 bg-card/90 px-6 text-center shadow-panel shadow-black/25 backdrop-blur;
+    @apply flex min-h-[220px] flex-col items-center justify-center rounded-lg border border-dashed border-border/80 bg-card/70 px-6 text-center shadow-panel;
   }
 
   .metis-badge {
-    @apply inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em];
+    @apply inline-flex items-center gap-2 rounded-md border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em];
   }
 
   .metis-dot {
@@ -193,7 +269,7 @@
   }
 
   .metis-choice-card {
-    @apply rounded-xl border border-border/80 bg-secondary/35 p-4 transition-colors;
+    @apply rounded-lg border border-border/80 bg-secondary/35 p-4 transition-colors;
   }
 
   .metis-table {
@@ -201,11 +277,11 @@
   }
 
   .metis-table thead th {
-    @apply border-b border-border/80 bg-secondary/60 px-3 py-2.5 text-left text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
+    @apply border-b border-border/80 bg-secondary/60 px-[10px] py-2 text-left text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
   }
 
   .metis-table tbody td {
-    @apply border-b border-border/70 px-3 py-2.5 align-top text-sm;
+    @apply border-b border-border/70 px-[10px] py-[9px] align-top text-sm;
   }
 
   .metis-table tbody tr:last-child td {

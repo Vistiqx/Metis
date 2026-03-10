@@ -1,121 +1,125 @@
-import { useState } from 'react'
-import { 
-  BookOpen, 
-  Calendar, 
-  Download, 
-  Edit, 
-  FileText, 
-  Filter, 
-  MoreVertical, 
-  Plus, 
-  Search, 
+import { useState } from "react";
+import {
+  BookOpen,
+  Calendar,
+  Download,
+  Edit,
+  FileText,
+  Filter,
+  MoreVertical,
+  Plus,
+  Search,
   Share2,
   Tag,
   Trash2,
-  Users
-} from 'lucide-react'
-import { WorkspaceLayout } from '../components/layout'
-import { Badge } from '../components/ui/Badge'
-import { Button } from '../components/ui/Button'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+  Users,
+} from "lucide-react";
+import { WorkspaceLayout } from "../components/layout";
+import { Badge } from "../components/ui/Badge";
+import { Button } from "../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/Card";
 
 // Mock narratives data
 const mockNarratives = [
-  { 
-    id: 'NAR-001', 
-    title: 'District 7 Protest Timeline', 
-    description: 'Chronological account of events leading up to and during the protest',
-    status: 'published',
-    author: 'Analyst A',
-    caseId: 'CASE-2024-001',
+  {
+    id: "NAR-001",
+    title: "District 7 Protest Timeline",
+    description:
+      "Chronological account of events leading up to and during the protest",
+    status: "published",
+    author: "Analyst A",
+    caseId: "CASE-2024-001",
     events: 12,
     actors: 8,
-    tags: ['protest', 'timeline', 'analysis'],
-    lastModified: '2 hours ago',
-    createdAt: '5 days ago',
+    tags: ["protest", "timeline", "analysis"],
+    lastModified: "2 hours ago",
+    createdAt: "5 days ago",
     views: 45,
   },
-  { 
-    id: 'NAR-002', 
-    title: 'Organizer Network Connections', 
-    description: 'Analysis of relationships between key protest organizers',
-    status: 'draft',
-    author: 'Analyst B',
-    caseId: 'CASE-2024-002',
+  {
+    id: "NAR-002",
+    title: "Organizer Network Connections",
+    description: "Analysis of relationships between key protest organizers",
+    status: "draft",
+    author: "Analyst B",
+    caseId: "CASE-2024-002",
     events: 24,
     actors: 15,
-    tags: ['network', 'organizers', 'connections'],
-    lastModified: '1 day ago',
-    createdAt: '3 days ago',
+    tags: ["network", "organizers", "connections"],
+    lastModified: "1 day ago",
+    createdAt: "3 days ago",
     views: 0,
   },
-  { 
-    id: 'NAR-003', 
-    title: 'Social Media Campaign Impact', 
-    description: 'Assessment of social media influence on event participation',
-    status: 'published',
-    author: 'Analyst A',
-    caseId: 'CASE-2024-003',
+  {
+    id: "NAR-003",
+    title: "Social Media Campaign Impact",
+    description: "Assessment of social media influence on event participation",
+    status: "published",
+    author: "Analyst A",
+    caseId: "CASE-2024-003",
     events: 18,
     actors: 32,
-    tags: ['social-media', 'impact', 'analysis'],
-    lastModified: '3 days ago',
-    createdAt: '1 week ago',
+    tags: ["social-media", "impact", "analysis"],
+    lastModified: "3 days ago",
+    createdAt: "1 week ago",
     views: 128,
   },
-  { 
-    id: 'NAR-004', 
-    title: 'Cross-Border Activity Analysis', 
-    description: 'Investigation of international connections and movements',
-    status: 'review',
-    author: 'Reviewer C',
-    caseId: 'CASE-2024-004',
+  {
+    id: "NAR-004",
+    title: "Cross-Border Activity Analysis",
+    description: "Investigation of international connections and movements",
+    status: "review",
+    author: "Reviewer C",
+    caseId: "CASE-2024-004",
     events: 9,
     actors: 6,
-    tags: ['cross-border', 'international', 'tracking'],
-    lastModified: '5 hours ago',
-    createdAt: '2 days ago',
+    tags: ["cross-border", "international", "tracking"],
+    lastModified: "5 hours ago",
+    createdAt: "2 days ago",
     views: 12,
   },
-  { 
-    id: 'NAR-005', 
-    title: 'Evidence Correlation Report', 
-    description: 'Correlation of physical and digital evidence from multiple sources',
-    status: 'draft',
-    author: 'Analyst B',
-    caseId: 'CASE-2024-001',
+  {
+    id: "NAR-005",
+    title: "Evidence Correlation Report",
+    description:
+      "Correlation of physical and digital evidence from multiple sources",
+    status: "draft",
+    author: "Analyst B",
+    caseId: "CASE-2024-001",
     events: 15,
     actors: 10,
-    tags: ['evidence', 'correlation', 'sources'],
-    lastModified: '12 hours ago',
-    createdAt: '4 days ago',
+    tags: ["evidence", "correlation", "sources"],
+    lastModified: "12 hours ago",
+    createdAt: "4 days ago",
     views: 0,
   },
-]
-
-const statusColors: Record<string, string> = {
-  published: 'success',
-  draft: 'neutral',
-  review: 'warning',
-}
+];
 
 export function Narratives() {
-  const [filter, setFilter] = useState<'all' | 'published' | 'draft' | 'review'>('all')
-  const [searchQuery, setSearchQuery] = useState('')
+  const [filter, setFilter] = useState<
+    "all" | "published" | "draft" | "review"
+  >("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredNarratives = mockNarratives.filter(narrative => {
-    const matchesFilter = filter === 'all' || narrative.status === filter
-    const matchesSearch = narrative.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         narrative.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesFilter && matchesSearch
-  })
+  const filteredNarratives = mockNarratives.filter((narrative) => {
+    const matchesFilter = filter === "all" || narrative.status === filter;
+    const matchesSearch =
+      narrative.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      narrative.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   const stats = {
-    published: mockNarratives.filter(n => n.status === 'published').length,
-    drafts: mockNarratives.filter(n => n.status === 'draft').length,
-    review: mockNarratives.filter(n => n.status === 'review').length,
+    published: mockNarratives.filter((n) => n.status === "published").length,
+    drafts: mockNarratives.filter((n) => n.status === "draft").length,
+    review: mockNarratives.filter((n) => n.status === "review").length,
     totalViews: mockNarratives.reduce((acc, n) => acc + n.views, 0),
-  }
+  };
 
   return (
     <WorkspaceLayout dockContext="narratives" showRightPanel={true}>
@@ -124,7 +128,10 @@ export function Narratives() {
           <div>
             <div className="metis-kicker">Reporting</div>
             <h1 className="metis-title">Narratives</h1>
-            <p className="metis-subtitle">Draft, review, and publish report-ready analytical narratives grounded in live case data.</p>
+            <p className="metis-subtitle">
+              Draft, review, and publish report-ready analytical narratives
+              grounded in live case data.
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline">
@@ -143,7 +150,7 @@ export function Narratives() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Published</CardTitle>
-              <BookOpen className="h-4 w-4 text-green-500" />
+              <BookOpen className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.published}</div>
@@ -163,7 +170,7 @@ export function Narratives() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">In Review</CardTitle>
-              <Users className="h-4 w-4 text-yellow-500" />
+              <Users className="h-4 w-4 text-primary" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stats.review}</div>
@@ -192,35 +199,35 @@ export function Narratives() {
                 placeholder="Search narratives..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                 className="metis-input w-full pl-10"
-               />
-             </div>
+                className="metis-input w-full pl-10"
+              />
+            </div>
             <div className="flex gap-1 rounded-lg border bg-card p-1">
               <Button
-                variant={filter === 'all' ? 'secondary' : 'ghost'}
+                variant={filter === "all" ? "secondary" : "ghost"}
                 size="sm"
-                onClick={() => setFilter('all')}
+                onClick={() => setFilter("all")}
               >
                 All
               </Button>
               <Button
-                variant={filter === 'published' ? 'secondary' : 'ghost'}
+                variant={filter === "published" ? "secondary" : "ghost"}
                 size="sm"
-                onClick={() => setFilter('published')}
+                onClick={() => setFilter("published")}
               >
                 Published
               </Button>
               <Button
-                variant={filter === 'draft' ? 'secondary' : 'ghost'}
+                variant={filter === "draft" ? "secondary" : "ghost"}
                 size="sm"
-                onClick={() => setFilter('draft')}
+                onClick={() => setFilter("draft")}
               >
                 Drafts
               </Button>
               <Button
-                variant={filter === 'review' ? 'secondary' : 'ghost'}
+                variant={filter === "review" ? "secondary" : "ghost"}
                 size="sm"
-                onClick={() => setFilter('review')}
+                onClick={() => setFilter("review")}
               >
                 Review
               </Button>
@@ -235,21 +242,44 @@ export function Narratives() {
         {/* Narratives Grid */}
         <div className="grid gap-4 md:grid-cols-2">
           {filteredNarratives.map((narrative) => (
-            <Card key={narrative.id} className="hover:border-primary/50 transition-colors">
+            <Card
+              key={narrative.id}
+              className="hover:border-primary/50 transition-colors"
+            >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="text-xs font-mono text-muted-foreground">{narrative.id}</p>
-                       <Badge variant={statusColors[narrative.status] as 'success' | 'neutral' | 'warning'}>{narrative.status}</Badge>
+                      <p className="text-xs font-mono text-muted-foreground">
+                        {narrative.id}
+                      </p>
+                      <Badge
+                        variant={
+                          narrative.status === "published" ? "gold" : "neutral"
+                        }
+                      >
+                        {narrative.status}
+                      </Badge>
                     </div>
-                    <CardTitle className="text-lg mt-1">{narrative.title}</CardTitle>
+                    <CardTitle className="text-lg mt-1">
+                      {narrative.title}
+                    </CardTitle>
                   </div>
                   <div className="flex gap-1">
-                    <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Share narrative">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      aria-label="Share narrative"
+                    >
                       <Share2 className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More narrative actions">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8"
+                      aria-label="More narrative actions"
+                    >
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </div>
@@ -279,11 +309,11 @@ export function Narratives() {
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1">
-                    {narrative.tags.map(tag => (
-                      <span 
+                    {narrative.tags.map((tag) => (
+                      <span
                         key={tag}
-                         className="inline-flex items-center rounded-full border border-border/80 bg-secondary/60 px-2 py-1 text-xs"
-                       >
+                        className="inline-flex items-center rounded-full border border-border/80 bg-secondary/60 px-2 py-1 text-xs"
+                      >
                         <Tag className="mr-1 h-3 w-3" />
                         {tag}
                       </span>
@@ -294,16 +324,19 @@ export function Narratives() {
                   <div className="flex items-center justify-between pt-3 border-t">
                     <div className="flex items-center gap-4 text-xs text-muted-foreground">
                       <span>By {narrative.author}</span>
-                      {narrative.caseId && (
-                        <span>{narrative.caseId}</span>
-                      )}
+                      {narrative.caseId && <span>{narrative.caseId}</span>}
                     </div>
                     <div className="flex items-center gap-1">
                       <Button variant="ghost" size="sm">
                         <Edit className="mr-1 h-4 w-4" />
                         Edit
                       </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Delete narrative">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        aria-label="Delete narrative"
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
@@ -315,5 +348,5 @@ export function Narratives() {
         </div>
       </div>
     </WorkspaceLayout>
-  )
+  );
 }

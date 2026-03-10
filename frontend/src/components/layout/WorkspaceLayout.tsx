@@ -32,27 +32,34 @@ export function WorkspaceLayout({
   showDock = true,
 }: WorkspaceLayoutProps) {
   return (
-    <div className="relative flex min-h-screen w-full overflow-hidden bg-transparent text-foreground">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(212,167,58,0.08),rgba(15,23,42,0))]"
-        data-layer={layer}
-      />
+    <div
+      className="metis-shell-grid bg-transparent text-foreground"
+      data-has-inspector={showRightPanel ? "true" : "false"}
+      data-layer={layer}
+    >
       <Sidebar />
 
-      <div className="relative flex min-w-0 flex-1 flex-col">
+      <div
+        className="metis-workspace relative flex min-w-0 flex-col"
+        data-shell-region="workspace"
+      >
         <TopBar />
 
-        <div className="relative flex flex-1 overflow-hidden">
-          <main className="relative flex-1 overflow-auto px-4 pb-28 pt-4 sm:px-5 lg:px-7 lg:pb-28 lg:pt-5">
+        <div className="metis-shell-region relative flex flex-1 overflow-hidden">
+          <main className="metis-page-body relative flex-1 overflow-auto pb-24">
             {children}
           </main>
-
-          {showRightPanel && (
-            <RightPanel title={rightPanelTitle}>{rightPanelContent}</RightPanel>
-          )}
         </div>
       </div>
+
+      {showRightPanel ? (
+        <RightPanel title={rightPanelTitle}>{rightPanelContent}</RightPanel>
+      ) : (
+        <aside
+          aria-hidden="true"
+          className="hidden h-screen w-[300px] border-l border-border/70 bg-card/55 xl:block"
+        />
+      )}
 
       {showDock && (
         <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-50">

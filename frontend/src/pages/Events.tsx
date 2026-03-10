@@ -278,13 +278,13 @@ export function Events() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <SignalBadge
-                        tone={
-                          event.status === "confirmed"
-                            ? "relationship"
-                            : "emerging"
-                        }
-                      >
+                        <SignalBadge
+                          tone={
+                            event.status === "confirmed"
+                              ? "confirmed"
+                              : "emerging"
+                          }
+                        >
                         {event.status}
                       </SignalBadge>
                     </div>

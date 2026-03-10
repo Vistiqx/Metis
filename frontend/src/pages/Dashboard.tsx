@@ -1,170 +1,340 @@
 import {
-  AlertTriangle, 
-  BookOpen, 
-  Eye, 
-  FolderKanban, 
-  GitGraph, 
-  Network
-} from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
-import { Badge } from '../components/ui/Badge'
-import { WorkspaceLayout } from '../components/layout'
+  ArrowRight,
+  BookOpen,
+  FolderKanban,
+  GitGraph,
+  Network,
+  ScanSearch,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { DashboardArchetype } from "../components/archetypes";
+import {
+  MetadataItem,
+  MetadataSection,
+  WorkspaceLayout,
+} from "../components/layout";
+import { Badge } from "../components/ui/Badge";
+import { Panel } from "../components/ui/Panel";
+import { SectionHeader } from "../components/ui/SectionHeader";
+import { SignalBadge } from "../components/ui/SignalBadge";
 
-const stats = [
-  { label: 'Active Cases', value: 12, icon: FolderKanban, trend: '+2 this week' },
-  { label: 'Open Events', value: 47, icon: Network, trend: '+8 today' },
-  { label: 'Alerts', value: 5, icon: AlertTriangle, trend: '3 high priority' },
-  { label: 'Watchlists', value: 8, icon: Eye, trend: 'All active' },
-]
-
-const recentActivity = [
-  { type: 'event', title: 'New event detected in District 7', time: '5 minutes ago', severity: 'high' },
-  { type: 'alert', title: 'Watchlist "Protest Organizers" triggered', time: '12 minutes ago', severity: 'medium' },
-  { type: 'evidence', title: 'Evidence uploaded to Case #2341', time: '1 hour ago', severity: 'low' },
-  { type: 'candidate', title: 'Candidate event confidence increased to 78%', time: '2 hours ago', severity: 'medium' },
-]
+const metrics = [
+  { label: "Active cases", value: "12", note: "3 due for reassessment" },
+  { label: "Alert load", value: "05", note: "2 require immediate triage" },
+  { label: "Evidence backlog", value: "41", note: "8 packets unreviewed" },
+  { label: "Draft outputs", value: "08", note: "2 ready for signoff" },
+];
 
 const quickActions = [
-  { label: 'New Case', icon: FolderKanban, href: '/investigations' },
-  { label: 'View Events', icon: Network, href: '/events' },
-  { label: 'Graph Analysis', icon: GitGraph, href: '/graph' },
-  { label: 'Browse Evidence', icon: BookOpen, href: '/evidence' },
-]
+  {
+    label: "Investigations",
+    href: "/investigations",
+    note: "Open case management workspace",
+    icon: FolderKanban,
+  },
+  {
+    label: "Timeline",
+    href: "/timeline",
+    note: "Review temporal correlation lane",
+    icon: Network,
+  },
+  {
+    label: "Graph",
+    href: "/graph",
+    note: "Trace entity relationship paths",
+    icon: GitGraph,
+  },
+  {
+    label: "Sources",
+    href: "/sources",
+    note: "Inspect ingestion directory",
+    icon: ScanSearch,
+  },
+];
+
+const commandRows = [
+  {
+    id: "CASE-2024-001",
+    title: "District 7 unrest network",
+    owner: "A. Rivera",
+    confidence: "88%",
+    tone: "anomaly" as const,
+    state: "ESCALATED",
+    nextAction: "Validate courier cluster against overnight footage.",
+  },
+  {
+    id: "CASE-2024-004",
+    title: "Cross-border logistics channel",
+    owner: "M. Imani",
+    confidence: "81%",
+    tone: "financial" as const,
+    state: "CORRELATION",
+    nextAction: "Merge manifest delta with yard-access sequence.",
+  },
+  {
+    id: "CASE-2024-002",
+    title: "Organizer network analysis",
+    owner: "J. Cole",
+    confidence: "73%",
+    tone: "emerging" as const,
+    state: "ACTIVE",
+    nextAction: "Approve narrative packet before afternoon brief.",
+  },
+];
+
+const activityFeed = [
+  {
+    time: "05m",
+    label: "Alert",
+    text: "Watchlist organizer cluster produced a new anomaly match.",
+  },
+  {
+    time: "18m",
+    label: "Evidence",
+    text: "Source packet SR-118 completed OCR and entity extraction.",
+  },
+  {
+    time: "42m",
+    label: "Graph",
+    text: "Transit yard focal node gained two confirmed logistics links.",
+  },
+  {
+    time: "1h",
+    label: "Report",
+    text: "Weekly brief for CASE-2024-001 moved to review queue.",
+  },
+];
+
+const watchRows = [
+  {
+    subject: "Transit yard badge reuse",
+    owner: "Graph desk",
+    status: "Tracking",
+  },
+  {
+    subject: "Courier handset cluster",
+    owner: "Signals desk",
+    status: "Reviewing",
+  },
+  {
+    subject: "Harbor manifest variance",
+    owner: "Finance desk",
+    status: "Queued",
+  },
+];
 
 export function Dashboard() {
   return (
-    <WorkspaceLayout showDock={false} showRightPanel={false}>
-      <div className="metis-page">
-        <div className="metis-page-header">
-          <div>
-            <div className="metis-kicker">Executive Overview</div>
-            <h1 className="metis-title">Dashboard</h1>
-            <p className="metis-subtitle">Fast analyst orientation across active investigations, alert load, and system readiness.</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Badge variant="gold">Authority layer active</Badge>
-            <Badge variant="success" dot>All systems operational</Badge>
-          </div>
-        </div>
-
-        <div className="metis-stat-grid">
-          {stats.map((stat) => (
-            <Card key={stat.label} className="overflow-hidden">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">{stat.label}</CardTitle>
-                <stat.icon className="h-4 w-4 text-primary" />
-              </CardHeader>
-              <CardContent>
-                <div className="mb-3 text-3xl font-semibold text-foreground">{stat.value}</div>
-                <Badge variant="neutral">{stat.trend}</Badge>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div>
-          <div className="mb-4 flex items-end justify-between gap-3">
-            <div>
-              <div className="metis-kicker">Navigation</div>
-              <h2 className="text-2xl">Quick Actions</h2>
-            </div>
-            <p className="hidden text-sm text-muted-foreground lg:block">Go directly into the primary analysis surfaces.</p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {quickActions.map((action) => (
-              <a
-                key={action.label}
-                href={action.href}
-                className="metis-panel group flex items-center gap-4 p-4 transition hover:-translate-y-0.5 hover:border-primary/30 hover:bg-secondary/60"
+    <WorkspaceLayout
+      layer="platform"
+      showDock={false}
+      rightPanelTitle="Operational Context"
+      rightPanelContent={
+        <>
+          <MetadataSection title="Activity Feed">
+            {activityFeed.map((item) => (
+              <div
+                key={`${item.time}-${item.text}`}
+                className="rounded-lg border border-border/70 bg-secondary/25 px-3 py-2.5"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 text-primary transition group-hover:bg-primary/16">
-                  <action.icon className="h-6 w-6" />
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {item.time}
+                  </span>
+                  <span className="metis-micro-label">{item.label}</span>
                 </div>
-                <div>
-                  <p className="font-semibold">{action.label}</p>
-                  <p className="text-sm text-muted-foreground">Open operational workspace</p>
+                <p className="mt-2 text-sm text-foreground">{item.text}</p>
+              </div>
+            ))}
+          </MetadataSection>
+          <MetadataSection title="Briefing Notices">
+            <MetadataItem label="Morning brief" value="09:30 UTC" />
+            <MetadataItem label="Priority case" value="CASE-2024-001" />
+            <MetadataItem label="Publishing queue" value="3 briefs" />
+          </MetadataSection>
+          <MetadataSection title="Analyst Guidance">
+            <p className="text-sm text-muted-foreground">
+              Gold accents remain reserved for authority cues. Signal chips mark
+              intelligence state without tinting panels or layout surfaces.
+            </p>
+          </MetadataSection>
+        </>
+      }
+    >
+      <DashboardArchetype
+        header={
+          <SectionHeader
+            kicker="Intelligence Overview"
+            title="Dashboard"
+            subtitle="Session-start overview with compact posture metrics, a dominant investigation command queue, and persistent analyst briefing context."
+            meta={
+              <>
+                <Badge variant="gold">Authority layer active</Badge>
+                <Badge variant="neutral" dot>
+                  Canonical shell aligned
+                </Badge>
+              </>
+            }
+          />
+        }
+        commandStrip={
+          <div className="metis-command-strip">
+            {metrics.map((metric) => (
+              <div key={metric.label} className="metis-metric-cell flex-1">
+                <div className="metis-micro-label">{metric.label}</div>
+                <div className="mt-1 text-2xl font-semibold text-foreground">
+                  {metric.value}
                 </div>
-              </a>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {metric.note}
+                </p>
+              </div>
             ))}
           </div>
-        </div>
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
-              <CardDescription>Latest events and alerts</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {recentActivity.map((activity) => (
-                  <div
-                    key={activity.title}
-                    className="rounded-2xl border border-border/70 bg-secondary/40 p-4"
+        }
+        leftRail={
+          <>
+            <Panel>
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div>
+                  <div className="metis-kicker">Workflow Shortcuts</div>
+                  <h2 className="text-[20px] font-semibold">Access Surfaces</h2>
+                </div>
+                <ScanSearch className="h-4 w-4 text-primary" />
+              </div>
+              <div className="space-y-2">
+                {quickActions.map((action) => (
+                  <Link
+                    key={action.label}
+                    to={action.href}
+                    className="metis-list-row group"
                   >
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <Badge
-                        variant={
-                          activity.severity === 'high'
-                            ? 'danger'
-                            : activity.severity === 'medium'
-                              ? 'warning'
-                              : 'success'
-                        }
-                        dot
-                      >
-                        {activity.type}
-                      </Badge>
-                      <span className="text-xs uppercase tracking-[0.18em] text-muted-foreground">{activity.time}</span>
+                    <div className="flex min-w-0 items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-md border border-primary/20 bg-primary/10 text-primary">
+                        <action.icon className="h-4 w-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-semibold text-foreground">
+                          {action.label}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {action.note}
+                        </p>
+                      </div>
                     </div>
-                    <p className="text-sm font-semibold text-foreground">{activity.title}</p>
-                    <div
-                      className={`mt-3 h-1.5 rounded-full ${
-                        activity.severity === 'high'
-                          ? 'bg-destructive'
-                          : activity.severity === 'medium'
-                            ? 'bg-amber-400'
-                            : 'bg-emerald-400'
-                      }`}
-                    />
+                    <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:text-primary" />
+                  </Link>
+                ))}
+              </div>
+            </Panel>
+
+            <Panel>
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div>
+                  <div className="metis-kicker">Watch Desk</div>
+                  <h2 className="text-[20px] font-semibold">Monitoring</h2>
+                </div>
+                <Badge variant="neutral">3 active</Badge>
+              </div>
+              <div className="space-y-2.5">
+                {watchRows.map((row) => (
+                  <div key={row.subject} className="metis-pane-muted">
+                    <p className="text-sm font-semibold text-foreground">
+                      {row.subject}
+                    </p>
+                    <div className="mt-2 flex items-center justify-between gap-3 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                      <span>{row.owner}</span>
+                      <span>{row.status}</span>
+                    </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>System Health</CardTitle>
-              <CardDescription>Component status overview</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {[
-                  { name: 'Database', status: 'operational', latency: '24ms' },
-                  { name: 'Ingestion Service', status: 'operational', latency: '156ms' },
-                  { name: 'Analysis Engine', status: 'operational', latency: '89ms' },
-                  { name: 'Graph Database', status: 'operational', latency: '12ms' },
-                  { name: 'Search Index', status: 'degraded', latency: '450ms' },
-                ].map((service) => (
-                  <div
-                    key={service.name}
-                    className="flex items-center justify-between rounded-2xl border border-border/70 bg-secondary/40 p-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <Badge variant={service.status === 'operational' ? 'success' : 'warning'} dot>
-                        {service.status}
-                      </Badge>
-                      <span className="text-sm font-semibold">{service.name}</span>
-                    </div>
-                    <span className="text-sm text-muted-foreground">{service.latency}</span>
-                  </div>
-                ))}
+            </Panel>
+          </>
+        }
+        centerPrimary={
+          <Panel>
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <div className="metis-kicker">Investigation Command Queue</div>
+                <h2 className="text-[20px] font-semibold">
+                  Operational Priorities
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+                  Cases remain the dominant analytical surface. Signals describe
+                  status only while ownership and actions stay neutral for rapid
+                  scanning.
+                </p>
               </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+              <Badge variant="gold">Morning brief window</Badge>
+            </div>
+
+            <div className="space-y-3">
+              {commandRows.map((row) => (
+                <div key={row.id} className="metis-list-row flex-col">
+                  <div className="flex w-full items-start justify-between gap-3">
+                    <div>
+                      <div className="mb-1 flex items-center gap-2">
+                        <span className="font-mono text-xs text-muted-foreground">
+                          {row.id}
+                        </span>
+                        <Badge variant="neutral">Owner {row.owner}</Badge>
+                        <SignalBadge tone={row.tone}>{row.state}</SignalBadge>
+                      </div>
+                      <p className="text-base font-semibold text-foreground">
+                        {row.title}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="metis-micro-label">Confidence</div>
+                      <div className="mt-1 text-lg font-semibold text-foreground">
+                        {row.confidence}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="metis-keyline" />
+                  <div className="flex w-full items-center justify-between gap-3 text-sm">
+                    <p className="text-muted-foreground">{row.nextAction}</p>
+                    <Link
+                      to="/investigations"
+                      className="text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+                    >
+                      Open case
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Panel>
+        }
+        centerSecondary={
+          <Panel>
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <div>
+                <div className="metis-kicker">Operational Priorities</div>
+                <h2 className="text-[20px] font-semibold">
+                  Briefing Readiness
+                </h2>
+              </div>
+              <BookOpen className="h-4 w-4 text-primary" />
+            </div>
+            <div className="space-y-2.5 text-sm">
+              <div className="metis-list-row">
+                <span>District 7 weekly brief</span>
+                <Badge variant="gold">Review</Badge>
+              </div>
+              <div className="metis-list-row">
+                <span>Logistics assessment annex</span>
+                <Badge variant="neutral">Draft</Badge>
+              </div>
+              <div className="metis-list-row">
+                <span>Watchlist update digest</span>
+                <Badge variant="neutral">Queued</Badge>
+              </div>
+            </div>
+          </Panel>
+        }
+      />
     </WorkspaceLayout>
-  )
+  );
 }

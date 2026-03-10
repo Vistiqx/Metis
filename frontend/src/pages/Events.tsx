@@ -1,130 +1,152 @@
-import { useState } from 'react'
-import { 
-  Calendar, 
-  CheckCircle2, 
-  Clock, 
-  Filter, 
-  MapPin, 
+import { useState } from "react";
+import {
+  Calendar,
+  CheckCircle2,
+  Clock,
+  Filter,
+  MapPin,
   Plus,
   Search,
   Shield,
-  XCircle 
-} from 'lucide-react'
-import { WorkspaceLayout, MetadataItem, MetadataSection } from '../components/layout'
-import { Badge } from '../components/ui/Badge'
-import { Button } from '../components/ui/Button'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
-import { CreateEventDialog } from '../components/ui/Dialog'
+  XCircle,
+} from "lucide-react";
+import {
+  WorkspaceLayout,
+  MetadataItem,
+  MetadataSection,
+} from "../components/layout";
+import { Badge } from "../components/ui/Badge";
+import { Button } from "../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/Card";
+import { CreateEventDialog } from "../components/ui/Dialog";
+import { SectionHeader } from "../components/ui/SectionHeader";
+import { SignalBadge } from "../components/ui/SignalBadge";
+import { SignalTag } from "../components/ui/SignalTag";
 
 interface Event {
-  id: string
-  title: string
-  type: string
-  status: 'confirmed' | 'monitoring'
-  severity: 'high' | 'medium' | 'low'
-  location: string
-  occurredAt: string
-  confidence: number
-  evidence: number
-  caseId: string
+  id: string;
+  title: string;
+  type: string;
+  status: "confirmed" | "monitoring";
+  severity: "high" | "medium" | "low";
+  location: string;
+  occurredAt: string;
+  confidence: number;
+  evidence: number;
+  caseId: string;
 }
 
 const initialEvents: Event[] = [
-  { 
-    id: 'EVT-001', 
-    title: 'Protest at City Hall', 
-    type: 'protest', 
-    status: 'confirmed', 
-    severity: 'high',
-    location: 'City Hall, District 7',
-    occurredAt: '2024-03-06 14:00',
+  {
+    id: "EVT-001",
+    title: "Protest at City Hall",
+    type: "protest",
+    status: "confirmed",
+    severity: "high",
+    location: "City Hall, District 7",
+    occurredAt: "2024-03-06 14:00",
     confidence: 0.92,
     evidence: 12,
-    caseId: 'CASE-2024-001'
+    caseId: "CASE-2024-001",
   },
-  { 
-    id: 'EVT-002', 
-    title: 'Organizer Meeting', 
-    type: 'meeting', 
-    status: 'confirmed', 
-    severity: 'medium',
-    location: 'Community Center',
-    occurredAt: '2024-03-05 18:30',
+  {
+    id: "EVT-002",
+    title: "Organizer Meeting",
+    type: "meeting",
+    status: "confirmed",
+    severity: "medium",
+    location: "Community Center",
+    occurredAt: "2024-03-05 18:30",
     confidence: 0.78,
     evidence: 5,
-    caseId: 'CASE-2024-001'
+    caseId: "CASE-2024-001",
   },
-  { 
-    id: 'EVT-003', 
-    title: 'Social Media Campaign', 
-    type: 'viral', 
-    status: 'monitoring', 
-    severity: 'low',
-    location: 'Online',
-    occurredAt: '2024-03-04 09:00',
+  {
+    id: "EVT-003",
+    title: "Social Media Campaign",
+    type: "viral",
+    status: "monitoring",
+    severity: "low",
+    location: "Online",
+    occurredAt: "2024-03-04 09:00",
     confidence: 0.65,
     evidence: 23,
-    caseId: 'CASE-2024-002'
+    caseId: "CASE-2024-002",
   },
-]
+];
 
 const mockCandidates = [
   {
-    id: 'CAND-001',
-    title: 'Gathering in Central Park',
+    id: "CAND-001",
+    title: "Gathering in Central Park",
     confidence: 0.73,
     sources: 4,
-    location: 'Central Park, District 3',
-    signals: ['coordination_language', 'temporal_reference', 'location_mention'],
-    firstSeen: '2 hours ago'
+    location: "Central Park, District 3",
+    signals: [
+      "coordination_language",
+      "temporal_reference",
+      "location_mention",
+    ],
+    firstSeen: "2 hours ago",
   },
   {
-    id: 'CAND-002',
-    title: 'Transport Disruption Planned',
+    id: "CAND-002",
+    title: "Transport Disruption Planned",
     confidence: 0.58,
     sources: 2,
-    location: 'Metro Station, District 5',
-    signals: ['escalation_language', 'organizer_account'],
-    firstSeen: '4 hours ago'
+    location: "Metro Station, District 5",
+    signals: ["escalation_language", "organizer_account"],
+    firstSeen: "4 hours ago",
   },
   {
-    id: 'CAND-003',
-    title: 'Online Coordination Activity',
+    id: "CAND-003",
+    title: "Online Coordination Activity",
     confidence: 0.41,
     sources: 3,
-    location: 'Multiple locations',
-    signals: ['volume_spike', 'coordination_language'],
-    firstSeen: '6 hours ago'
+    location: "Multiple locations",
+    signals: ["volume_spike", "coordination_language"],
+    firstSeen: "6 hours ago",
   },
-]
+];
 
 export function Events() {
-  const [events, setEvents] = useState<Event[]>(initialEvents)
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
-  const [activeTab, setActiveTab] = useState<'events' | 'candidates'>('events')
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [events, setEvents] = useState<Event[]>(initialEvents);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [activeTab, setActiveTab] = useState<"events" | "candidates">("events");
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const handleCreateEvent = (eventData: { title: string; type: string; location: string; description: string }) => {
+  const handleCreateEvent = (eventData: {
+    title: string;
+    type: string;
+    location: string;
+    description: string;
+  }) => {
     const newEvent: Event = {
-      id: `EVT-${String(events.length + 1).padStart(3, '0')}`,
+      id: `EVT-${String(events.length + 1).padStart(3, "0")}`,
       title: eventData.title,
       type: eventData.type,
-      status: 'confirmed',
-      severity: 'medium',
-      location: eventData.location || 'Unknown',
-      occurredAt: new Date().toISOString().slice(0, 16).replace('T', ' '),
+      status: "confirmed",
+      severity: "medium",
+      location: eventData.location || "Unknown",
+      occurredAt: new Date().toISOString().slice(0, 16).replace("T", " "),
       confidence: 0.85,
       evidence: 0,
-      caseId: 'Unassigned'
-    }
-    setEvents([newEvent, ...events])
-  }
+      caseId: "Unassigned",
+    };
+    setEvents([newEvent, ...events]);
+  };
 
-  const filteredEvents = events.filter(event =>
-    event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.id.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredEvents = events.filter(
+    (event) =>
+      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      event.id.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   const rightPanelContent = selectedEvent ? (
     <>
@@ -133,9 +155,9 @@ export function Events() {
         <MetadataItem label="Type" value={selectedEvent.type} />
         <MetadataItem label="Status" value={selectedEvent.status} />
         <MetadataItem label="Severity" value={selectedEvent.severity} />
-        <MetadataItem 
-          label="Confidence" 
-          value={`${Math.round(selectedEvent.confidence * 100)}%`} 
+        <MetadataItem
+          label="Confidence"
+          value={`${Math.round(selectedEvent.confidence * 100)}%`}
         />
       </MetadataSection>
 
@@ -153,50 +175,50 @@ export function Events() {
     <div className="text-center text-muted-foreground">
       <p className="text-sm">Select an event to view details</p>
     </div>
-  )
+  );
 
   return (
-    <WorkspaceLayout 
-      dockContext="event" 
+    <WorkspaceLayout
+      dockContext="event"
       rightPanelContent={rightPanelContent}
-      rightPanelTitle={selectedEvent ? 'Event Details' : 'Details'}
+      rightPanelTitle={selectedEvent ? "Event Details" : "Details"}
     >
       <div className="metis-page">
-        <div className="metis-page-header">
-          <div>
-            <div className="metis-kicker">Event Intake</div>
-            <h1 className="metis-title">Events</h1>
-            <p className="metis-subtitle">Review confirmed events, inspect candidate signals, and promote evidence-backed findings.</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="metis-tablist">
-              <button
-                onClick={() => setActiveTab('events')}
-                className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-                  activeTab === 'events'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                Events ({events.length})
-              </button>
-              <button
-                onClick={() => setActiveTab('candidates')}
-                className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
-                  activeTab === 'candidates'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                Candidates ({mockCandidates.length})
-              </button>
+        <SectionHeader
+          kicker="Event Intake"
+          title="Events"
+          subtitle="Review confirmed events, inspect candidate signals, and promote evidence-backed findings."
+          meta={
+            <div className="flex items-center gap-2">
+              <div className="metis-tablist">
+                <button
+                  onClick={() => setActiveTab("events")}
+                  className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+                    activeTab === "events"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Events ({events.length})
+                </button>
+                <button
+                  onClick={() => setActiveTab("candidates")}
+                  className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+                    activeTab === "candidates"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Candidates ({mockCandidates.length})
+                </button>
+              </div>
+              <Button onClick={() => setIsCreateDialogOpen(true)}>
+                <Plus className="mr-2 h-4 w-4" />
+                New Event
+              </Button>
             </div>
-            <Button onClick={() => setIsCreateDialogOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" />
-              New Event
-            </Button>
-          </div>
-        </div>
+          }
+        />
 
         <div className="metis-toolbar">
           <div className="relative flex-1 max-w-sm">
@@ -210,7 +232,7 @@ export function Events() {
             />
           </div>
           <div className="flex items-center gap-3">
-            <Badge variant={activeTab === 'events' ? 'gold' : 'warning'}>{activeTab}</Badge>
+            <Badge variant="gold">{activeTab}</Badge>
             <Button variant="outline">
               <Filter className="mr-2 h-4 w-4" />
               Filter
@@ -218,33 +240,53 @@ export function Events() {
           </div>
         </div>
 
-        {activeTab === 'events' ? (
+        {activeTab === "events" ? (
           <div className="grid gap-4">
             {filteredEvents.map((event) => (
-              <Card 
-                key={event.id} 
+              <Card
+                key={event.id}
                 className={`cursor-pointer transition-all hover:border-primary/40 hover:bg-secondary/40 ${
-                  selectedEvent?.id === event.id ? 'border-primary ring-1 ring-primary' : ''
+                  selectedEvent?.id === event.id
+                    ? "border-primary ring-1 ring-primary"
+                    : ""
                 }`}
                 onClick={() => setSelectedEvent(event)}
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
-                      <Badge
-                        variant={event.severity === 'high' ? 'danger' : event.severity === 'medium' ? 'warning' : 'info'}
+                      <SignalBadge
+                        tone={
+                          event.severity === "high"
+                            ? "anomaly"
+                            : event.severity === "medium"
+                              ? "financial"
+                              : "emerging"
+                        }
                         dot
                         className="mt-0.5"
                       >
                         {event.severity}
-                      </Badge>
+                      </SignalBadge>
                       <div>
-                        <p className="text-xs font-mono text-muted-foreground">{event.id}</p>
-                        <CardTitle className="text-lg mt-1">{event.title}</CardTitle>
+                        <p className="text-xs font-mono text-muted-foreground">
+                          {event.id}
+                        </p>
+                        <CardTitle className="text-lg mt-1">
+                          {event.title}
+                        </CardTitle>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Badge variant={event.status === 'confirmed' ? 'success' : 'warning'}>{event.status}</Badge>
+                      <SignalBadge
+                        tone={
+                          event.status === "confirmed"
+                            ? "relationship"
+                            : "emerging"
+                        }
+                      >
+                        {event.status}
+                      </SignalBadge>
                     </div>
                   </div>
                 </CardHeader>
@@ -271,19 +313,25 @@ export function Events() {
             ))}
             {filteredEvents.length === 0 && (
               <div className="metis-empty border-dashed bg-transparent py-12">
-                <p className="text-muted-foreground">No events found matching your search.</p>
+                <p className="text-muted-foreground">
+                  No events found matching your search.
+                </p>
               </div>
             )}
           </div>
         ) : (
           <div className="grid gap-4">
             {mockCandidates.map((candidate) => (
-              <Card key={candidate.id} className="border-l-4 border-l-amber-400/80">
+              <Card key={candidate.id}>
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-xs font-mono text-muted-foreground">{candidate.id}</p>
-                      <CardTitle className="text-lg mt-1">{candidate.title}</CardTitle>
+                      <p className="text-xs font-mono text-muted-foreground">
+                        {candidate.id}
+                      </p>
+                      <CardTitle className="text-lg mt-1">
+                        {candidate.title}
+                      </CardTitle>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-sm font-semibold text-foreground">
@@ -303,19 +351,18 @@ export function Events() {
                         <Clock className="h-4 w-4" />
                         First seen {candidate.firstSeen}
                       </div>
-                      <div>
-                        {candidate.sources} sources
-                      </div>
+                      <div>{candidate.sources} sources</div>
                     </div>
-                    
+
                     <div className="flex flex-wrap gap-2">
                       {candidate.signals.map((signal) => (
-                        <span
+                        <SignalTag
                           key={signal}
-                          className="metis-badge border-border/80 bg-secondary/60 capitalize text-secondary-foreground"
+                          tone="emerging"
+                          className="capitalize"
                         >
-                          {signal.replace('_', ' ')}
-                        </span>
+                          {signal.replace("_", " ")}
+                        </SignalTag>
                       ))}
                     </div>
 
@@ -328,7 +375,11 @@ export function Events() {
                         <Plus className="mr-1 h-3 w-3" />
                         Merge
                       </Button>
-                      <Button size="sm" variant="ghost" className="h-8 text-muted-foreground">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-8 text-muted-foreground"
+                      >
                         <XCircle className="mr-1 h-3 w-3" />
                         Dismiss
                       </Button>
@@ -348,5 +399,5 @@ export function Events() {
         onCreate={handleCreateEvent}
       />
     </WorkspaceLayout>
-  )
+  );
 }

@@ -1,88 +1,97 @@
-import { useState } from 'react'
-import { 
-  Bell, 
-  Globe, 
-  Lock, 
-  Moon, 
-  Palette, 
-  Save, 
-  Shield, 
-  Sun, 
-  User, 
-  Users
-} from 'lucide-react'
-import { WorkspaceLayout } from '../components/layout'
-import { Badge } from '../components/ui/Badge'
-import { Button } from '../components/ui/Button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card'
+import { useState } from "react";
+import {
+  Bell,
+  Globe,
+  Lock,
+  Moon,
+  Palette,
+  Save,
+  Shield,
+  Sun,
+  User,
+  Users,
+} from "lucide-react";
+import { WorkspaceLayout } from "../components/layout";
+import { Badge } from "../components/ui/Badge";
+import { Button } from "../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/Card";
+import { SectionHeader } from "../components/ui/SectionHeader";
 
 export function Settings() {
-  const [activeTab, setActiveTab] = useState<'general' | 'notifications' | 'security' | 'appearance'>('general')
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
+  const [activeTab, setActiveTab] = useState<
+    "general" | "notifications" | "security" | "appearance"
+  >("general");
+  const [theme, setTheme] = useState<"light" | "dark" | "system">("system");
 
   const generalIds = {
-    displayName: 'settings-display-name',
-    email: 'settings-email',
-    role: 'settings-role',
-    timezone: 'settings-timezone',
-    organization: 'settings-organization',
-    department: 'settings-department',
-  }
+    displayName: "settings-display-name",
+    email: "settings-email",
+    role: "settings-role",
+    timezone: "settings-timezone",
+    organization: "settings-organization",
+    department: "settings-department",
+  };
 
   const notificationsIds = {
-    digestFrequency: 'settings-digest-frequency',
-  }
+    digestFrequency: "settings-digest-frequency",
+  };
 
   const securityIds = {
-    currentPassword: 'settings-current-password',
-    newPassword: 'settings-new-password',
-    confirmPassword: 'settings-confirm-password',
-  }
+    currentPassword: "settings-current-password",
+    newPassword: "settings-new-password",
+    confirmPassword: "settings-confirm-password",
+  };
 
   return (
     <WorkspaceLayout dockContext="settings" showRightPanel={false}>
       <div className="metis-page">
-        <div className="metis-page-header">
-          <div>
-            <div className="metis-kicker">Administration</div>
-            <h1 className="metis-title">Settings</h1>
-            <p className="metis-subtitle">Govern workspace configuration, notification posture, and security controls with minimal visual noise.</p>
-          </div>
-          <Badge variant="neutral">Administrative surface</Badge>
-        </div>
+        <SectionHeader
+          kicker="Administration"
+          title="Settings"
+          subtitle="Govern workspace configuration, notification posture, and security controls with minimal visual noise."
+          meta={<Badge variant="neutral">Administrative surface</Badge>}
+        />
 
         <div className="grid gap-6 lg:grid-cols-4">
           <Card className="lg:col-span-1 h-fit">
             <CardContent className="p-4">
               <nav className="space-y-1">
                 <Button
-                  variant={activeTab === 'general' ? 'secondary' : 'ghost'}
+                  variant={activeTab === "general" ? "secondary" : "ghost"}
                   className="w-full justify-start"
-                  onClick={() => setActiveTab('general')}
+                  onClick={() => setActiveTab("general")}
                 >
                   <User className="mr-2 h-4 w-4" />
                   General
                 </Button>
                 <Button
-                  variant={activeTab === 'notifications' ? 'secondary' : 'ghost'}
+                  variant={
+                    activeTab === "notifications" ? "secondary" : "ghost"
+                  }
                   className="w-full justify-start"
-                  onClick={() => setActiveTab('notifications')}
+                  onClick={() => setActiveTab("notifications")}
                 >
                   <Bell className="mr-2 h-4 w-4" />
                   Notifications
                 </Button>
                 <Button
-                  variant={activeTab === 'security' ? 'secondary' : 'ghost'}
+                  variant={activeTab === "security" ? "secondary" : "ghost"}
                   className="w-full justify-start"
-                  onClick={() => setActiveTab('security')}
+                  onClick={() => setActiveTab("security")}
                 >
                   <Shield className="mr-2 h-4 w-4" />
                   Security
                 </Button>
                 <Button
-                  variant={activeTab === 'appearance' ? 'secondary' : 'ghost'}
+                  variant={activeTab === "appearance" ? "secondary" : "ghost"}
                   className="w-full justify-start"
-                  onClick={() => setActiveTab('appearance')}
+                  onClick={() => setActiveTab("appearance")}
                 >
                   <Palette className="mr-2 h-4 w-4" />
                   Appearance
@@ -92,7 +101,7 @@ export function Settings() {
           </Card>
 
           <div className="lg:col-span-3 space-y-6">
-            {activeTab === 'general' && (
+            {activeTab === "general" && (
               <>
                 <Card>
                   <CardHeader>
@@ -104,27 +113,45 @@ export function Settings() {
                   <CardContent className="space-y-4">
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
-                        <label htmlFor={generalIds.displayName} className="text-sm font-medium">Display Name</label>
+                        <label
+                          htmlFor={generalIds.displayName}
+                          className="text-sm font-medium"
+                        >
+                          Display Name
+                        </label>
                         <input
                           id={generalIds.displayName}
                           type="text"
                           defaultValue="Analyst A"
-                          className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                          className="metis-input w-full"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label htmlFor={generalIds.email} className="text-sm font-medium">Email</label>
+                        <label
+                          htmlFor={generalIds.email}
+                          className="text-sm font-medium"
+                        >
+                          Email
+                        </label>
                         <input
                           id={generalIds.email}
                           type="email"
                           defaultValue="analyst@metis.local"
-                          className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                          className="metis-input w-full"
                         />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor={generalIds.role} className="text-sm font-medium">Role</label>
-                      <select id={generalIds.role} className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                      <label
+                        htmlFor={generalIds.role}
+                        className="text-sm font-medium"
+                      >
+                        Role
+                      </label>
+                      <select
+                        id={generalIds.role}
+                        className="metis-input w-full"
+                      >
                         <option>Senior Analyst</option>
                         <option>Analyst</option>
                         <option>Reviewer</option>
@@ -132,8 +159,16 @@ export function Settings() {
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor={generalIds.timezone} className="text-sm font-medium">Timezone</label>
-                      <select id={generalIds.timezone} className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                      <label
+                        htmlFor={generalIds.timezone}
+                        className="text-sm font-medium"
+                      >
+                        Timezone
+                      </label>
+                      <select
+                        id={generalIds.timezone}
+                        className="metis-input w-full"
+                      >
                         <option>UTC-05:00 Eastern Time</option>
                         <option>UTC-08:00 Pacific Time</option>
                         <option>UTC+00:00 UTC</option>
@@ -152,22 +187,32 @@ export function Settings() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <label htmlFor={generalIds.organization} className="text-sm font-medium">Organization</label>
+                      <label
+                        htmlFor={generalIds.organization}
+                        className="text-sm font-medium"
+                      >
+                        Organization
+                      </label>
                       <input
                         id={generalIds.organization}
                         type="text"
                         defaultValue="Metis Intelligence Unit"
                         disabled
-                        className="h-10 w-full rounded-lg border bg-muted px-3 text-sm"
+                        className="metis-input w-full bg-muted"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor={generalIds.department} className="text-sm font-medium">Department</label>
+                      <label
+                        htmlFor={generalIds.department}
+                        className="text-sm font-medium"
+                      >
+                        Department
+                      </label>
                       <input
                         id={generalIds.department}
                         type="text"
                         defaultValue="OSINT Analysis"
-                        className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="metis-input w-full"
                       />
                     </div>
                     <div className="flex items-center gap-2">
@@ -181,7 +226,7 @@ export function Settings() {
               </>
             )}
 
-            {activeTab === 'notifications' && (
+            {activeTab === "notifications" && (
               <Card>
                 <CardHeader>
                   <CardTitle>Notification Preferences</CardTitle>
@@ -194,17 +239,20 @@ export function Settings() {
                     <h3 className="font-medium">Email Notifications</h3>
                     <div className="space-y-3">
                       {[
-                        { label: 'Watchlist matches', checked: true },
-                        { label: 'High priority alerts', checked: true },
-                        { label: 'Task assignments', checked: true },
-                        { label: 'Case updates', checked: false },
-                        { label: 'System maintenance', checked: true },
+                        { label: "Watchlist matches", checked: true },
+                        { label: "High priority alerts", checked: true },
+                        { label: "Task assignments", checked: true },
+                        { label: "Case updates", checked: false },
+                        { label: "System maintenance", checked: true },
                       ].map((item) => (
-                        <label key={item.label} className="flex items-center gap-3">
+                        <label
+                          key={item.label}
+                          className="flex items-center gap-3"
+                        >
                           <input
                             type="checkbox"
                             defaultChecked={item.checked}
-                            className="h-4 w-4 rounded border-gray-300"
+                            className="metis-check"
                           />
                           <span className="text-sm">{item.label}</span>
                         </label>
@@ -216,16 +264,19 @@ export function Settings() {
                     <h3 className="font-medium">In-App Notifications</h3>
                     <div className="space-y-3">
                       {[
-                        { label: 'Real-time alerts', checked: true },
-                        { label: 'Analysis complete', checked: true },
-                        { label: 'Evidence processing', checked: false },
-                        { label: 'Collaboration mentions', checked: true },
+                        { label: "Real-time alerts", checked: true },
+                        { label: "Analysis complete", checked: true },
+                        { label: "Evidence processing", checked: false },
+                        { label: "Collaboration mentions", checked: true },
                       ].map((item) => (
-                        <label key={item.label} className="flex items-center gap-3">
+                        <label
+                          key={item.label}
+                          className="flex items-center gap-3"
+                        >
                           <input
                             type="checkbox"
                             defaultChecked={item.checked}
-                            className="h-4 w-4 rounded border-gray-300"
+                            className="metis-check"
                           />
                           <span className="text-sm">{item.label}</span>
                         </label>
@@ -234,8 +285,16 @@ export function Settings() {
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor={notificationsIds.digestFrequency} className="text-sm font-medium">Digest Frequency</label>
-                    <select id={notificationsIds.digestFrequency} className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+                    <label
+                      htmlFor={notificationsIds.digestFrequency}
+                      className="text-sm font-medium"
+                    >
+                      Digest Frequency
+                    </label>
+                    <select
+                      id={notificationsIds.digestFrequency}
+                      className="metis-input w-full"
+                    >
                       <option>Real-time</option>
                       <option>Hourly digest</option>
                       <option>Daily digest</option>
@@ -246,7 +305,7 @@ export function Settings() {
               </Card>
             )}
 
-            {activeTab === 'security' && (
+            {activeTab === "security" && (
               <>
                 <Card>
                   <CardHeader>
@@ -257,27 +316,42 @@ export function Settings() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <label htmlFor={securityIds.currentPassword} className="text-sm font-medium">Current Password</label>
+                      <label
+                        htmlFor={securityIds.currentPassword}
+                        className="text-sm font-medium"
+                      >
+                        Current Password
+                      </label>
                       <input
                         id={securityIds.currentPassword}
                         type="password"
-                        className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="metis-input w-full"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor={securityIds.newPassword} className="text-sm font-medium">New Password</label>
+                      <label
+                        htmlFor={securityIds.newPassword}
+                        className="text-sm font-medium"
+                      >
+                        New Password
+                      </label>
                       <input
                         id={securityIds.newPassword}
                         type="password"
-                        className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="metis-input w-full"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label htmlFor={securityIds.confirmPassword} className="text-sm font-medium">Confirm New Password</label>
+                      <label
+                        htmlFor={securityIds.confirmPassword}
+                        className="text-sm font-medium"
+                      >
+                        Confirm New Password
+                      </label>
                       <input
                         id={securityIds.confirmPassword}
                         type="password"
-                        className="h-10 w-full rounded-lg border bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                        className="metis-input w-full"
                       />
                     </div>
                     <Button>
@@ -297,10 +371,12 @@ export function Settings() {
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between rounded-lg border p-4">
                       <div className="flex items-center gap-3">
-                        <Shield className="h-5 w-5 text-yellow-500" />
+                        <Shield className="h-5 w-5 text-primary" />
                         <div>
                           <p className="font-medium">2FA Status</p>
-                          <p className="text-sm text-muted-foreground">Not enabled</p>
+                          <p className="text-sm text-muted-foreground">
+                            Not enabled
+                          </p>
                         </div>
                       </div>
                       <Button variant="outline">Enable 2FA</Button>
@@ -325,8 +401,12 @@ export function Settings() {
                           </p>
                         </div>
                         <div className="flex gap-2">
-                          <Button variant="outline" size="sm">Show</Button>
-                          <Button variant="outline" size="sm">Regenerate</Button>
+                          <Button variant="outline" size="sm">
+                            Show
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            Regenerate
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -335,7 +415,7 @@ export function Settings() {
               </>
             )}
 
-            {activeTab === 'appearance' && (
+            {activeTab === "appearance" && (
               <Card>
                 <CardHeader>
                   <CardTitle>Appearance</CardTitle>
@@ -348,27 +428,33 @@ export function Settings() {
                     <h3 className="font-medium">Theme</h3>
                     <div className="grid gap-4 md:grid-cols-3">
                       <button
-                        onClick={() => setTheme('light')}
-                        className={`flex flex-col items-center gap-3 rounded-lg border p-4 transition-colors ${
-                          theme === 'light' ? 'border-primary bg-primary/5' : 'hover:bg-muted'
+                        onClick={() => setTheme("light")}
+                        className={`metis-choice-card flex flex-col items-center gap-3 ${
+                          theme === "light"
+                            ? "border-primary/35 bg-primary/10 text-foreground"
+                            : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
                         <Sun className="h-8 w-8" />
                         <span className="text-sm font-medium">Light</span>
                       </button>
                       <button
-                        onClick={() => setTheme('dark')}
-                        className={`flex flex-col items-center gap-3 rounded-lg border p-4 transition-colors ${
-                          theme === 'dark' ? 'border-primary bg-primary/5' : 'hover:bg-muted'
+                        onClick={() => setTheme("dark")}
+                        className={`metis-choice-card flex flex-col items-center gap-3 ${
+                          theme === "dark"
+                            ? "border-primary/35 bg-primary/10 text-foreground"
+                            : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
                         <Moon className="h-8 w-8" />
                         <span className="text-sm font-medium">Dark</span>
                       </button>
                       <button
-                        onClick={() => setTheme('system')}
-                        className={`flex flex-col items-center gap-3 rounded-lg border p-4 transition-colors ${
-                          theme === 'system' ? 'border-primary bg-primary/5' : 'hover:bg-muted'
+                        onClick={() => setTheme("system")}
+                        className={`metis-choice-card flex flex-col items-center gap-3 ${
+                          theme === "system"
+                            ? "border-primary/35 bg-primary/10 text-foreground"
+                            : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
                         <Globe className="h-8 w-8" />
@@ -380,13 +466,16 @@ export function Settings() {
                   <div className="space-y-4">
                     <h3 className="font-medium">Interface Density</h3>
                     <div className="space-y-3">
-                      {['Compact', 'Comfortable', 'Spacious'].map((density) => (
-                        <label key={density} className="flex items-center gap-3">
+                      {["Compact", "Comfortable", "Spacious"].map((density) => (
+                        <label
+                          key={density}
+                          className="flex items-center gap-3"
+                        >
                           <input
                             type="radio"
                             name="density"
-                            defaultChecked={density === 'Comfortable'}
-                            className="h-4 w-4"
+                            defaultChecked={density === "Comfortable"}
+                            className="metis-radio"
                           />
                           <span className="text-sm">{density}</span>
                         </label>
@@ -400,7 +489,7 @@ export function Settings() {
                       <input
                         type="checkbox"
                         defaultChecked={true}
-                        className="h-4 w-4 rounded border-gray-300"
+                        className="metis-check"
                       />
                       <span className="text-sm">Always show labels</span>
                     </label>
@@ -408,7 +497,7 @@ export function Settings() {
                       <input
                         type="checkbox"
                         defaultChecked={false}
-                        className="h-4 w-4 rounded border-gray-300"
+                        className="metis-check"
                       />
                       <span className="text-sm">Start collapsed</span>
                     </label>
@@ -428,5 +517,5 @@ export function Settings() {
         </div>
       </div>
     </WorkspaceLayout>
-  )
+  );
 }

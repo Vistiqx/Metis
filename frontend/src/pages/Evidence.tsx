@@ -1,123 +1,131 @@
-import { useState } from 'react'
-import { 
-  Download, 
-  Eye, 
-  FileText, 
-  Filter, 
-  Grid3X3, 
-  Image as ImageIcon, 
-  List, 
-  MoreVertical, 
-  Search, 
+import { useState } from "react";
+import {
+  Download,
+  Eye,
+  FileText,
+  Filter,
+  Grid3X3,
+  Image as ImageIcon,
+  List,
+  MoreVertical,
+  Search,
   Tag,
   Trash2,
   Upload,
-  Video
-} from 'lucide-react'
-import { WorkspaceLayout } from '../components/layout'
-import { Badge } from '../components/ui/Badge'
-import { Button } from '../components/ui/Button'
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card'
+  Video,
+} from "lucide-react";
+import { WorkspaceLayout } from "../components/layout";
+import { Badge } from "../components/ui/Badge";
+import { Button } from "../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/Card";
+import { SignalBadge } from "../components/ui/SignalBadge";
+import { SignalTag } from "../components/ui/SignalTag";
 
 // Mock evidence data
 const mockEvidence = [
-  { 
-    id: 'EV-001', 
-    title: 'Protest Photo Set A', 
-    type: 'image', 
-    format: 'JPG', 
-    size: '12.4 MB',
-    caseId: 'CASE-2024-001',
-    tags: ['protest', 'district-7', 'photo'],
-    uploaded: '2 hours ago',
-    thumbnail: '📷'
+  {
+    id: "EV-001",
+    title: "Protest Photo Set A",
+    type: "image",
+    format: "JPG",
+    size: "12.4 MB",
+    caseId: "CASE-2024-001",
+    tags: ["protest", "district-7", "photo"],
+    uploaded: "2 hours ago",
+    thumbnail: "📷",
   },
-  { 
-    id: 'EV-002', 
-    title: 'Social Media Video', 
-    type: 'video', 
-    format: 'MP4', 
-    size: '45.2 MB',
-    caseId: 'CASE-2024-001',
-    tags: ['video', 'twitter', 'viral'],
-    uploaded: '5 hours ago',
-    thumbnail: '🎥'
+  {
+    id: "EV-002",
+    title: "Social Media Video",
+    type: "video",
+    format: "MP4",
+    size: "45.2 MB",
+    caseId: "CASE-2024-001",
+    tags: ["video", "twitter", "viral"],
+    uploaded: "5 hours ago",
+    thumbnail: "🎥",
   },
-  { 
-    id: 'EV-003', 
-    title: 'Network Communication Log', 
-    type: 'document', 
-    format: 'PDF', 
-    size: '2.1 MB',
-    caseId: 'CASE-2024-002',
-    tags: ['document', 'communication', 'log'],
-    uploaded: '1 day ago',
-    thumbnail: '📄'
+  {
+    id: "EV-003",
+    title: "Network Communication Log",
+    type: "document",
+    format: "PDF",
+    size: "2.1 MB",
+    caseId: "CASE-2024-002",
+    tags: ["document", "communication", "log"],
+    uploaded: "1 day ago",
+    thumbnail: "📄",
   },
-  { 
-    id: 'EV-004', 
-    title: 'Aerial Surveillance', 
-    type: 'image', 
-    format: 'PNG', 
-    size: '8.7 MB',
-    caseId: 'CASE-2024-004',
-    tags: ['drone', 'aerial', 'surveillance'],
-    uploaded: '2 days ago',
-    thumbnail: '📷'
+  {
+    id: "EV-004",
+    title: "Aerial Surveillance",
+    type: "image",
+    format: "PNG",
+    size: "8.7 MB",
+    caseId: "CASE-2024-004",
+    tags: ["drone", "aerial", "surveillance"],
+    uploaded: "2 days ago",
+    thumbnail: "📷",
   },
-  { 
-    id: 'EV-005', 
-    title: 'Interview Recording', 
-    type: 'video', 
-    format: 'MOV', 
-    size: '156.3 MB',
-    caseId: 'CASE-2024-002',
-    tags: ['interview', 'audio', 'witness'],
-    uploaded: '3 days ago',
-    thumbnail: '🎥'
+  {
+    id: "EV-005",
+    title: "Interview Recording",
+    type: "video",
+    format: "MOV",
+    size: "156.3 MB",
+    caseId: "CASE-2024-002",
+    tags: ["interview", "audio", "witness"],
+    uploaded: "3 days ago",
+    thumbnail: "🎥",
   },
-  { 
-    id: 'EV-006', 
-    title: 'Financial Records', 
-    type: 'document', 
-    format: 'XLSX', 
-    size: '1.2 MB',
-    caseId: 'CASE-2024-003',
-    tags: ['financial', 'spreadsheet', 'records'],
-    uploaded: '4 days ago',
-    thumbnail: '📊'
+  {
+    id: "EV-006",
+    title: "Financial Records",
+    type: "document",
+    format: "XLSX",
+    size: "1.2 MB",
+    caseId: "CASE-2024-003",
+    tags: ["financial", "spreadsheet", "records"],
+    uploaded: "4 days ago",
+    thumbnail: "📊",
   },
-]
+];
 
 const typeIcons: Record<string, React.ElementType> = {
   image: ImageIcon,
   video: Video,
   document: FileText,
-}
+};
 
 const typeColors: Record<string, string> = {
-  image: 'info',
-  video: 'danger',
-  document: 'warning',
-}
+  image: "emerging",
+  video: "anomaly",
+  document: "financial",
+};
 
 export function Evidence() {
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [selectedEvidence, setSelectedEvidence] = useState<string[]>([])
-  const [searchQuery, setSearchQuery] = useState('')
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [selectedEvidence, setSelectedEvidence] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredEvidence = mockEvidence.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  )
+  const filteredEvidence = mockEvidence.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.tags.some((tag) =>
+        tag.toLowerCase().includes(searchQuery.toLowerCase()),
+      ),
+  );
 
   const toggleSelection = (id: string) => {
-    setSelectedEvidence(prev => 
-      prev.includes(id) 
-        ? prev.filter(i => i !== id)
-        : [...prev, id]
-    )
-  }
+    setSelectedEvidence((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id],
+    );
+  };
 
   return (
     <WorkspaceLayout dockContext="evidence" showRightPanel={true}>
@@ -126,7 +134,10 @@ export function Evidence() {
           <div>
             <div className="metis-kicker">Evidence Registry</div>
             <h1 className="metis-title">Evidence</h1>
-            <p className="metis-subtitle">Browse evidence by media type, chain context, and tagged analytical relevance.</p>
+            <p className="metis-subtitle">
+              Browse evidence by media type, chain context, and tagged
+              analytical relevance.
+            </p>
           </div>
           <div className="flex items-center gap-2">
             <Button variant="outline">
@@ -166,18 +177,18 @@ export function Evidence() {
           </div>
           <div className="flex items-center gap-2">
             <Button
-              variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
+              variant={viewMode === "grid" ? "secondary" : "ghost"}
               size="icon"
               aria-label="Grid view"
-              onClick={() => setViewMode('grid')}
+              onClick={() => setViewMode("grid")}
             >
               <Grid3X3 className="h-4 w-4" />
             </Button>
             <Button
-              variant={viewMode === 'list' ? 'secondary' : 'ghost'}
+              variant={viewMode === "list" ? "secondary" : "ghost"}
               size="icon"
               aria-label="List view"
-              onClick={() => setViewMode('list')}
+              onClick={() => setViewMode("list")}
             >
               <List className="h-4 w-4" />
             </Button>
@@ -187,7 +198,9 @@ export function Evidence() {
         <div className="metis-stat-grid">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Evidence</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Total Evidence
+              </CardTitle>
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -202,9 +215,11 @@ export function Evidence() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {mockEvidence.filter(e => e.type === 'image').length}
+                {mockEvidence.filter((e) => e.type === "image").length}
               </div>
-              <p className="text-xs text-muted-foreground">Photos & screenshots</p>
+              <p className="text-xs text-muted-foreground">
+                Photos & screenshots
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -214,14 +229,18 @@ export function Evidence() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {mockEvidence.filter(e => e.type === 'video').length}
+                {mockEvidence.filter((e) => e.type === "video").length}
               </div>
-              <p className="text-xs text-muted-foreground">Recordings & clips</p>
+              <p className="text-xs text-muted-foreground">
+                Recordings & clips
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Storage Used</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Storage Used
+              </CardTitle>
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -231,15 +250,17 @@ export function Evidence() {
           </Card>
         </div>
 
-        {viewMode === 'grid' ? (
+        {viewMode === "grid" ? (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filteredEvidence.map((item) => {
-              const TypeIcon = typeIcons[item.type]
+              const TypeIcon = typeIcons[item.type];
               return (
-                <Card 
+                <Card
                   key={item.id}
                   className={`cursor-pointer transition-all hover:shadow-md ${
-                    selectedEvidence.includes(item.id) ? 'ring-2 ring-primary' : ''
+                    selectedEvidence.includes(item.id)
+                      ? "ring-2 ring-primary"
+                      : ""
                   }`}
                   onClick={() => toggleSelection(item.id)}
                 >
@@ -250,38 +271,52 @@ export function Evidence() {
                           {item.thumbnail}
                         </div>
                         <div>
-                          <p className="text-xs font-mono text-muted-foreground">{item.id}</p>
-                          <CardTitle className="text-base">{item.title}</CardTitle>
+                          <p className="text-xs font-mono text-muted-foreground">
+                            {item.id}
+                          </p>
+                          <CardTitle className="text-base">
+                            {item.title}
+                          </CardTitle>
                         </div>
                       </div>
                       <input
                         type="checkbox"
                         checked={selectedEvidence.includes(item.id)}
                         onChange={() => {}}
-                        className="h-4 w-4 rounded border-gray-300"
+                        className="metis-check"
                       />
                     </div>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
-                         <Badge variant={typeColors[item.type] as 'info' | 'danger' | 'warning'}>
-                           <TypeIcon className="h-3 w-3" />
-                           {item.format}
-                         </Badge>
-                        <span className="text-xs text-muted-foreground">{item.size}</span>
+                        <SignalBadge
+                          tone={
+                            typeColors[item.type] as
+                              | "emerging"
+                              | "anomaly"
+                              | "financial"
+                          }
+                        >
+                          <TypeIcon className="h-3 w-3" />
+                          {item.format}
+                        </SignalBadge>
+                        <span className="text-xs text-muted-foreground">
+                          {item.size}
+                        </span>
                       </div>
                       <p className="text-xs text-muted-foreground">
                         Case: {item.caseId}
                       </p>
                       <div className="flex flex-wrap gap-1">
-                        {item.tags.map(tag => (
-                          <span 
+                        {item.tags.map((tag) => (
+                          <SignalTag
                             key={tag}
-                            className="rounded-full border border-border/80 bg-secondary/60 px-2 py-1 text-xs"
+                            tone="communications"
+                            className="normal-case tracking-normal text-xs"
                           >
                             {tag}
-                          </span>
+                          </SignalTag>
                         ))}
                       </div>
                       <div className="flex items-center justify-between pt-2">
@@ -289,10 +324,20 @@ export function Evidence() {
                           {item.uploaded}
                         </span>
                         <div className="flex gap-1">
-                          <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Preview evidence">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            aria-label="Preview evidence"
+                          >
                             <Eye className="h-4 w-4" />
                           </Button>
-                          <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="More evidence actions">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            aria-label="More evidence actions"
+                          >
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </div>
@@ -300,7 +345,7 @@ export function Evidence() {
                     </div>
                   </CardContent>
                 </Card>
-              )
+              );
             })}
           </div>
         ) : (
@@ -310,31 +355,47 @@ export function Evidence() {
                 <thead>
                   <tr>
                     <th className="w-12 px-4 py-3"></th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">Evidence</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">Type</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">Case</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">Size</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">Tags</th>
-                    <th className="px-4 py-3 text-left text-sm font-medium">Uploaded</th>
-                    <th className="px-4 py-3 text-right text-sm font-medium">Actions</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">
+                      Evidence
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">
+                      Type
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">
+                      Case
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">
+                      Size
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">
+                      Tags
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium">
+                      Uploaded
+                    </th>
+                    <th className="px-4 py-3 text-right text-sm font-medium">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredEvidence.map((item) => {
-                    const TypeIcon = typeIcons[item.type]
+                    const TypeIcon = typeIcons[item.type];
                     return (
-                       <tr 
-                         key={item.id}
-                         className={`${
-                           selectedEvidence.includes(item.id) ? 'bg-primary/5' : ''
-                         }`}
-                       >
+                      <tr
+                        key={item.id}
+                        className={`${
+                          selectedEvidence.includes(item.id)
+                            ? "bg-primary/5"
+                            : ""
+                        }`}
+                      >
                         <td className="px-4 py-3">
                           <input
                             type="checkbox"
                             checked={selectedEvidence.includes(item.id)}
                             onChange={() => toggleSelection(item.id)}
-                            className="h-4 w-4 rounded border-gray-300"
+                            className="metis-check"
                           />
                         </td>
                         <td className="px-4 py-3">
@@ -342,27 +403,37 @@ export function Evidence() {
                             <div className="text-2xl">{item.thumbnail}</div>
                             <div>
                               <p className="font-medium">{item.title}</p>
-                              <p className="text-xs text-muted-foreground">{item.id}</p>
+                              <p className="text-xs text-muted-foreground">
+                                {item.id}
+                              </p>
                             </div>
                           </div>
                         </td>
                         <td className="px-4 py-3">
-                           <Badge variant={typeColors[item.type] as 'info' | 'danger' | 'warning'}>
-                             <TypeIcon className="h-3 w-3" />
-                             {item.format}
-                           </Badge>
+                          <SignalBadge
+                            tone={
+                              typeColors[item.type] as
+                                | "emerging"
+                                | "anomaly"
+                                | "financial"
+                            }
+                          >
+                            <TypeIcon className="h-3 w-3" />
+                            {item.format}
+                          </SignalBadge>
                         </td>
                         <td className="px-4 py-3 text-sm">{item.caseId}</td>
                         <td className="px-4 py-3 text-sm">{item.size}</td>
                         <td className="px-4 py-3">
                           <div className="flex flex-wrap gap-1">
-                            {item.tags.slice(0, 2).map(tag => (
-                              <span 
+                            {item.tags.slice(0, 2).map((tag) => (
+                              <SignalTag
                                 key={tag}
-                                 className="rounded-full border border-border/80 bg-secondary/60 px-2 py-1 text-xs"
-                               >
-                                 {tag}
-                               </span>
+                                tone="communications"
+                                className="normal-case tracking-normal text-xs"
+                              >
+                                {tag}
+                              </SignalTag>
                             ))}
                             {item.tags.length > 2 && (
                               <span className="text-xs text-muted-foreground">
@@ -371,22 +442,39 @@ export function Evidence() {
                             )}
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-muted-foreground">{item.uploaded}</td>
+                        <td className="px-4 py-3 text-sm text-muted-foreground">
+                          {item.uploaded}
+                        </td>
                         <td className="px-4 py-3 text-right">
                           <div className="flex justify-end gap-1">
-                            <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Preview evidence">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              aria-label="Preview evidence"
+                            >
                               <Eye className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Download evidence">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              aria-label="Download evidence"
+                            >
                               <Download className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Delete evidence">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              aria-label="Delete evidence"
+                            >
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
                         </td>
                       </tr>
-                    )
+                    );
                   })}
                 </tbody>
               </table>
@@ -395,5 +483,5 @@ export function Evidence() {
         )}
       </div>
     </WorkspaceLayout>
-  )
+  );
 }

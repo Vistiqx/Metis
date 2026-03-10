@@ -48,8 +48,16 @@
     @apply bg-background text-foreground antialiased;
     font-family: "Charter", "Cambria", Georgia, serif;
     background-image:
-      radial-gradient(circle at top left, rgba(212, 167, 58, 0.12), transparent 28%),
-      radial-gradient(circle at top right, rgba(50, 209, 204, 0.07), transparent 22%),
+      radial-gradient(
+        circle at top left,
+        rgba(212, 167, 58, 0.12),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at top right,
+        rgba(212, 167, 58, 0.05),
+        transparent 20%
+      ),
       linear-gradient(180deg, rgba(11, 15, 26, 0.96), rgba(2, 8, 23, 1));
     min-height: 100vh;
   }
@@ -63,7 +71,8 @@
   h3,
   h4 {
     @apply tracking-tight text-foreground;
-    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+    font-family:
+      "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   }
 
   p,
@@ -116,11 +125,11 @@
 
 @layer components {
   .metis-page {
-    @apply space-y-6;
+    @apply space-y-5;
   }
 
   .metis-page-header {
-    @apply flex flex-col gap-4 border-b border-border/70 pb-5 lg:flex-row lg:items-end lg:justify-between;
+    @apply flex flex-col gap-3 border-b border-border/70 pb-4 lg:flex-row lg:items-end lg:justify-between;
   }
 
   .metis-kicker {
@@ -128,31 +137,31 @@
   }
 
   .metis-title {
-    @apply text-3xl sm:text-4xl;
+    @apply text-[2.1rem] sm:text-[2.55rem];
   }
 
   .metis-subtitle {
-    @apply max-w-3xl text-sm leading-6 text-muted-foreground sm:text-[0.95rem];
+    @apply max-w-3xl text-sm leading-6 text-muted-foreground;
   }
 
   .metis-panel {
-    @apply rounded-2xl border border-border/80 bg-card/90 shadow-panel shadow-black/25 backdrop-blur;
+    @apply rounded-xl border border-border/80 bg-card/90 shadow-panel shadow-black/25 backdrop-blur;
   }
 
   .metis-panel-muted {
-    @apply rounded-2xl border border-border/70 bg-secondary/70 shadow-sm;
+    @apply rounded-xl border border-border/70 bg-secondary/56 shadow-sm;
   }
 
   .metis-toolbar {
-    @apply flex flex-col gap-3 rounded-2xl border border-border/80 bg-card/90 p-4 shadow-panel shadow-black/25 backdrop-blur lg:flex-row lg:items-center lg:justify-between;
+    @apply flex flex-col gap-3 rounded-xl border border-border/80 bg-card/90 p-3.5 shadow-panel shadow-black/25 backdrop-blur lg:flex-row lg:items-center lg:justify-between;
   }
 
   .metis-input {
-    @apply h-11 rounded-xl border border-border/80 bg-input/90 px-3.5 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply h-10 rounded-xl border border-border/80 bg-input/90 px-3 text-sm text-foreground placeholder:text-muted-foreground;
   }
 
   .metis-textarea {
-    @apply rounded-xl border border-border/80 bg-input/90 px-3.5 py-3 text-sm text-foreground placeholder:text-muted-foreground;
+    @apply rounded-xl border border-border/80 bg-input/90 px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground;
   }
 
   .metis-tablist {
@@ -164,7 +173,7 @@
   }
 
   .metis-empty {
-    @apply flex min-h-[220px] flex-col items-center justify-center rounded-2xl border border-border/80 bg-card/90 px-6 text-center shadow-panel shadow-black/25 backdrop-blur;
+    @apply flex min-h-[220px] flex-col items-center justify-center rounded-xl border border-border/80 bg-card/90 px-6 text-center shadow-panel shadow-black/25 backdrop-blur;
   }
 
   .metis-badge {
@@ -175,16 +184,28 @@
     @apply h-2 w-2 rounded-full;
   }
 
+  .metis-check {
+    @apply h-4 w-4 rounded border-border bg-input text-primary focus:ring-2 focus:ring-ring;
+  }
+
+  .metis-radio {
+    @apply h-4 w-4 border-border bg-input text-primary focus:ring-2 focus:ring-ring;
+  }
+
+  .metis-choice-card {
+    @apply rounded-xl border border-border/80 bg-secondary/35 p-4 transition-colors;
+  }
+
   .metis-table {
     @apply w-full border-separate border-spacing-0 overflow-hidden;
   }
 
   .metis-table thead th {
-    @apply border-b border-border/80 bg-secondary/70 px-4 py-3 text-left text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+    @apply border-b border-border/80 bg-secondary/60 px-3 py-2.5 text-left text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground;
   }
 
   .metis-table tbody td {
-    @apply border-b border-border/70 px-4 py-3 align-top text-sm;
+    @apply border-b border-border/70 px-3 py-2.5 align-top text-sm;
   }
 
   .metis-table tbody tr:last-child td {

@@ -4,35 +4,24 @@ import { Badge } from "../ui/Badge";
 
 interface RightPanelProps {
   children?: React.ReactNode;
+  isDrawerOpen?: boolean;
   title?: string;
   onClose?: () => void;
 }
 
 export function RightPanel({
   children,
+  isDrawerOpen = false,
   title = "Details",
   onClose,
 }: RightPanelProps) {
   const [collapsed, setCollapsed] = useState(false);
 
-  if (collapsed) {
-    return (
-      <button
-        onClick={() => setCollapsed(false)}
-        aria-label="Expand inspector"
-        title="Expand inspector"
-        className="hidden h-full w-10 items-center justify-center border-l border-border/70 bg-card/90 text-muted-foreground transition hover:bg-secondary/70 hover:text-foreground xl:flex"
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </button>
-    );
-  }
-
-  return (
-    <aside className="hidden h-screen w-[300px] flex-col border-l border-border/70 bg-card/92 backdrop-blur xl:flex">
+  const panelContent = (
+    <>
       <div className="border-b border-border/70 px-4 py-4">
-        <div className="mb-2 flex items-center justify-between">
-          <div>
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <div className="min-w-0">
             <div className="metis-kicker">Right Intelligence Region</div>
             <h2 className="text-[20px] font-semibold">{title}</h2>
           </div>
@@ -43,20 +32,20 @@ export function RightPanel({
             onClick={() => setCollapsed(true)}
             aria-label="Collapse inspector"
             title="Collapse inspector"
-            className="rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground"
+            className="hidden rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground [@media(min-width:1680px)]:inline-flex"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
-          {onClose && (
+          {onClose ? (
             <button
               aria-label="Close inspector"
               title="Close inspector"
               onClick={onClose}
-              className="rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground"
+              className="rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground [@media(min-width:1680px)]:hidden"
             >
               <X className="h-5 w-5" />
             </button>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -67,7 +56,48 @@ export function RightPanel({
           </div>
         )}
       </div>
-    </aside>
+    </>
+  );
+
+  if (collapsed) {
+    return (
+      <button
+        onClick={() => setCollapsed(false)}
+        aria-label="Expand inspector"
+        title="Expand inspector"
+        className="hidden h-full w-10 items-center justify-center border-l border-border/70 bg-card/90 text-muted-foreground transition hover:bg-secondary/70 hover:text-foreground [@media(min-width:1680px)]:flex"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <div
+        role="button"
+        tabIndex={isDrawerOpen ? 0 : -1}
+        aria-hidden={!isDrawerOpen}
+        className={`fixed inset-0 z-40 bg-[rgba(6,6,10,0.6)] backdrop-blur-[2px] transition-opacity duration-200 [@media(min-width:1680px)]:hidden ${
+          isDrawerOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        onClick={onClose}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onClose?.();
+          }
+        }}
+      />
+
+      <aside
+        className={`metis-right-panel fixed inset-y-0 right-0 z-50 flex w-[min(22rem,calc(100vw-1rem))] flex-col border-l border-border/70 bg-card/95 shadow-[-18px_0_48px_rgba(0,0,0,0.38)] backdrop-blur xl:w-[min(24rem,calc(100vw-1.5rem))] [@media(min-width:1680px)]:sticky [@media(min-width:1680px)]:top-0 [@media(min-width:1680px)]:z-auto [@media(min-width:1680px)]:h-[100dvh] [@media(min-width:1680px)]:w-auto [@media(min-width:1680px)]:self-start [@media(min-width:1680px)]:translate-x-0 [@media(min-width:1680px)]:shadow-none ${
+          isDrawerOpen ? "translate-x-0" : "translate-x-full [@media(min-width:1680px)]:translate-x-0"
+        }`}
+      >
+        {panelContent}
+      </aside>
+    </>
   );
 }
 

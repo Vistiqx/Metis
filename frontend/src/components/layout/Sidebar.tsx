@@ -137,7 +137,7 @@ export function Sidebar() {
       )}
 
       <aside
-        className={`metis-shell-sidebar fixed inset-y-0 left-0 z-40 flex h-screen w-[240px] flex-col backdrop-blur-xl transition-transform duration-200 xl:static ${
+        className={`metis-shell-sidebar fixed inset-y-0 left-0 z-40 flex h-[100dvh] flex-col backdrop-blur-xl transition-transform duration-200 xl:sticky xl:top-0 xl:z-auto xl:h-[100dvh] xl:self-start ${
           mobileOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"
         }`}
       >

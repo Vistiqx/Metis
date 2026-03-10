@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Dock } from "./Dock";
 import { RightPanel } from "./RightPanel";
 import { Sidebar } from "./Sidebar";
@@ -31,6 +32,7 @@ export function WorkspaceLayout({
   showRightPanel = true,
   showDock = true,
 }: WorkspaceLayoutProps) {
+  const [isInspectorOpen, setIsInspectorOpen] = useState(false);
   const hasInspector = showRightPanel;
 
   return (
@@ -46,9 +48,14 @@ export function WorkspaceLayout({
         data-shell-region="workspace"
         data-layer={layer}
       >
-        <TopBar />
+        <TopBar
+          onToggleInspector={
+            hasInspector ? () => setIsInspectorOpen((current) => !current) : undefined
+          }
+          showInspectorToggle={hasInspector}
+        />
 
-        <div className="metis-shell-region relative flex min-h-[calc(100vh-56px)] flex-1 overflow-hidden">
+        <div className="metis-shell-region relative flex min-h-0 flex-1 overflow-hidden">
           <main
             className="metis-page-body relative flex-1 overflow-auto pb-24"
             data-shell-region="analysis"
@@ -59,7 +66,13 @@ export function WorkspaceLayout({
       </div>
 
       {hasInspector ? (
-        <RightPanel title={rightPanelTitle}>{rightPanelContent}</RightPanel>
+        <RightPanel
+          isDrawerOpen={isInspectorOpen}
+          onClose={() => setIsInspectorOpen(false)}
+          title={rightPanelTitle}
+        >
+          {rightPanelContent}
+        </RightPanel>
       ) : null}
 
       {showDock && (

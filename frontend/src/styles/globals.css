@@ -35,6 +35,9 @@
     --metis-yellow: 50 100% 50%;
     --metis-teal: 183 58% 53%;
     --metis-lime: 80 100% 49%;
+    --metis-shell-sidebar-width: clamp(14rem, 13vw, 15rem);
+    --metis-shell-inspector-width: clamp(17rem, 15vw, 18rem);
+    --metis-analysis-rail-width: clamp(17rem, 18vw, 19rem);
   }
 }
 
@@ -45,6 +48,9 @@
 
   html {
     color-scheme: dark;
+    font-size: 16px;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -56,11 +62,11 @@
       radial-gradient(circle at 82% 20%, rgba(133, 34, 18, 0.1), transparent 24%),
       radial-gradient(circle at 50% 120%, rgba(212, 175, 55, 0.06), transparent 30%),
       linear-gradient(180deg, rgba(12, 6, 9, 1) 0%, rgba(18, 10, 12, 1) 30%, rgba(14, 10, 14, 1) 62%, rgba(8, 7, 11, 1) 100%);
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   #root {
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   h1,
@@ -174,7 +180,13 @@
   }
 
   .metis-analysis-grid {
-    @apply grid items-start gap-4 xl:grid-cols-[240px_minmax(0,1.6fr)];
+    @apply grid items-start gap-4;
+  }
+
+  @media (min-width: 1440px) {
+    .metis-analysis-grid {
+      grid-template-columns: var(--metis-analysis-rail-width) minmax(0, 1.6fr);
+    }
   }
 
   .metis-archetype-grid {
@@ -214,22 +226,33 @@
   }
 
   .metis-shell-grid {
-    @apply grid min-h-screen bg-[radial-gradient(circle_at_16%_18%,rgba(156,52,20,0.16),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(212,175,55,0.1),transparent_18%),radial-gradient(circle_at_50%_52%,rgba(122,34,18,0.08),transparent_32%),linear-gradient(180deg,rgba(12,6,9,0.99),rgba(18,10,12,1)_32%,rgba(14,10,14,1)_68%,rgba(8,7,11,1))] xl:grid-cols-[240px_minmax(0,1fr)];
+    @apply grid min-h-[100dvh] bg-[radial-gradient(circle_at_16%_18%,rgba(156,52,20,0.16),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(212,175,55,0.1),transparent_18%),radial-gradient(circle_at_50%_52%,rgba(122,34,18,0.08),transparent_32%),linear-gradient(180deg,rgba(12,6,9,0.99),rgba(18,10,12,1)_32%,rgba(14,10,14,1)_68%,rgba(8,7,11,1))] xl:h-[100dvh];
   }
 
-  .metis-shell-grid[data-has-inspector="true"] {
-    @apply xl:grid-cols-[240px_minmax(0,1fr)_300px];
+  @media (min-width: 1280px) {
+    .metis-shell-grid {
+      grid-template-columns: var(--metis-shell-sidebar-width) minmax(0, 1fr);
+    }
+  }
+
+  @media (min-width: 1680px) {
+    .metis-shell-grid[data-has-inspector="true"] {
+      grid-template-columns:
+        var(--metis-shell-sidebar-width)
+        minmax(0, 1fr)
+        var(--metis-shell-inspector-width);
+    }
   }
 
   .metis-workspace {
-    @apply min-w-0 border-l border-r border-[rgba(166,132,72,0.16)] bg-[rgba(11,9,14,0.9)];
+    @apply min-h-0 min-w-0 border-l border-r border-[rgba(166,132,72,0.16)] bg-[rgba(11,9,14,0.9)];
     box-shadow:
       inset 1px 0 0 rgba(212, 175, 55, 0.03),
       inset -1px 0 0 rgba(212, 175, 55, 0.03);
   }
 
   .metis-shell-region {
-    @apply relative bg-[rgba(10,8,13,0.72)];
+    @apply relative min-h-0 bg-[rgba(10,8,13,0.72)];
   }
 
   .metis-shell-region::before {
@@ -263,7 +286,21 @@
   }
 
   .metis-page-body {
-    @apply relative px-5 py-4;
+    @apply relative min-h-0 overflow-x-hidden px-5 py-4;
+  }
+
+  @media (max-width: 767px) {
+    .metis-page-body {
+      @apply px-4 py-3;
+    }
+  }
+
+  .metis-shell-sidebar {
+    width: var(--metis-shell-sidebar-width);
+  }
+
+  .metis-right-panel {
+    width: var(--metis-shell-inspector-width);
   }
 
   .metis-metric-row {

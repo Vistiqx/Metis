@@ -182,7 +182,7 @@ export function Dashboard() {
               {metrics.map((metric) => (
                 <div
                   key={metric.label}
-                  className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]"
+                  className="metis-metric-cell metis-metric-cell-gold flex-1"
                 >
                   <div className="metis-micro-label">{metric.label}</div>
                   <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">

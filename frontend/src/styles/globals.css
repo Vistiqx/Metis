@@ -274,6 +274,16 @@
     @apply min-w-[140px] rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.9)] px-3 py-2;
   }
 
+  .metis-metric-cell-gold {
+    border-color: hsl(var(--metis-gold) / 0.24);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--metis-gold-deep) / 0.3) 0%,
+      rgba(25, 17, 18, 0.92) 100%
+    );
+    box-shadow: inset 0 1px 0 hsl(var(--metis-gold-radiant) / 0.08);
+  }
+
   .metis-micro-label {
     @apply text-[11px] uppercase tracking-[0.18em] text-muted-foreground;
   }

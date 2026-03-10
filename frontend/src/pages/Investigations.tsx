@@ -187,19 +187,19 @@ export function Investigations() {
         }
         commandStrip={
             <div className="metis-command-strip">
-            <div className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]">
+            <div className="metis-metric-cell metis-metric-cell-gold flex-1">
               <div className="metis-micro-label">Open cases</div>
               <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
                 {openCount}
               </div>
             </div>
-            <div className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]">
+            <div className="metis-metric-cell metis-metric-cell-gold flex-1">
               <div className="metis-micro-label">Evidence linked</div>
               <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
                 {cases.reduce((sum, item) => sum + item.evidence, 0)}
               </div>
             </div>
-            <div className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]">
+            <div className="metis-metric-cell metis-metric-cell-gold flex-1">
               <div className="metis-micro-label">High priority</div>
               <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
                 {

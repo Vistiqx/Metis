@@ -31,10 +31,12 @@ export function WorkspaceLayout({
   showRightPanel = true,
   showDock = true,
 }: WorkspaceLayoutProps) {
+  const hasInspector = showRightPanel;
+
   return (
     <div
       className="metis-shell-grid bg-transparent text-foreground"
-      data-has-inspector={showRightPanel ? "true" : "false"}
+      data-has-inspector={hasInspector ? "true" : "false"}
       data-layer={layer}
     >
       <Sidebar />
@@ -42,27 +44,26 @@ export function WorkspaceLayout({
       <div
         className="metis-workspace relative flex min-w-0 flex-col"
         data-shell-region="workspace"
+        data-layer={layer}
       >
         <TopBar />
 
-        <div className="metis-shell-region relative flex flex-1 overflow-hidden">
-          <main className="metis-page-body relative flex-1 overflow-auto pb-24">
+        <div className="metis-shell-region relative flex min-h-[calc(100vh-56px)] flex-1 overflow-hidden">
+          <main
+            className="metis-page-body relative flex-1 overflow-auto pb-24"
+            data-shell-region="analysis"
+          >
             {children}
           </main>
         </div>
       </div>
 
-      {showRightPanel ? (
+      {hasInspector ? (
         <RightPanel title={rightPanelTitle}>{rightPanelContent}</RightPanel>
-      ) : (
-        <aside
-          aria-hidden="true"
-          className="hidden h-screen w-[300px] border-l border-border/70 bg-card/55 xl:block"
-        />
-      )}
+      ) : null}
 
       {showDock && (
-        <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-50">
+        <div className="metis-dock-frame">
           <div className="pointer-events-auto">
             <Dock context={dockContext} />
           </div>

@@ -15,6 +15,7 @@ import {
   Shield,
   TimerReset,
   Waypoints,
+  ChevronRight,
   X,
 } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -47,6 +48,55 @@ const bottomItems: NavItem[] = [
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
+function SidebarLane({
+  title,
+  items,
+  pathname,
+  onNavigate,
+}: {
+  title: string;
+  items: NavItem[];
+  pathname: string;
+  onNavigate: () => void;
+}) {
+  return (
+    <section className="space-y-2">
+      <div className="flex items-center gap-2 px-2">
+        <div className="h-px flex-1 bg-border/60" />
+        <div className="metis-operations-rail-label">{title}</div>
+      </div>
+      <ul className="space-y-1">
+        {items.map((item) => {
+          const isActive =
+            pathname === item.path ||
+            (item.path !== "/" && pathname.startsWith(item.path));
+
+          return (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                onClick={onNavigate}
+                data-active={isActive ? "true" : "false"}
+                className="metis-operations-rail-link group"
+              >
+                <item.icon
+                  className={`h-[18px] w-[18px] flex-shrink-0 ${isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"}`}
+                />
+                <div className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-medium">{item.label}</span>
+                </div>
+                <ChevronRight
+                  className={`h-3.5 w-3.5 flex-shrink-0 ${isActive ? "text-primary/80" : "text-muted-foreground/50 group-hover:text-muted-foreground"}`}
+                />
+              </NavLink>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
 export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
@@ -63,7 +113,7 @@ export function Sidebar() {
     <>
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed left-4 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-md border border-border/80 bg-card/95 text-foreground shadow-panel transition hover:border-primary/40 hover:text-primary xl:hidden"
+        className="fixed left-4 top-3 z-[60] flex h-10 w-10 items-center justify-center rounded-md border border-border/80 bg-[rgba(10,15,24,0.96)] text-foreground shadow-panel transition hover:border-primary/30 hover:text-primary xl:hidden"
         aria-label="Toggle navigation"
       >
         <Menu className="h-5 w-5" />
@@ -75,7 +125,7 @@ export function Sidebar() {
           role="button"
           tabIndex={0}
           aria-label="Close navigation overlay"
-          className="fixed inset-0 z-30 bg-metis-ink/82 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-30 bg-metis-ink/82 backdrop-blur-sm xl:hidden"
           onClick={() => setMobileOpen(false)}
           onKeyDown={(event) => {
             if (event.key === "Enter" || event.key === " ") {
@@ -87,21 +137,24 @@ export function Sidebar() {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex h-screen w-[240px] flex-col border-r border-border/70 bg-metis-ink/95 backdrop-blur-xl transition-transform duration-200 xl:static ${
+        className={`metis-shell-sidebar fixed inset-y-0 left-0 z-40 flex h-screen w-[240px] flex-col backdrop-blur-xl transition-transform duration-200 xl:static ${
           mobileOpen ? "translate-x-0" : "-translate-x-full xl:translate-x-0"
         }`}
       >
-        <div className="border-b border-border/70 px-4 py-4">
+        <div className="relative z-[1] border-b border-border/70 px-4 py-4">
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-md border border-primary/25 bg-primary/10 text-primary">
-                <Shield className="h-5 w-5 flex-shrink-0" />
+            <div className="flex min-w-0 items-start gap-3">
+              <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-md border border-border/70 bg-[rgba(17,24,39,0.92)] text-primary">
+                <Shield className="h-[18px] w-[18px] flex-shrink-0" />
               </div>
               <div className="min-w-0">
-                <div className="metis-kicker">Metis Intelligence</div>
-                <span className="block truncate text-base font-semibold text-foreground">
-                  {workspaceLabel}
+                <div className="metis-operations-rail-label">System Rail</div>
+                <span className="block truncate text-sm font-semibold text-foreground">
+                  Metis Intelligence Platform
                 </span>
+                <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                  Active module: {workspaceLabel}
+                </div>
               </div>
             </div>
             <button
@@ -114,72 +167,48 @@ export function Sidebar() {
           </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4">
-          <div className="mb-3 px-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Operations
+        <div className="relative z-[1] border-b border-border/70 px-4 py-3">
+          <div className="metis-operations-rail-label">Navigation Posture</div>
+          <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+            <div className="rounded-md border border-border/60 bg-[rgba(17,24,39,0.78)] px-2 py-2">
+              Analyst mode
+            </div>
+            <div className="rounded-md border border-border/60 bg-[rgba(17,24,39,0.78)] px-2 py-2 text-primary/85">
+              Secure session
+            </div>
           </div>
-          <ul className="space-y-1.5">
-            {navItems.map((item) => {
-              const isActive =
-                location.pathname === item.path ||
-                (item.path !== "/" && location.pathname.startsWith(item.path));
+        </div>
 
-              return (
-                <li key={item.path}>
-                  <NavLink
-                    to={item.path}
-                    onClick={() => setMobileOpen(false)}
-                    className={`group flex items-center gap-3 rounded-md border px-3 py-2.5 transition-all duration-200 ${
-                      isActive
-                        ? "border-primary/30 bg-primary/12 text-primary shadow-sm shadow-primary/10"
-                        : "border-transparent text-slate-200 hover:border-border/80 hover:bg-secondary/60 hover:text-foreground"
-                    }`}
-                  >
-                    <item.icon
-                      className={`h-5 w-5 flex-shrink-0 ${isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"}`}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-semibold">
-                        {item.label}
-                      </span>
-                    </div>
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
+        <nav className="relative z-[1] flex-1 overflow-y-auto px-3 py-4">
+          <div className="space-y-5">
+            <SidebarLane
+              title="Operations"
+              items={navItems}
+              pathname={location.pathname}
+              onNavigate={() => setMobileOpen(false)}
+            />
+            <SidebarLane
+              title="Reference"
+              items={bottomItems}
+              pathname={location.pathname}
+              onNavigate={() => setMobileOpen(false)}
+            />
+          </div>
         </nav>
 
-        <div className="border-t border-border/70 px-3 py-3.5">
-          <div className="mb-3 px-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-            Reference
+        <div className="relative z-[1] border-t border-border/70 px-4 py-3">
+          <div className="metis-operations-rail-label">Rail Status</div>
+          <div className="mt-2 rounded-md border border-border/60 bg-[rgba(17,24,39,0.76)] px-3 py-3 text-sm text-muted-foreground">
+            <div className="flex items-center justify-between gap-3">
+              <span>Context lane</span>
+              <span className="text-foreground">{workspaceLabel}</span>
+            </div>
+            <div className="mt-2 h-px bg-border/60" />
+            <div className="mt-2 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.16em]">
+              <span>Authority layer</span>
+              <span className="text-primary/85">Stable</span>
+            </div>
           </div>
-          <ul className="space-y-1.5">
-            {bottomItems.map((item) => {
-              const isActive = location.pathname === item.path;
-
-              return (
-                <li key={item.path}>
-                  <NavLink
-                    to={item.path}
-                    onClick={() => setMobileOpen(false)}
-                    className={`group flex items-center gap-3 rounded-md border px-3 py-2.5 transition-all duration-200 ${
-                      isActive
-                        ? "border-primary/30 bg-primary/12 text-primary shadow-sm shadow-primary/10"
-                        : "border-transparent text-slate-200 hover:border-border/80 hover:bg-secondary/60 hover:text-foreground"
-                    }`}
-                  >
-                    <item.icon
-                      className={`h-5 w-5 flex-shrink-0 ${isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"}`}
-                    />
-                    <span className="truncate text-sm font-semibold">
-                      {item.label}
-                    </span>
-                  </NavLink>
-                </li>
-              );
-            })}
-          </ul>
         </div>
       </aside>
     </>

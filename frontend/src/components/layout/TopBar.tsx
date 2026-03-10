@@ -1,10 +1,11 @@
 import {
   Bell,
   Search,
-  User,
   LogOut,
   Command,
   ChevronRight,
+  Shield,
+  UserCircle2,
 } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -110,76 +111,89 @@ export function TopBar() {
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-14 items-center border-b border-border/70 bg-metis-ink/92 px-4 py-2 backdrop-blur xl:px-5">
-      <div className="flex w-full flex-col gap-2.5 xl:flex-row xl:items-center xl:justify-between">
-        <div className="flex max-w-3xl flex-1 items-center gap-3">
-          <div className="hidden min-w-[244px] xl:block">
-            <div className="metis-kicker">{currentRoute.section}</div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">Metis</span>
-              <ChevronRight className="h-3.5 w-3.5" />
-              <span>{currentRoute.label}</span>
+    <header className="metis-context-bar">
+      <div className="flex w-full items-center justify-between gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-4">
+          <div className="min-w-0 flex-1 xl:max-w-[520px]">
+            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              <span className="text-primary/85">Application Shell</span>
+              <span className="text-border/90">/</span>
+              <span>{currentRoute.section}</span>
             </div>
-            <div className="mt-1 text-xs uppercase tracking-[0.16em] text-muted-foreground/90">
-              {currentRoute.posture}
+            <div className="mt-1 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+              <span className="shrink-0 font-semibold text-foreground">Metis</span>
+              <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate text-foreground">{currentRoute.label}</span>
+              <span className="hidden text-border/90 xl:inline">/</span>
+              <span className="hidden truncate text-[11px] uppercase tracking-[0.16em] xl:inline">
+                {currentRoute.posture}
+              </span>
             </div>
           </div>
-          <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search cases, events, actors, evidence..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="metis-input h-10 w-full pl-10 pr-14"
-            />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2">
-              <kbd className="hidden rounded-md border border-border/80 bg-secondary/80 px-2 py-1 text-[11px] font-semibold text-muted-foreground sm:inline-flex sm:items-center sm:gap-1">
+          <div className="hidden items-center gap-2 2xl:flex">
+            <Badge variant="gold" dot>
+              Authority layer
+            </Badge>
+            <Badge variant="neutral">Secure analyst session</Badge>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <div className="hidden 2xl:block">
+            <div className="metis-context-bar-search">
+              <Search className="h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Search workspace records"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="h-full w-[180px] border-0 bg-transparent p-0 text-sm text-foreground shadow-none outline-none ring-0 placeholder:text-muted-foreground focus:ring-0"
+              />
+              <kbd className="hidden rounded border border-border/80 bg-[rgba(10,15,24,0.94)] px-1.5 py-0.5 text-[11px] font-semibold text-muted-foreground 2xl:inline-flex 2xl:items-center 2xl:gap-1">
                 <Command className="inline h-3 w-3" />K
               </kbd>
             </div>
           </div>
-        </div>
 
-        <div className="flex items-center justify-between gap-3 xl:justify-end">
-          <div className="hidden items-center gap-2 lg:flex">
-            <Badge variant="gold" dot>
-              Analyst workspace secure
-            </Badge>
-            <Badge variant="neutral">{currentRoute.label}</Badge>
+          <div className="hidden rounded-md border border-border/70 bg-[rgba(17,24,39,0.76)] px-2.5 py-1.5 text-[11px] uppercase tracking-[0.16em] text-muted-foreground lg:block">
+            {currentRoute.label}
           </div>
 
           <button
             aria-label="Open notifications"
             title="Open notifications"
-            className="relative rounded-md border border-border/80 bg-secondary/60 p-2.5 text-muted-foreground transition hover:border-primary/30 hover:text-foreground"
+            className="relative flex h-9 w-9 items-center justify-center rounded-md border border-border/70 bg-[rgba(17,24,39,0.78)] text-muted-foreground transition hover:border-primary/25 hover:text-foreground"
           >
-            <Bell className="h-5 w-5" />
+            <Bell className="h-[18px] w-[18px]" />
             <span className="sr-only">Open notifications</span>
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" />
+            <span className="absolute right-[7px] top-[7px] h-1.5 w-1.5 rounded-full bg-primary" />
           </button>
 
-          <div className="flex items-center gap-3 border-l border-border/70 pl-3 sm:pl-4">
-            <div className="hidden text-right md:block">
-              <p className="text-sm font-semibold">Analyst User</p>
-              <p className="text-xs tracking-[0.08em] text-muted-foreground">
-                analyst@metis.local
-              </p>
+          <div className="flex items-center gap-2 border-l border-border/70 pl-2">
+            <div className="hidden items-center gap-2 rounded-md border border-border/70 bg-[rgba(17,24,39,0.76)] px-2.5 py-1.5 md:flex">
+              <Shield className="h-4 w-4 text-primary/85" />
+              <div className="leading-none">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                  Analyst session
+                </p>
+                <p className="mt-1 text-xs font-medium text-foreground">analyst@metis.local</p>
+              </div>
             </div>
+
             <button
-              aria-label="Open user profile"
-              title="Open user profile"
-              className="flex h-10 w-10 items-center justify-center rounded-md border border-primary/35 bg-primary/12 text-primary transition hover:bg-primary/18"
+              aria-label="Open user session"
+              title="Open user session"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-border/70 bg-[rgba(17,24,39,0.78)] text-muted-foreground transition hover:border-primary/25 hover:text-foreground"
             >
-              <User className="h-5 w-5" />
-              <span className="sr-only">Open user profile</span>
+              <UserCircle2 className="h-[18px] w-[18px]" />
+              <span className="sr-only">Open user session</span>
             </button>
             <button
               aria-label="Log out"
               title="Log out"
-              className="rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-border/80 hover:bg-[rgba(17,24,39,0.78)] hover:text-foreground"
             >
-              <LogOut className="h-5 w-5" />
+              <LogOut className="h-[18px] w-[18px]" />
               <span className="sr-only">Log out</span>
             </button>
           </div>

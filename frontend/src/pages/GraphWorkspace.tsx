@@ -118,7 +118,7 @@ export function GraphInspectorPanel({
             return (
               <div
                 key={`${edge.from}-${edge.to}-${edge.label}`}
-                className="rounded-lg border border-border/60 bg-secondary/25 px-3 py-2"
+                className="rounded-lg border border-[rgba(110,138,189,0.18)] bg-[rgba(11,17,28,0.9)] px-3 py-2"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-semibold text-foreground">
@@ -286,10 +286,10 @@ export function GraphCanvas({
   return (
     <Panel className="overflow-hidden p-0">
       <div
-        className="relative h-[680px] overflow-hidden bg-secondary/30"
+        className="relative h-[680px] overflow-hidden bg-[radial-gradient(circle_at_50%_38%,rgba(212,175,55,0.09),transparent_18%),linear-gradient(180deg,rgba(15,23,42,0.76),rgba(8,13,23,0.98))]"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 1px 1px, rgba(148,163,184,0.16) 1px, transparent 0)",
+            "radial-gradient(circle at 50% 38%, rgba(212,175,55,0.08), transparent 18%), radial-gradient(circle at 1px 1px, rgba(148,163,184,0.12) 1px, transparent 0)",
           backgroundSize: "28px 28px",
         }}
       >
@@ -304,7 +304,7 @@ export function GraphCanvas({
               orient="auto"
               markerUnits="strokeWidth"
             >
-              <path d="M0,0 L0,6 L9,3 z" fill="rgba(148,163,184,0.72)" />
+              <path d="M0,0 L0,6 L9,3 z" fill="rgba(240,207,112,0.72)" />
             </marker>
           </defs>
           <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
@@ -323,9 +323,17 @@ export function GraphCanvas({
                     y1={fromNode.y}
                     x2={toNode.x}
                     y2={toNode.y}
-                    stroke="rgba(148, 163, 184, 0.45)"
+                    stroke={
+                      edge.from === selectedNodeId || edge.to === selectedNodeId
+                        ? "rgba(240, 207, 112, 0.68)"
+                        : "rgba(148, 163, 184, 0.38)"
+                    }
                     strokeWidth="1.6"
-                    strokeDasharray="4,6"
+                    strokeDasharray={
+                      edge.from === selectedNodeId || edge.to === selectedNodeId
+                        ? ""
+                        : "4,6"
+                    }
                     markerEnd="url(#edge-arrow)"
                   />
                   <rect
@@ -334,13 +342,13 @@ export function GraphCanvas({
                     width="84"
                     height="20"
                     rx="10"
-                    fill="rgba(15, 23, 42, 0.88)"
-                    stroke="rgba(71, 85, 105, 0.7)"
+                    fill="rgba(8, 13, 23, 0.92)"
+                    stroke="rgba(110, 138, 189, 0.36)"
                   />
                   <text
                     x={midX}
                     y={midY - 7}
-                    fill="rgba(226, 232, 240, 0.85)"
+                    fill="rgba(240, 207, 112, 0.9)"
                     fontSize="9"
                     textAnchor="middle"
                   >
@@ -349,7 +357,7 @@ export function GraphCanvas({
                   <text
                     x={midX}
                     y={midY + 5}
-                    fill="rgba(148, 163, 184, 0.8)"
+                    fill="rgba(163, 181, 213, 0.84)"
                     fontSize="8"
                     textAnchor="middle"
                   >
@@ -367,12 +375,14 @@ export function GraphCanvas({
                 onClick={() => onSelectNode(node.id)}
               >
                 {node.id === selectedNodeId ? (
-                  <circle
-                    r="36"
-                    fill="rgba(212, 175, 55, 0.08)"
-                    stroke="rgba(212, 175, 55, 0.4)"
-                    strokeDasharray="5,6"
-                  />
+                  <>
+                    <circle r="40" fill="rgba(240, 207, 112, 0.12)" />
+                    <circle
+                      r="36"
+                      fill="rgba(212, 175, 55, 0.08)"
+                      stroke="rgba(240, 207, 112, 0.54)"
+                    />
+                  </>
                 ) : null}
                 <SignalNode tone={node.signal} selected={selectedNodeId === node.id} />
                 <text
@@ -386,7 +396,7 @@ export function GraphCanvas({
                 </text>
                 <text
                   y="44"
-                  fill="hsl(var(--foreground))"
+                  fill={node.id === selectedNodeId ? "#fff1bf" : "hsl(var(--foreground))"}
                   fontSize="11"
                   fontWeight="600"
                   textAnchor="middle"

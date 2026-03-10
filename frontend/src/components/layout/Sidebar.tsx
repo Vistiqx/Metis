@@ -12,7 +12,6 @@ import {
   ScanSearch,
   Settings,
   Shapes,
-  Shield,
   TimerReset,
   Waypoints,
   ChevronRight,
@@ -20,6 +19,7 @@ import {
 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { MetisLogoMark } from "../ui/MetisLogoMark";
 
 interface NavItem {
   icon: React.ElementType;
@@ -80,13 +80,13 @@ function SidebarLane({
                 className="metis-operations-rail-link group"
               >
                 <item.icon
-                  className={`h-[18px] w-[18px] flex-shrink-0 ${isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"}`}
+                  className={`h-[18px] w-[18px] flex-shrink-0 ${isActive ? "text-[#f0cf70]" : "text-muted-foreground group-hover:text-[#f0cf70]"}`}
                 />
                 <div className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-medium">{item.label}</span>
                 </div>
                 <ChevronRight
-                  className={`h-3.5 w-3.5 flex-shrink-0 ${isActive ? "text-primary/80" : "text-muted-foreground/50 group-hover:text-muted-foreground"}`}
+                  className={`h-3.5 w-3.5 flex-shrink-0 ${isActive ? "text-[#f0cf70]/80" : "text-muted-foreground/50 group-hover:text-[#f0cf70]/70"}`}
                 />
               </NavLink>
             </li>
@@ -144,15 +144,15 @@ export function Sidebar() {
         <div className="relative z-[1] border-b border-border/70 px-4 py-4">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-start gap-3">
-              <div className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-md border border-border/70 bg-[rgba(17,24,39,0.92)] text-primary">
-                <Shield className="h-[18px] w-[18px] flex-shrink-0" />
+              <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(46,34,11,0.56),rgba(11,17,28,0.94))] shadow-[0_0_18px_rgba(212,175,55,0.08)]">
+                <MetisLogoMark className="h-6 w-6" />
               </div>
               <div className="min-w-0">
                 <div className="metis-operations-rail-label">System Rail</div>
-                <span className="block truncate text-sm font-semibold text-foreground">
-                  Metis Intelligence Platform
-                </span>
-                <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                <div className="metis-logo-lockup mt-0.5">
+                  <span className="metis-logo-wordmark text-[0.95rem]">METIS</span>
+                </div>
+                <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-muted-foreground/95">
                   Active module: {workspaceLabel}
                 </div>
               </div>
@@ -170,10 +170,10 @@ export function Sidebar() {
         <div className="relative z-[1] border-b border-border/70 px-4 py-3">
           <div className="metis-operations-rail-label">Navigation Posture</div>
           <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-            <div className="rounded-md border border-border/60 bg-[rgba(17,24,39,0.78)] px-2 py-2">
+            <div className="rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] px-2 py-2 text-[#dce6f6]">
               Analyst mode
             </div>
-            <div className="rounded-md border border-border/60 bg-[rgba(17,24,39,0.78)] px-2 py-2 text-primary/85">
+            <div className="rounded-md border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(48,36,12,0.42),rgba(11,17,28,0.88))] px-2 py-2 text-[#f0cf70]">
               Secure session
             </div>
           </div>
@@ -198,7 +198,7 @@ export function Sidebar() {
 
         <div className="relative z-[1] border-t border-border/70 px-4 py-3">
           <div className="metis-operations-rail-label">Rail Status</div>
-          <div className="mt-2 rounded-md border border-border/60 bg-[rgba(17,24,39,0.76)] px-3 py-3 text-sm text-muted-foreground">
+          <div className="mt-2 rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] px-3 py-3 text-sm text-muted-foreground">
             <div className="flex items-center justify-between gap-3">
               <span>Context lane</span>
               <span className="text-foreground">{workspaceLabel}</span>
@@ -206,7 +206,7 @@ export function Sidebar() {
             <div className="mt-2 h-px bg-border/60" />
             <div className="mt-2 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.16em]">
               <span>Authority layer</span>
-              <span className="text-primary/85">Stable</span>
+              <span className="text-[#f0cf70]">Stable</span>
             </div>
           </div>
         </div>

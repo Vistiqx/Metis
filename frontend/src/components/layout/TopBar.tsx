@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Badge } from "../ui/Badge";
+import { MetisLogoMark } from "../ui/MetisLogoMark";
 
 const routeMeta: Record<
   string,
@@ -116,12 +117,17 @@ export function TopBar() {
         <div className="flex min-w-0 flex-1 items-center gap-4">
           <div className="min-w-0 flex-1 xl:max-w-[520px]">
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-              <span className="text-primary/85">Application Shell</span>
+              <span className="text-[#d4af37]">Application Shell</span>
               <span className="text-border/90">/</span>
               <span>{currentRoute.section}</span>
             </div>
             <div className="mt-1 flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
-              <span className="shrink-0 font-semibold text-foreground">Metis</span>
+              <span className="metis-logo-lockup shrink-0">
+                <span className="flex h-5 w-5 items-center justify-center rounded-sm border border-[rgba(212,175,55,0.22)] bg-[linear-gradient(180deg,rgba(46,34,11,0.48),rgba(11,17,28,0.88))]">
+                  <MetisLogoMark className="h-3.5 w-3.5" />
+                </span>
+                <span className="metis-logo-wordmark text-[0.82rem]">METIS</span>
+              </span>
               <ChevronRight className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate text-foreground">{currentRoute.label}</span>
               <span className="hidden text-border/90 xl:inline">/</span>
@@ -141,7 +147,7 @@ export function TopBar() {
         <div className="flex items-center gap-2">
           <div className="hidden 2xl:block">
             <div className="metis-context-bar-search">
-              <Search className="h-4 w-4" />
+              <Search className="h-4 w-4 text-[#f0cf70]" />
               <input
                 type="text"
                 placeholder="Search workspace records"
@@ -162,7 +168,7 @@ export function TopBar() {
           <button
             aria-label="Open notifications"
             title="Open notifications"
-            className="relative flex h-9 w-9 items-center justify-center rounded-md border border-border/70 bg-[rgba(17,24,39,0.78)] text-muted-foreground transition hover:border-primary/25 hover:text-foreground"
+            className="relative flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70]"
           >
             <Bell className="h-[18px] w-[18px]" />
             <span className="sr-only">Open notifications</span>
@@ -170,10 +176,10 @@ export function TopBar() {
           </button>
 
           <div className="flex items-center gap-2 border-l border-border/70 pl-2">
-            <div className="hidden items-center gap-2 rounded-md border border-border/70 bg-[rgba(17,24,39,0.76)] px-2.5 py-1.5 md:flex">
-              <Shield className="h-4 w-4 text-primary/85" />
+            <div className="hidden items-center gap-2 rounded-md border border-[rgba(212,175,55,0.24)] bg-[linear-gradient(180deg,rgba(48,36,12,0.34),rgba(11,17,28,0.88))] px-2.5 py-1.5 md:flex">
+              <Shield className="h-4 w-4 text-[#f0cf70]" />
               <div className="leading-none">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                <p className="text-[11px] uppercase tracking-[0.16em] text-[#d4af37]">
                   Analyst session
                 </p>
                 <p className="mt-1 text-xs font-medium text-foreground">analyst@metis.local</p>
@@ -183,7 +189,7 @@ export function TopBar() {
             <button
               aria-label="Open user session"
               title="Open user session"
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-border/70 bg-[rgba(17,24,39,0.78)] text-muted-foreground transition hover:border-primary/25 hover:text-foreground"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-[rgba(110,138,189,0.24)] bg-[rgba(11,17,28,0.84)] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70]"
             >
               <UserCircle2 className="h-[18px] w-[18px]" />
               <span className="sr-only">Open user session</span>
@@ -191,7 +197,7 @@ export function TopBar() {
             <button
               aria-label="Log out"
               title="Log out"
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-border/80 hover:bg-[rgba(17,24,39,0.78)] hover:text-foreground"
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-transparent text-muted-foreground transition hover:border-[rgba(110,138,189,0.24)] hover:bg-[rgba(11,17,28,0.84)] hover:text-[#f0cf70]"
             >
               <LogOut className="h-[18px] w-[18px]" />
               <span className="sr-only">Log out</span>

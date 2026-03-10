@@ -186,22 +186,22 @@ export function Investigations() {
           />
         }
         commandStrip={
-          <div className="metis-command-strip">
-            <div className="metis-metric-cell flex-1">
+            <div className="metis-command-strip">
+            <div className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]">
               <div className="metis-micro-label">Open cases</div>
-              <div className="mt-1 text-2xl font-semibold text-foreground">
+              <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
                 {openCount}
               </div>
             </div>
-            <div className="metis-metric-cell flex-1">
+            <div className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]">
               <div className="metis-micro-label">Evidence linked</div>
-              <div className="mt-1 text-2xl font-semibold text-foreground">
+              <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
                 {cases.reduce((sum, item) => sum + item.evidence, 0)}
               </div>
             </div>
-            <div className="metis-metric-cell flex-1">
+            <div className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]">
               <div className="metis-micro-label">High priority</div>
-              <div className="mt-1 text-2xl font-semibold text-foreground">
+              <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
                 {
                   cases.filter(
                     (item) =>
@@ -210,7 +210,7 @@ export function Investigations() {
                 }
               </div>
             </div>
-            <div className="metis-metric-cell flex-[1.3]">
+            <div className="metis-metric-cell flex-[1.3] border-[rgba(212,175,55,0.14)] bg-[rgba(12,18,29,0.88)]">
               <div className="metis-micro-label">Queue note</div>
               <p className="mt-2 text-sm text-muted-foreground">
                 Signal colors classify urgency only. Workflow state and
@@ -242,7 +242,7 @@ export function Investigations() {
                   className="metis-input w-full pl-10"
                 />
               </div>
-              <div className="metis-pane-muted">
+                <div className="metis-pane-muted border-[rgba(110,138,189,0.18)] bg-[rgba(10,16,27,0.92)]">
                 <div className="metis-micro-label">Case posture</div>
                 <div className="mt-3 space-y-2 text-sm text-muted-foreground">
                   <div className="flex items-center justify-between">
@@ -293,7 +293,7 @@ export function Investigations() {
                   {filteredCases.map((caseItem) => (
                     <tr
                       key={caseItem.id}
-                      className={`cursor-pointer ${selectedCase?.id === caseItem.id ? "bg-primary/5" : ""}`}
+                      className={`cursor-pointer ${selectedCase?.id === caseItem.id ? "bg-[linear-gradient(90deg,rgba(66,48,13,0.26),rgba(15,23,42,0.08))]" : ""}`}
                       onClick={() => setSelectedId(caseItem.id)}
                     >
                       <DataTableCell>

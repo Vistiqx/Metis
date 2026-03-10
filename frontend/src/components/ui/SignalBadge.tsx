@@ -17,8 +17,9 @@ export function SignalBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em]",
+        "inline-flex items-center gap-2 rounded-md border px-2.5 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]",
         signalTokens[tone].badge,
+        signalTokens[tone].glow,
         className,
       )}
       {...props}

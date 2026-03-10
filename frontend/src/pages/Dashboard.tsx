@@ -135,7 +135,7 @@ export function Dashboard() {
             {activityFeed.map((item) => (
               <div
                 key={`${item.time}-${item.text}`}
-                className="rounded-lg border border-border/70 bg-secondary/25 px-3 py-2.5"
+                className="rounded-lg border border-[rgba(110,138,189,0.18)] bg-[rgba(11,17,28,0.88)] px-3 py-2.5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-mono text-xs text-muted-foreground">
@@ -178,19 +178,22 @@ export function Dashboard() {
           />
         }
         commandStrip={
-          <div className="metis-command-strip">
-            {metrics.map((metric) => (
-              <div key={metric.label} className="metis-metric-cell flex-1">
-                <div className="metis-micro-label">{metric.label}</div>
-                <div className="mt-1 text-2xl font-semibold text-foreground">
-                  {metric.value}
+            <div className="metis-command-strip">
+              {metrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="metis-metric-cell flex-1 border-[rgba(212,175,55,0.18)] bg-[linear-gradient(180deg,rgba(10,18,29,0.96),rgba(7,12,21,0.98))]"
+                >
+                  <div className="metis-micro-label">{metric.label}</div>
+                  <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
+                    {metric.value}
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {metric.note}
+                  </p>
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {metric.note}
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
         }
         leftRail={
           <>
@@ -200,7 +203,7 @@ export function Dashboard() {
                   <div className="metis-kicker">Workflow Shortcuts</div>
                   <h2 className="text-[20px] font-semibold">Access Surfaces</h2>
                 </div>
-                <ScanSearch className="h-4 w-4 text-primary" />
+                <ScanSearch className="h-4 w-4 text-[#f0cf70]" />
               </div>
               <div className="space-y-2">
                 {quickActions.map((action) => (
@@ -210,7 +213,7 @@ export function Dashboard() {
                     className="metis-list-row group"
                   >
                     <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-md border border-primary/20 bg-primary/10 text-primary">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-md border border-[rgba(212,175,55,0.22)] bg-[linear-gradient(180deg,rgba(52,39,12,0.46),rgba(14,21,33,0.94))] text-[#f0cf70] shadow-[0_0_14px_rgba(212,175,55,0.08)]">
                         <action.icon className="h-4 w-4" />
                       </div>
                       <div className="min-w-0">
@@ -222,7 +225,7 @@ export function Dashboard() {
                         </p>
                       </div>
                     </div>
-                    <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:text-primary" />
+                    <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:text-[#f0cf70]" />
                   </Link>
                 ))}
               </div>
@@ -238,7 +241,7 @@ export function Dashboard() {
               </div>
               <div className="space-y-2.5">
                 {watchRows.map((row) => (
-                  <div key={row.subject} className="metis-pane-muted">
+                    <div key={row.subject} className="metis-pane-muted border-[rgba(110,138,189,0.18)] bg-[rgba(10,16,27,0.92)]">
                     <p className="text-sm font-semibold text-foreground">
                       {row.subject}
                     </p>
@@ -266,12 +269,15 @@ export function Dashboard() {
                   scanning.
                 </p>
               </div>
-              <Badge variant="gold">Morning brief window</Badge>
-            </div>
+                <Badge variant="gold">Morning brief window</Badge>
+              </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 rounded-[18px] border border-[rgba(212,175,55,0.14)] bg-[linear-gradient(180deg,rgba(7,12,21,0.76),rgba(7,12,21,0.3))] p-3">
               {commandRows.map((row) => (
-                <div key={row.id} className="metis-list-row flex-col">
+                <div
+                  key={row.id}
+                  className="metis-list-row flex-col border-[rgba(110,138,189,0.18)] bg-[linear-gradient(180deg,rgba(14,20,31,0.94),rgba(11,17,28,0.96))]"
+                >
                   <div className="flex w-full items-start justify-between gap-3">
                     <div>
                       <div className="mb-1 flex items-center gap-2">
@@ -287,7 +293,7 @@ export function Dashboard() {
                     </div>
                     <div className="text-right">
                       <div className="metis-micro-label">Confidence</div>
-                      <div className="mt-1 text-lg font-semibold text-foreground">
+                      <div className="mt-1 text-lg font-semibold text-[#fff1bf]">
                         {row.confidence}
                       </div>
                     </div>
@@ -295,12 +301,12 @@ export function Dashboard() {
                   <div className="metis-keyline" />
                   <div className="flex w-full items-center justify-between gap-3 text-sm">
                     <p className="text-muted-foreground">{row.nextAction}</p>
-                    <Link
-                      to="/investigations"
-                      className="text-xs font-semibold uppercase tracking-[0.16em] text-primary"
-                    >
-                      Open case
-                    </Link>
+                      <Link
+                        to="/investigations"
+                        className="text-xs font-semibold uppercase tracking-[0.16em] text-[#f0cf70]"
+                      >
+                        Open case
+                      </Link>
                   </div>
                 </div>
               ))}
@@ -316,7 +322,7 @@ export function Dashboard() {
                   Briefing Readiness
                 </h2>
               </div>
-              <BookOpen className="h-4 w-4 text-primary" />
+              <BookOpen className="h-4 w-4 text-[#f0cf70]" />
             </div>
             <div className="space-y-2.5 text-sm">
               <div className="metis-list-row">

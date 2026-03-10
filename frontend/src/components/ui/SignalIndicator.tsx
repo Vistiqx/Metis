@@ -16,16 +16,20 @@ export function SignalIndicator({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-foreground",
+        "inline-flex items-center gap-2 rounded-md border border-[rgba(110,138,189,0.16)] bg-[rgba(11,17,28,0.52)] px-2 py-1 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-foreground",
         className,
       )}
       {...props}
     >
       <span
-        className={cn("h-2 w-2 rounded-full", signalTokens[tone].dot)}
+        className={cn(
+          "h-2.5 w-2.5 rounded-full",
+          signalTokens[tone].dot,
+          signalTokens[tone].glow,
+        )}
         aria-hidden="true"
       />
-      {label}
+      <span className={signalTokens[tone].text}>{label}</span>
     </span>
   );
 }

@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        authority: ['"Iowan Old Style"', '"Palatino Linotype"', '"Book Antiqua"', 'Georgia', 'serif'],
-        interface: ['"Charter"', '"Cambria"', 'Georgia', 'serif'],
+        authority: ['"IBM Plex Serif"', '"Palatino Linotype"', 'Georgia', 'serif'],
+        interface: ['"IBM Plex Sans"', '"Segoe UI"', '"Helvetica Neue"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,7 +61,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        panel: '0 22px 60px rgba(2, 6, 23, 0.45)',
+        panel: '0 6px 20px rgba(0, 0, 0, 0.35)',
+        hover: '0 8px 26px rgba(0, 0, 0, 0.45)',
         inset: 'inset 0 1px 0 rgba(255,255,255,0.04)',
       },
       backgroundImage: {

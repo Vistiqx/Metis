@@ -23,7 +23,7 @@ export function SectionHeader({
         <h1 className="metis-title">{title}</h1>
         {subtitle ? <p className="metis-subtitle">{subtitle}</p> : null}
       </div>
-      {meta ? <div className="flex items-center gap-2">{meta}</div> : null}
+      {meta ? <div className="flex flex-wrap items-center gap-2">{meta}</div> : null}
     </div>
   );
 }

@@ -5,12 +5,10 @@ import {
   Command,
   ChevronRight,
   PanelRightOpen,
-  Shield,
   UserCircle2,
 } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Badge } from "../ui/Badge";
 import { MetisLogoMark } from "../ui/MetisLogoMark";
 
 const routeMeta: Record<
@@ -122,7 +120,7 @@ export function TopBar({
 
   return (
     <header className="metis-context-bar">
-      <div className="flex w-full items-center justify-between gap-3">
+      <div className="flex w-full flex-wrap items-center justify-between gap-3">
         <div className="flex min-w-0 flex-1 items-center gap-4">
           <div className="min-w-0 flex-1 xl:max-w-[36rem] 2xl:max-w-[40rem]">
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
@@ -145,29 +143,23 @@ export function TopBar({
               </span>
             </div>
           </div>
-          <div className="hidden items-center gap-2 2xl:flex">
-            <Badge variant="gold" dot>
-              Authority layer
-            </Badge>
-            <Badge variant="neutral">Secure analyst session</Badge>
-          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center justify-end gap-2">
           {showInspectorToggle ? (
             <button
               type="button"
               aria-label="Toggle intelligence panel"
               title="Toggle intelligence panel"
               onClick={onToggleInspector}
-              className="hidden h-9 items-center gap-2 rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] px-3 text-[11px] uppercase tracking-[0.16em] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70] xl:flex [@media(min-width:1680px)]:hidden"
+              className="inline-flex h-9 items-center gap-2 rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] px-3 text-[11px] uppercase tracking-[0.16em] text-muted-foreground transition hover:border-[rgba(212,175,55,0.24)] hover:text-[#f0cf70] [@media(min-width:1440px)]:hidden"
             >
               <PanelRightOpen className="h-4 w-4" />
               Intel Panel
             </button>
           ) : null}
 
-          <div className="hidden 2xl:block">
+          <div className="hidden [@media(min-width:1520px)]:block">
             <div className="metis-context-bar-search">
               <Search className="h-4 w-4 text-[#f0cf70]" />
               <input
@@ -175,16 +167,12 @@ export function TopBar({
                 placeholder="Search workspace records"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-full w-[10rem] border-0 bg-transparent p-0 text-sm text-foreground shadow-none outline-none ring-0 placeholder:text-muted-foreground focus:ring-0 2xl:w-[12rem]"
+                className="h-full w-[10rem] border-0 bg-transparent p-0 text-sm text-foreground shadow-none outline-none ring-0 placeholder:text-muted-foreground focus:ring-0"
               />
-              <kbd className="hidden rounded border border-border/80 bg-[rgba(10,15,24,0.94)] px-1.5 py-0.5 text-[11px] font-semibold text-muted-foreground 2xl:inline-flex 2xl:items-center 2xl:gap-1">
+              <kbd className="hidden rounded border border-border/80 bg-[rgba(10,15,24,0.94)] px-1.5 py-0.5 text-[11px] font-semibold text-muted-foreground [@media(min-width:1520px)]:inline-flex [@media(min-width:1520px)]:items-center [@media(min-width:1520px)]:gap-1">
                 <Command className="inline h-3 w-3" />K
               </kbd>
             </div>
-          </div>
-
-          <div className="hidden rounded-md border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.8)] px-2.5 py-1.5 text-[11px] uppercase tracking-[0.16em] text-muted-foreground lg:block">
-            {currentRoute.label}
           </div>
 
           <button
@@ -198,16 +186,6 @@ export function TopBar({
           </button>
 
           <div className="flex items-center gap-2 border-l border-border/70 pl-2">
-            <div className="hidden items-center gap-2 rounded-md border border-[rgba(212,175,55,0.24)] bg-[linear-gradient(180deg,rgba(48,36,12,0.34),rgba(22,15,16,0.9))] px-2.5 py-1.5 md:flex">
-              <Shield className="h-4 w-4 text-[#f0cf70]" />
-              <div className="leading-none">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-[#d4af37]">
-                  Analyst session
-                </p>
-                <p className="mt-1 text-xs font-medium text-foreground">analyst@metis.local</p>
-              </div>
-            </div>
-
             <button
               aria-label="Open user session"
               title="Open user session"

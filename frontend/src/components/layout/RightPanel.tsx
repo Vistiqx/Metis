@@ -23,16 +23,17 @@ export function RightPanel({
         <div className="mb-2 flex items-center justify-between gap-3">
           <div className="min-w-0">
             <div className="metis-kicker">Right Intelligence Region</div>
-            <h2 className="text-[20px] font-semibold">{title}</h2>
+            <h2 className="text-[16px] font-semibold uppercase tracking-[0.1em] text-foreground/95">
+              {title}
+            </h2>
           </div>
-          <Badge variant="neutral">Live context</Badge>
         </div>
         <div className="flex items-center gap-1">
           <button
             onClick={() => setCollapsed(true)}
             aria-label="Collapse inspector"
             title="Collapse inspector"
-            className="hidden rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground [@media(min-width:1680px)]:inline-flex"
+            className="hidden rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground [@media(min-width:1440px)]:inline-flex"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -41,7 +42,7 @@ export function RightPanel({
               aria-label="Close inspector"
               title="Close inspector"
               onClick={onClose}
-              className="rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground [@media(min-width:1680px)]:hidden"
+              className="rounded-md border border-transparent p-2 text-muted-foreground transition hover:border-border/80 hover:bg-secondary/70 hover:text-foreground [@media(min-width:1440px)]:hidden"
             >
               <X className="h-5 w-5" />
             </button>
@@ -65,7 +66,7 @@ export function RightPanel({
         onClick={() => setCollapsed(false)}
         aria-label="Expand inspector"
         title="Expand inspector"
-        className="hidden h-full w-10 items-center justify-center border-l border-border/70 bg-card/90 text-muted-foreground transition hover:bg-secondary/70 hover:text-foreground [@media(min-width:1680px)]:flex"
+        className="hidden h-full w-10 items-center justify-center border-l border-border/70 bg-card/90 text-muted-foreground transition hover:bg-secondary/70 hover:text-foreground [@media(min-width:1440px)]:flex"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -78,7 +79,7 @@ export function RightPanel({
         role="button"
         tabIndex={isDrawerOpen ? 0 : -1}
         aria-hidden={!isDrawerOpen}
-        className={`fixed inset-0 z-40 bg-[rgba(6,6,10,0.6)] backdrop-blur-[2px] transition-opacity duration-200 [@media(min-width:1680px)]:hidden ${
+        className={`fixed inset-0 z-40 bg-[rgba(6,8,12,0.62)] backdrop-blur-[2px] transition-opacity duration-200 [@media(min-width:1440px)]:hidden ${
           isDrawerOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={onClose}
@@ -91,8 +92,8 @@ export function RightPanel({
       />
 
       <aside
-        className={`metis-right-panel fixed inset-y-0 right-0 z-50 flex w-[min(22rem,calc(100vw-1rem))] flex-col border-l border-border/70 bg-card/95 shadow-[-18px_0_48px_rgba(0,0,0,0.38)] backdrop-blur xl:w-[min(24rem,calc(100vw-1.5rem))] [@media(min-width:1680px)]:sticky [@media(min-width:1680px)]:top-0 [@media(min-width:1680px)]:z-auto [@media(min-width:1680px)]:h-[100dvh] [@media(min-width:1680px)]:w-auto [@media(min-width:1680px)]:self-start [@media(min-width:1680px)]:translate-x-0 [@media(min-width:1680px)]:shadow-none ${
-          isDrawerOpen ? "translate-x-0" : "translate-x-full [@media(min-width:1680px)]:translate-x-0"
+        className={`metis-right-panel fixed inset-y-0 right-0 z-50 flex w-[min(22rem,calc(100vw-1rem))] flex-col border-l border-border/70 bg-card/95 shadow-[-18px_0_48px_rgba(0,0,0,0.38)] backdrop-blur xl:w-[min(24rem,calc(100vw-1.5rem))] [@media(min-width:1440px)]:sticky [@media(min-width:1440px)]:top-0 [@media(min-width:1440px)]:z-auto [@media(min-width:1440px)]:h-[100dvh] [@media(min-width:1440px)]:w-auto [@media(min-width:1440px)]:self-start [@media(min-width:1440px)]:translate-x-0 [@media(min-width:1440px)]:shadow-none ${
+          isDrawerOpen ? "translate-x-0" : "translate-x-full [@media(min-width:1440px)]:translate-x-0"
         }`}
       >
         {panelContent}
@@ -110,7 +111,7 @@ export function MetadataSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mb-4 rounded-lg border border-border/70 bg-secondary/45 p-4">
+    <div className="mb-4 rounded-[10px] border border-border/70 bg-secondary/45 p-4">
       <h3 className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
         {title}
       </h3>

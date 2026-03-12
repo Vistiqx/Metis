@@ -22,7 +22,6 @@ const metrics = [
   { label: "Active cases", value: "12", note: "3 due for reassessment" },
   { label: "Alert load", value: "05", note: "2 require immediate triage" },
   { label: "Evidence backlog", value: "41", note: "8 packets unreviewed" },
-  { label: "Draft outputs", value: "08", note: "2 ready for signoff" },
 ];
 
 const quickActions = [
@@ -132,10 +131,10 @@ export function Dashboard() {
       rightPanelContent={
         <>
           <MetadataSection title="Activity Feed">
-            {activityFeed.map((item) => (
+            {activityFeed.slice(0, 3).map((item) => (
               <div
                 key={`${item.time}-${item.text}`}
-                className="rounded-lg border border-[rgba(156,120,70,0.18)] bg-[rgba(25,17,19,0.88)] px-3 py-2.5"
+                className="rounded-[10px] border border-[rgba(156,120,70,0.18)] bg-[rgba(25,17,19,0.88)] px-3 py-2.5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-mono text-xs text-muted-foreground">
@@ -152,12 +151,6 @@ export function Dashboard() {
             <MetadataItem label="Priority case" value="CASE-2024-001" />
             <MetadataItem label="Publishing queue" value="3 briefs" />
           </MetadataSection>
-          <MetadataSection title="Analyst Guidance">
-            <p className="text-sm text-muted-foreground">
-              Gold accents remain reserved for authority cues. Signal chips mark
-              intelligence state without tinting panels or layout surfaces.
-            </p>
-          </MetadataSection>
         </>
       }
     >
@@ -166,13 +159,10 @@ export function Dashboard() {
           <SectionHeader
             kicker="Intelligence Overview"
             title="Dashboard"
-            subtitle="Session-start overview with compact posture metrics, a dominant investigation command queue, and persistent analyst briefing context."
+            subtitle="Session-start overview of active case posture and movement."
             meta={
               <>
                 <Badge variant="gold">Authority layer active</Badge>
-                <Badge variant="neutral" dot>
-                  Canonical shell aligned
-                </Badge>
               </>
             }
           />
@@ -182,7 +172,7 @@ export function Dashboard() {
               {metrics.map((metric) => (
                 <div
                   key={metric.label}
-                  className="metis-metric-cell metis-metric-cell-gold flex-1"
+                  className="metis-metric-cell metis-metric-cell-gold min-w-[150px] flex-1"
                 >
                   <div className="metis-micro-label">{metric.label}</div>
                   <div className="mt-1 text-2xl font-semibold text-[#fff1bf]">
@@ -220,9 +210,6 @@ export function Dashboard() {
                         <p className="truncate text-sm font-semibold text-foreground">
                           {action.label}
                         </p>
-                        <p className="text-xs text-muted-foreground">
-                          {action.note}
-                        </p>
                       </div>
                     </div>
                     <ArrowRight className="h-4 w-4 text-muted-foreground transition group-hover:text-[#f0cf70]" />
@@ -235,13 +222,13 @@ export function Dashboard() {
               <div className="mb-3 flex items-center justify-between gap-3">
                 <div>
                   <div className="metis-kicker">Watch Desk</div>
-                  <h2 className="text-[20px] font-semibold">Monitoring</h2>
+                  <h2 className="text-[16px] font-semibold uppercase tracking-[0.1em]">Monitoring</h2>
                 </div>
                 <Badge variant="neutral">3 active</Badge>
               </div>
-              <div className="space-y-2.5">
-                {watchRows.map((row) => (
-                    <div key={row.subject} className="metis-pane-muted border-[rgba(156,120,70,0.18)] bg-[rgba(24,17,19,0.9)]">
+              <div className="space-y-2">
+                {watchRows.slice(0, 2).map((row) => (
+                    <div key={row.subject} className="metis-pane-muted border-[rgba(156,120,70,0.18)] bg-[rgba(24,17,19,0.9)] p-2.5">
                     <p className="text-sm font-semibold text-foreground">
                       {row.subject}
                     </p>
@@ -263,16 +250,11 @@ export function Dashboard() {
                 <h2 className="text-[20px] font-semibold">
                   Operational Priorities
                 </h2>
-                <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                  Cases remain the dominant analytical surface. Signals describe
-                  status only while ownership and actions stay neutral for rapid
-                  scanning.
-                </p>
               </div>
                 <Badge variant="gold">Morning brief window</Badge>
               </div>
 
-            <div className="space-y-3 rounded-[18px] border border-[rgba(212,175,55,0.14)] bg-[linear-gradient(180deg,rgba(7,12,21,0.76),rgba(7,12,21,0.3))] p-3">
+            <div className="space-y-2 rounded-[10px] border border-[rgba(212,175,55,0.14)] bg-[linear-gradient(180deg,rgba(7,12,21,0.62),rgba(7,12,21,0.28))] p-2.5">
               {commandRows.map((row) => (
                 <div
                   key={row.id}
@@ -299,7 +281,7 @@ export function Dashboard() {
                     </div>
                   </div>
                   <div className="metis-keyline" />
-                  <div className="flex w-full items-center justify-between gap-3 text-sm">
+                  <div className="flex w-full items-center justify-between gap-3 text-xs">
                     <p className="text-muted-foreground">{row.nextAction}</p>
                       <Link
                         to="/investigations"

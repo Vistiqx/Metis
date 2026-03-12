@@ -13,7 +13,7 @@ export function DataTable({
   return (
     <div
       className={cn(
-        "overflow-x-auto rounded-lg border border-[rgba(156,120,70,0.24)] bg-[linear-gradient(180deg,rgba(25,17,19,0.94),rgba(15,12,16,0.98))]",
+        "overflow-x-auto rounded-[10px] border border-[rgba(156,120,70,0.24)] bg-[linear-gradient(180deg,rgba(25,17,19,0.94),rgba(15,12,16,0.98))]",
         className,
       )}
       {...props}

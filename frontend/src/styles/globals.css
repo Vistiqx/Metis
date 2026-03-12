@@ -35,9 +35,14 @@
     --metis-yellow: 50 100% 50%;
     --metis-teal: 183 58% 53%;
     --metis-lime: 80 100% 49%;
-    --metis-shell-sidebar-width: clamp(14rem, 13vw, 15rem);
-    --metis-shell-inspector-width: clamp(17rem, 15vw, 18rem);
-    --metis-analysis-rail-width: clamp(17rem, 18vw, 19rem);
+    --metis-shell-sidebar-width: 240px;
+    --metis-shell-inspector-width: 300px;
+    --metis-analysis-rail-width: 240px;
+    --metis-topbar-height: 56px;
+    --metis-command-strip-height: 48px;
+    --metis-panel-radius: 10px;
+    --metis-panel-padding: 16px;
+    --metis-grid-gap: 16px;
   }
 }
 
@@ -157,7 +162,7 @@
   }
 
   .metis-panel {
-    @apply rounded-lg border border-[rgba(166,132,72,0.26)] bg-[linear-gradient(180deg,rgba(27,18,18,0.94),rgba(16,13,18,0.97))] p-4 shadow-panel;
+    @apply rounded-[10px] border border-[rgba(166,132,72,0.26)] bg-[linear-gradient(180deg,rgba(27,18,18,0.94),rgba(16,13,18,0.97))] p-4 shadow-panel;
     box-shadow:
       inset 0 1px 0 rgba(255, 240, 177, 0.04),
       0 0 0 1px rgba(212, 175, 55, 0.04),
@@ -165,15 +170,15 @@
   }
 
   .metis-panel-muted {
-    @apply rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.84)] p-4;
+    @apply rounded-[10px] border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.84)] p-4;
   }
 
   .metis-toolbar {
-    @apply flex min-h-12 flex-col gap-3 rounded-lg border border-[rgba(166,132,72,0.24)] bg-[rgba(22,16,18,0.94)] px-3 py-2 shadow-panel lg:flex-row lg:items-center lg:justify-between;
+    @apply flex min-h-12 flex-col gap-3 rounded-[10px] border border-[rgba(166,132,72,0.24)] bg-[rgba(22,16,18,0.94)] px-3 py-2 shadow-panel lg:flex-row lg:items-center lg:justify-between;
   }
 
   .metis-command-strip {
-    @apply flex min-h-12 flex-wrap items-center gap-3 rounded-lg border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(28,18,18,0.96),rgba(18,14,18,0.98))] px-3 py-2 shadow-panel;
+    @apply flex min-h-12 flex-wrap items-center gap-3 rounded-[10px] border border-[rgba(212,175,55,0.28)] bg-[linear-gradient(180deg,rgba(28,18,18,0.96),rgba(18,14,18,0.98))] px-3 py-2 shadow-panel;
     box-shadow:
       inset 0 1px 0 rgba(255, 240, 177, 0.08),
       0 6px 20px rgba(0, 0, 0, 0.35);
@@ -183,7 +188,7 @@
     @apply grid items-start gap-4;
   }
 
-  @media (min-width: 1440px) {
+  @media (min-width: 1360px) {
     .metis-analysis-grid {
       grid-template-columns: var(--metis-analysis-rail-width) minmax(0, 1.6fr);
     }
@@ -210,15 +215,15 @@
   }
 
   .metis-pane {
-    @apply rounded-lg border border-[rgba(166,132,72,0.24)] bg-[linear-gradient(180deg,rgba(27,18,18,0.94),rgba(16,13,18,0.97))] p-4 shadow-panel;
+    @apply rounded-[10px] border border-[rgba(166,132,72,0.24)] bg-[linear-gradient(180deg,rgba(27,18,18,0.94),rgba(16,13,18,0.97))] p-4 shadow-panel;
   }
 
   .metis-pane-muted {
-    @apply rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.84)] p-3;
+    @apply rounded-[10px] border border-[rgba(156,120,70,0.22)] bg-[rgba(31,21,21,0.84)] p-3;
   }
 
   .metis-list-row {
-    @apply flex items-start justify-between gap-3 rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.88)] px-3 py-3 transition-colors hover:border-[rgba(212,175,55,0.26)] hover:bg-[rgba(36,22,22,0.94)];
+    @apply flex items-start justify-between gap-3 rounded-[10px] border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.88)] px-3 py-3 transition-colors hover:border-[rgba(212,175,55,0.26)] hover:bg-[rgba(36,22,22,0.94)];
   }
 
   .metis-keyline {
@@ -226,7 +231,7 @@
   }
 
   .metis-shell-grid {
-    @apply grid min-h-[100dvh] bg-[radial-gradient(circle_at_16%_18%,rgba(156,52,20,0.16),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(212,175,55,0.1),transparent_18%),radial-gradient(circle_at_50%_52%,rgba(122,34,18,0.08),transparent_32%),linear-gradient(180deg,rgba(12,6,9,0.99),rgba(18,10,12,1)_32%,rgba(14,10,14,1)_68%,rgba(8,7,11,1))] xl:h-[100dvh];
+    @apply grid min-h-[100dvh] overflow-x-clip bg-[radial-gradient(circle_at_16%_18%,rgba(156,52,20,0.16),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(212,175,55,0.1),transparent_18%),radial-gradient(circle_at_50%_52%,rgba(122,34,18,0.08),transparent_32%),linear-gradient(180deg,rgba(12,6,9,0.99),rgba(18,10,12,1)_32%,rgba(14,10,14,1)_68%,rgba(8,7,11,1))];
   }
 
   @media (min-width: 1280px) {
@@ -235,7 +240,7 @@
     }
   }
 
-  @media (min-width: 1680px) {
+  @media (min-width: 1440px) {
     .metis-shell-grid[data-has-inspector="true"] {
       grid-template-columns:
         var(--metis-shell-sidebar-width)
@@ -308,7 +313,7 @@
   }
 
   .metis-metric-cell {
-    @apply min-w-[140px] rounded-lg border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.9)] px-3 py-2;
+    @apply min-w-[140px] rounded-[10px] border border-[rgba(156,120,70,0.22)] bg-[rgba(24,17,19,0.9)] px-3 py-2;
   }
 
   .metis-metric-cell-gold {
@@ -342,7 +347,7 @@
   }
 
   .metis-empty {
-    @apply flex min-h-[220px] flex-col items-center justify-center rounded-lg border border-dashed border-[rgba(156,120,70,0.24)] bg-[rgba(21,16,18,0.78)] px-6 text-center shadow-panel;
+    @apply flex min-h-[220px] flex-col items-center justify-center rounded-[10px] border border-dashed border-[rgba(156,120,70,0.24)] bg-[rgba(21,16,18,0.78)] px-6 text-center shadow-panel;
   }
 
   .metis-badge {
@@ -370,11 +375,11 @@
   }
 
   .metis-table thead th {
-    @apply border-b border-[rgba(156,120,70,0.24)] bg-[rgba(24,17,19,0.96)] px-[10px] py-2 text-left text-[11px] font-semibold uppercase tracking-[0.16em] text-[#d4af37];
+    @apply h-8 border-b border-[rgba(156,120,70,0.24)] bg-[rgba(24,17,19,0.96)] px-[10px] py-2 text-left text-[11px] font-semibold uppercase tracking-[0.16em] text-[#d4af37];
   }
 
   .metis-table tbody td {
-    @apply border-b border-[rgba(156,120,70,0.14)] px-[10px] py-[9px] align-top text-sm;
+    @apply h-9 border-b border-[rgba(156,120,70,0.14)] px-[10px] py-[9px] align-top text-sm;
   }
 
   .metis-table tbody tr:last-child td {
@@ -434,7 +439,7 @@
   }
 
   .metis-context-bar {
-    @apply sticky top-0 z-20 flex h-14 items-center border-b border-[rgba(212,175,55,0.16)] bg-[rgba(16,10,13,0.94)] px-4 py-2 backdrop-blur xl:px-5;
+    @apply sticky top-0 z-20 flex min-h-[56px] flex-wrap items-center border-b border-[rgba(212,175,55,0.16)] bg-[rgba(16,10,13,0.94)] px-4 py-2 backdrop-blur xl:px-5;
     box-shadow: inset 0 1px 0 rgba(255, 240, 177, 0.05);
   }
 

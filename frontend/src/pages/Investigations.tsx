@@ -134,6 +134,7 @@ export function Investigations() {
     <WorkspaceLayout
       layer="signal"
       dockContext="default"
+      showDock={false}
       rightPanelTitle="Case Inspector"
       rightPanelContent={
         selectedCase ? (
@@ -150,9 +151,7 @@ export function Investigations() {
               <p className="text-base font-semibold text-foreground">
                 {selectedCase.title}
               </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {selectedCase.focus}
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">{selectedCase.focus}</p>
             </MetadataSection>
             <MetadataSection title="Case Metrics">
               <MetadataItem label="Workflow" value={selectedCase.state} />
@@ -160,12 +159,6 @@ export function Investigations() {
               <MetadataItem label="Events" value={selectedCase.events} />
               <MetadataItem label="Evidence" value={selectedCase.evidence} />
               <MetadataItem label="Updated" value={selectedCase.updated} />
-            </MetadataSection>
-            <MetadataSection title="Next Action">
-              <p className="text-sm text-muted-foreground">
-                Prepare a corroboration review packet and open linked graph
-                context before the next analyst handoff.
-              </p>
             </MetadataSection>
           </>
         ) : undefined
@@ -176,7 +169,7 @@ export function Investigations() {
           <SectionHeader
             kicker="Case Management"
             title="Investigations"
-            subtitle="Primary analyst workspace with compact triage controls, dense entity correlation rows, and a persistent case inspector."
+            subtitle="Dense triage queue with sortable case context."
             meta={
               <Button onClick={() => setIsCreateDialogOpen(true)}>
                 <Plus className="mr-2 h-4 w-4" />
@@ -210,21 +203,14 @@ export function Investigations() {
                 }
               </div>
             </div>
-            <div className="metis-metric-cell flex-[1.3] border-[rgba(212,175,55,0.14)] bg-[rgba(24,17,19,0.88)]">
-              <div className="metis-micro-label">Queue note</div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Signal colors classify urgency only. Workflow state and
-                ownership remain neutral for cleaner scan paths.
-              </p>
-            </div>
           </div>
         }
         leftRail={
-          <Panel>
+          <Panel className="p-3">
             <div className="mb-3 flex items-center justify-between gap-3">
               <div>
                 <div className="metis-kicker">Case Filters</div>
-                <h2 className="text-[20px] font-semibold">Queue Scope</h2>
+                <h2 className="text-[16px] font-semibold uppercase tracking-[0.1em]">Scope</h2>
               </div>
               <Button variant="outline" size="sm">
                 <Filter className="mr-2 h-4 w-4" />
@@ -239,12 +225,12 @@ export function Investigations() {
                   placeholder="Search case ID or title"
                   value={searchQuery}
                   onChange={(event) => setSearchQuery(event.target.value)}
-                  className="metis-input w-full pl-10"
+                  className="metis-input h-9 w-full pl-10"
                 />
               </div>
-                <div className="metis-pane-muted border-[rgba(156,120,70,0.18)] bg-[rgba(24,17,19,0.9)]">
+                <div className="metis-pane-muted border-[rgba(156,120,70,0.18)] bg-[rgba(24,17,19,0.9)] p-2.5">
                 <div className="metis-micro-label">Case posture</div>
-                <div className="mt-3 space-y-2 text-sm text-muted-foreground">
+                <div className="mt-2.5 space-y-1.5 text-xs text-muted-foreground">
                   <div className="flex items-center justify-between">
                     <span>Open</span>
                     <Badge variant="neutral">{openCount}</Badge>
@@ -281,7 +267,8 @@ export function Investigations() {
               <DataTableTable>
                 <thead>
                   <tr>
-                    <DataTableHeadCell>Investigation</DataTableHeadCell>
+                    <DataTableHeadCell>Case</DataTableHeadCell>
+                    <DataTableHeadCell>Owner</DataTableHeadCell>
                     <DataTableHeadCell>Workflow</DataTableHeadCell>
                     <DataTableHeadCell>Priority</DataTableHeadCell>
                     <DataTableHeadCell>Events</DataTableHeadCell>
@@ -297,23 +284,12 @@ export function Investigations() {
                       onClick={() => setSelectedId(caseItem.id)}
                     >
                       <DataTableCell>
-                        <div>
-                          <div className="mb-1 flex items-center gap-2">
-                            <span className="font-mono text-xs text-muted-foreground">
-                              {caseItem.id}
-                            </span>
-                            <Badge variant="neutral">
-                              Owner {caseItem.owner}
-                            </Badge>
-                          </div>
-                          <div className="font-semibold text-foreground">
-                            {caseItem.title}
-                          </div>
-                          <div className="mt-1 text-xs text-muted-foreground">
-                            {caseItem.focus}
-                          </div>
+                        <div className="space-y-0.5">
+                          <div className="font-mono text-[11px] text-muted-foreground">{caseItem.id}</div>
+                          <div className="truncate font-semibold text-foreground">{caseItem.title}</div>
                         </div>
                       </DataTableCell>
+                      <DataTableCell className="text-xs text-muted-foreground">{caseItem.owner}</DataTableCell>
                       <DataTableCell>
                         <Badge
                           variant={

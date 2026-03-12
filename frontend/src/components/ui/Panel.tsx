@@ -9,9 +9,7 @@ export function Panel({ className, inset = false, ...props }: PanelProps) {
   return (
     <div
       className={cn(
-        inset
-          ? "rounded-xl border border-border/70 bg-input/70"
-          : "rounded-xl border border-border/80 bg-card/90 shadow-panel shadow-black/25 backdrop-blur",
+        inset ? "metis-panel-muted" : "metis-panel",
         className,
       )}
       {...props}

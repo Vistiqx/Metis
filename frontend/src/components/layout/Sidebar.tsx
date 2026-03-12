@@ -169,7 +169,7 @@ export function Sidebar() {
 
         <div className="relative z-[1] border-b border-border/70 px-4 py-3">
           <div className="metis-operations-rail-label">Navigation Posture</div>
-          <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+            <div className="mt-2 grid grid-cols-2 gap-2 text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
             <div className="rounded-md border border-[rgba(156,120,70,0.24)] bg-[rgba(25,17,19,0.84)] px-2 py-2 text-[#eadfca]">
               Analyst mode
             </div>
